@@ -1,0 +1,8 @@
+database:
+  adapter: mysql2
+  host: localhost
+  port: 3306
+  username: root
+  password: hasar50
+  database: maquillajetiti
+

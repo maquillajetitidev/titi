@@ -1,0 +1,53 @@
+@media only screen and (min-width:65em) { /* la carga necesita este minimo par air a tres cols */
+  // body {background:#79a693}
+  .flex_container {
+    /* 2009 */
+    display: -webkit-box;
+    display: -moz-box;
+    /* 2011 */
+    display: -ms-flexbox;
+    /* 2012 */
+    display: -webkit-flex;
+    display: flex;
+
+  }
+
+  .flex_item {
+    -ms-flex-item-align:stretch;
+    -webkit-align-self:stretch;
+    align-self:stretch;
+    // border: 1px solid red;
+  }
+
+  .flex_order_last {
+      /* Flex items are, by default, displayed and laid out in the same order as they appear in the source document.
+      The ‘order’ property can be used to change this ordering.
+      Alters ONLY the visual order, not the logical one */
+      -webkit-box-ordinal-group: 1;
+      -moz-box-ordinal-group: 1;
+      -ms-flex-order: 1;
+      /* 2012. Order: <integer> (default=0, accepts -1) */
+      /* http://www.w3.org/TR/css3-flexbox/#order-property */
+      -webkit-order: 1;
+      order: 1;
+  }
+
+  .flex_1 {-webkit-flex: 1; flex: 1;}
+  .flex_2 {-webkit-flex: 2; flex: 2;}
+  .flex_3 {-webkit-flex: 3; flex: 3;}
+  .flex_4 {-webkit-flex: 4; flex: 4;}
+  .flex_5 {-webkit-flex: 5; flex: 5;}
+  .flex_6 {-webkit-flex: 6; flex: 6;}
+
+
+}
+
+@media only screen and (min-width:80em) {
+    // body {background:#7993a6}
+}
+
+@media only screen and (min-width:96em) {
+    // body {background:#a693a6}
+}
+
+

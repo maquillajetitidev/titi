@@ -1,0 +1,42 @@
+-# coding: UTF-8
+- items ||= []
+- if items.empty?
+  form action=url("/inventory/samplify_items") method="post"
+    == Rack::Csrf.tag(env)
+
+    label for="reason" = t.samplify_items.write_reason
+    br
+    input.aligned autofocus="autofocus" required="required" type="text" name="reason" id="reason" size=30 value="" placeholder="#{t.samplify_items.reason_example}"
+
+    br
+
+    label for="i_ids" = t.order.scan_labels
+    br
+    textarea.aligned required="required" type="text" name="i_ids" id="i_ids" value="" placeholder="#{t.label.read_placeholder}"
+    br
+    br
+    input.aligned.ajax_confirm data-confirm_message="#{t.samplify_items.sure?}"  type="submit" value="#{t.actions.samplify}"
+
+
+    br
+    br
+    img src="/media/scan_barcode.jpg"
+
+- else
+
+  p.action = t.samplify_items.how_to_use
+
+  table class="items "
+    thead
+      tr
+        th.md_cell = t.item.fields.id
+        th = t.product.fields.name
+    tfoot
+      tr
+        td.counter colspan="7" = t.items.count(items.count)
+    tbody
+      - items.each do |item|
+        tr.item
+          td = item.i_id
+          td = item.p_name
+

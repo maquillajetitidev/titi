@@ -1,0 +1,15 @@
+- if labels.empty?
+  p = t.labels.empty
+- else
+  table.items
+    thead
+      tr
+        td = t.label.fields.id
+        td = t.label.fields.status
+        td = t.label.fields.created_at
+    tbody
+      - labels.each do |label|
+        tr.item
+          td = label.i_id
+          td = ConstantsTranslator.new(label.i_status).t
+          td = Utils::local_datetime_format(label.created_at)

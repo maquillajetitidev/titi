@@ -1,0 +1,27 @@
+doctype 5
+html lang="es"
+  head
+    meta charset="utf-8"
+    - title = title || @title
+    title = title || "NO TENGO TITULO"
+    link rel="shortcut icon" href="/media/favicon.ico"
+    == slim :mobile_meta
+    - date = Time.now.strftime("%Y%m%d")
+    link rel="stylesheet" href="/backend.css?#{date}"
+  body
+    == slim :nav_sales, locals: {sec_nav: sec_nav ||= false}
+
+    section.messages
+      == styled_flash
+
+    article
+      h1=title
+      section.main
+        == yield
+      footer
+        script src="/jquery-2.0.3.min.js"
+        script src="/jquery.plugins-min.js"
+        - if self.class.development?
+          script src="/jss/backend.js"
+        - else
+          script src="/backend-min.js?#{date}"

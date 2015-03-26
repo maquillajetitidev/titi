@@ -1,0 +1,12 @@
+-# coding: UTF-8
+
+- if @bulks.empty?
+  p = t.bulks.empty
+- else
+  - if @count > 0
+    form action=url("/bulks/labels/csv") method="post"
+      == Rack::Csrf.tag(env)
+      input class="ajax_hide_items" type="submit" value="#{t.labels.download(@count)}"
+  - if @count == 0
+    p No hay etiquetas de graneles pendientes de ser impresas
+  == slim :bulks_list, locals: {full_row: true, m_name_col: true}

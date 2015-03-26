@@ -1,0 +1,22 @@
+-# coding: UTF-8
+-# TODO
+- @title = "Notas de crédito"
+
+- if @credits.empty?
+  p No hay notas de crédito en la base
+- else
+  table.items.quicksearch.tablesorter data-label="#{t.actions.filter}"
+    thead
+      tr
+        td Descripción
+        td Estado
+        td Monto
+    - @credits.each do |credit|
+      tr.item
+        td #{credit[:description]}
+        td #{credit[:status]}
+        td.money
+          = Utils::number_format credit[:ammount], 2
+        td
+          a href="/admin/credits/#{credit[:credit_id]}"
+            img src="/media/Icon-Edit.png" width="32" height="32"

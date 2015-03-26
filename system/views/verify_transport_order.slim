@@ -1,0 +1,77 @@
+- @title = t.transport.arrivals.verification.title(@order.o_id, @verified_items.count, @pending_items.count+@verified_items.count )
+
+- base_route ||= "/transport/arrivals"
+
+- if @product.empty?
+  form action=url("#{base_route}/#{@order.o_id}") method="post"
+    == Rack::Csrf.tag(env)
+    label.aligner_2 for="i_id" = t.order.scan_label
+    input.aligned autofocus="autofocus" required="required" type="text" id="i_id" name="i_id" size=15 maxlength=15 value="" placeholder="#{t.label.read_placeholder}"
+    input type="submit" value="#{t.actions.ok}"
+
+
+- unless @product.empty?
+  - unless @item.empty?
+    div.ajax_response
+      fieldset.action_container
+        h2.no_padding #{flash[:notice]}
+        form action=url("#{base_route}/#{@order.o_id}") method="post"
+          == Rack::Csrf.tag(env)
+          label.aligner_2 for="fake_label" #{t.label.fields.label}
+          input.aligned type="text" disabled="disabled" name="fake_label_id" value="#{@item[:i_id]}"
+          br
+          br
+          label.aligner_2 for="confirm" Si es correcto
+          input.aligned  autofocus="autofocus" name="confirm" type="submit" value="#{t.actions.ok}"
+        br
+        form action=url("#{base_route}/#{@order.o_id}/#{@item.i_id}/void") method="post"
+          == Rack::Csrf.tag(env)
+          label.aligner_2 for="confirm" Si es Incorrecto
+          input.aligned.ajax_confirm name="confirm" data-confirm_message="Esto va a invalidar el item. Vas a tener que separarlo para que sea reetiquetado" type="submit" value="Anular"
+
+      == slim :product_details, locals: {product: @product}
+
+- if @pending_items.empty? and @void_items.empty? and @pending_bulks.empty? and @void_bulks.empty?
+  p Esta orden esta vacia
+
+- unless @pending_items.empty?
+  h2 Items pendientes de verificacion
+  - @items = @pending_items
+  == slim :items_list, locals: {price_pro_col: false, show_filters: false}
+  / Remove single item
+  a href="/#{@module}/#{@route}/#{@order.o_id}/item/remove" Remover un item de la orden
+
+- unless @pending_bulks.empty?
+  h2 Graneles pendientes de verificacion
+  - @bulks = @pending_bulks
+  == slim :bulks_list, locals: {show_edit_button: false, show_filters: false, m_name_col: true}
+  / Remove single bulk
+  a href="/#{@module}/#{@route}/#{@order.o_id}/bulk/remove" Remover un granel de la orden
+
+- unless @verified_items.empty?
+  h2 Items verificados
+  - @items = @verified_items
+  == slim :items_list, locals: {price_pro_col: false, show_filters: false}
+  / Remove single item
+  a href="/#{@module}/#{@route}/#{@order.o_id}/item/remove" Remover un item de la orden
+
+- unless @verified_bulks.empty?
+  h2 Graneles verificados
+  - @bulks = @verified_bulks
+  == slim :bulks_list, locals: {show_edit_button: false, show_filters: false, m_name_col: true}
+  / Remove single bulk
+  a href="/#{@module}/#{@route}/#{@order.o_id}/bulk/remove" Remover un granel de la orden
+
+- unless @void_items.empty?
+  h2 Items con problemas
+  - @items = @void_items
+  == slim :items_list, locals: {price_pro_col: false, show_filters: false, m_name_col: true}
+
+- unless @void_bulks.empty?
+  h2 Graneles con problemas
+  - @bulks = @void_bulks
+  == slim :bulks_list, locals: {show_edit_button: false, show_filters: false, m_name_col: true}
+
+form.v_island_1#finish_packaging action=url("#{base_route}/#{@order.o_id}/finish") method="post"
+  == Rack::Csrf.tag(env)
+  input type="submit" value="Terminar verificacion"

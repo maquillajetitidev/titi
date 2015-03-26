@@ -1,0 +1,16 @@
+-# coding: UTF-8
+- if @credit.nil?
+  - @title = "Nota de crédito inexistente"
+-else
+  - @title = "Editando nota de crédito nro #{@credit[:credit_id]}"
+
+- if @credit.nil?
+  p No tengo notas de credito con el id especificado
+- else
+  form
+    dl
+      dt Descripción
+      dd
+        input type="text" name="Name" size=50 maxlength=50 value="#{@credit[:description]}"
+      dt
+        input type="submit" value="Guardar"

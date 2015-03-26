@@ -1,0 +1,36 @@
+* {font-size: 11pt ! important}
+h1 {text-align: left; font-size: 2em !important; margin:-1.065em 0 0.0 0; color: #888;}
+.header {position: fixed; top: 0; right: 0; z-index: -1; height:10em}
+ul li{
+  padding: 0 0 0.5em 1em;
+  text-indent: -1.2em;
+}
+/*ul li:last-child {padding-bottom: 0}*/
+li {max-width: 45%}
+li:before { content: "⚫ " }
+
+body:after {display:none}
+
+
+#x {
+    width: 5em;
+    height:5em;
+    position: absolute;
+    top: 0.2em;
+    left: 45%;
+    font-size: 5em !important;
+}
+
+footer {
+  position: absolute;
+  top: 0;
+  left: 28%;
+  width: 25em;
+  height: 280mm;
+}
+
+footer section {
+  position: absolute;
+  bottom: 0;
+  text-align: center;
+}

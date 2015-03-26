@@ -1,0 +1,34 @@
+-# coding: UTF-8
+- @title = t.void_items.title
+- if @items.nil?
+  form action=url("/inventory/void_items") method="post"
+    == Rack::Csrf.tag(env)
+    
+    label for="reason" = t.void_items.write_reason
+    br
+    input.aligned autofocus="autofocus" required="required" type="text" name="reason" id="reason" size=30 value="" placeholder="#{t.void_items.reason_example}"
+
+    br
+
+    label for="i_ids" = t.order.scan_labels
+    br
+    textarea.aligned required="required" type="text" name="i_ids" id="i_ids" value="" placeholder="#{t.label.read_placeholder}"
+    br
+    br
+    input.aligned.ajax_confirm data-confirm_message="#{t.void_items.sure?}"  type="submit" value="#{t.actions.void}"
+
+
+    br
+    br
+    img src="/media/scan_barcode.jpg"
+
+- if @items
+  h3 Items anulados
+
+  p Las siquientes etiquetas fueron anuladas.
+
+  ul
+    - @items.each do |item|
+      li #{item.i_id} 
+
+  p.action Los productos tienen que ser reetiquetados para poder ser vendidos nuevamente.

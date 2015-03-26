@@ -1,0 +1,65 @@
+-# coding: UTF-8
+h2 Armando de #{product.p_name}
+
+- if missing_parts.empty?
+  p Todos los items necesarios ya fueron cargados
+- else
+  fieldset.action_container
+    h2.action Proxima parte a agregar
+    / Read new label
+    p Lee la etiqueta del proximo item&nbsp;
+
+    form action=url("/production/#{order.type.downcase}/#{order.o_id}") method="post"
+      == Rack::Csrf.tag(env)
+      label.aligner_2 for="i_id" = t.sales.inventory_review.scan_label
+      input.aligned autofocus="autofocus" required="required" type="text" name="i_id" id="i_id" size=15 maxlength=15 value="" placeholder="#{t.label.read_placeholder}"
+      input type="submit" value="Aceptar"
+
+  h2 Partes por agregar
+  == slim :products_list, locals: {price_col: false, price_pro_col: false, full_rows: false, show_edit_button: false, order: order, products: missing_parts, show_filters: false, category_col: false, brand_col: false}
+
+
+
+/ Current items in order and removal option
+h2 Partes agregadas a esta orden
+== slim :items_list, locals: {items: added_parts, show_filters: false, price_col: false, price_pro_col: false}
+/ Remove single item
+- unless added_parts.empty?
+  a href="/admin/production/#{order.type.downcase}/#{order.o_id}/item/remove" Remover una parte de la orden
+
+
+/ finish
+- if missing_parts.empty?
+  - if !extra_missing_materials.empty?
+    h2 kit mal definido
+    p Esto no deberia pasar. Pero me figuran materiales por agregar al kit (aparte de las etiquetas y packaging):
+    ul
+      - extra_missing_materials.each do |material|
+        li #{material[:m_qty].to_s("F")} x #{material[:m_name]}
+  - elsif !missing_materials.empty?
+    h2 = t.production.packaging.missing_materials_cant_allocate
+    == slim :materials_list, locals: {show_filters: false, stock_col: true, id: :missing_materials, show_edit_button: true, materials: missing_materials}
+  - else
+    h2 Finalización de armado
+    p
+      | Ahora toma todas las partes que agregaste a la orden y metelas dentro de una
+      b  #{packaging[:m_name]}.
+      br
+      | Pegale una
+      b  #{label_1[:m_name]}
+
+    form.v_island_1#finish_packaging action=url("/production/assembly/#{order.o_id}/allocate") method="post"
+      p
+        |Finalmente pegale una
+        b  #{label_2[:m_name]}
+        |. Leela con el scanner para continual
+
+      == Rack::Csrf.tag(env)
+      input type="hidden" name="o_id" value="#{order.o_id}"
+      input type="text" name="i_id" value="" required="required" autofocus="autofocus" placeholder="Lee la etiqueda ID"
+      input type="submit" value="#{t.actions.continue}"
+
+form.v_island_1#finish_packaging action=url("/production/#{order.type.downcase}/#{order.o_id}/cancel") method="post"
+  == Rack::Csrf.tag(env)
+  input type="hidden" name="o_id" value="#{order.o_id}"
+  input.ajax_confirm data-confirm_message="#{t.order.sure_to_cancel_load_order}" type="submit" value="#{t.actions.cancel_order}"

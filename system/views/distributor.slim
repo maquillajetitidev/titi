@@ -1,0 +1,33 @@
+-# coding: UTF-8
+
+- if distributor.empty?
+  - @title = t.distributor.new
+- else
+  - @title = t.distributor.title distributor.d_name
+
+form.grid-form action=url("/distributors/#{distributor.d_id.to_i}") method="post"
+  fieldset
+    legend = t.fields.details
+    == Rack::Csrf.tag(env)
+    - unless distributor.empty?
+      input type="hidden" name="_method" value="put"
+
+    div data-row-span="2"
+      div data-field-span="1"
+        label for="d_name" = t.distributor.fields.d_name
+        input autofocus="" type="text" name="d_name" size=50 maxlength=80 required="required" value="#{distributor.d_name}"
+
+      div data-field-span="1"
+        label for="d_has_pricelist" = t.distributor.fields.d_has_pricelist
+        input type="checkbox" name="d_has_pricelist" id="d_has_pricelist" checked=("checked" if distributor.d_has_pricelist)
+
+    div data-row-span="1"
+      div data-field-span="1"
+        label for="d_notes" = t.distributor.fields.d_notes
+        textarea name="d_notes" rows="10" cols="50" = distributor.d_notes
+
+  fieldset
+    legend = t.actions.actions
+    div data-row-span="1"
+      div data-field-span="1"
+        input type="submit" value="#{t.actions.save}"

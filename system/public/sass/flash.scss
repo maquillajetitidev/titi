@@ -1,0 +1,48 @@
+.flash, .static_flash {
+  padding: 1em; font-weight: bold; margin: 1em 0 0 0;position: absolute;top: 0;
+  left: 1em; width: calc(100% - 3em - 3em);
+}
+
+@media only screen and (min-width:60em) {
+  .flash, .static_flash {
+    left: calc(50% - 20em - 1.5em); width: 40em;
+  }
+}
+
+
+.flash_notice, .static_notice { background-color: lighten(LightGreen, 5%); color: DarkGreen; border: 3px solid DarkGreen }
+.flash_warning, .static_warning { background-color: LightYellow; color: darken(DarkKhaki, 15%); border: 3px solid darken(DarkKhaki, 15%) }
+.flash_error, .static_error { background-color: lighten( pink, 5% ); color: darken(crimson, 10%); border: 3px solid darken(crimson, 10%); }
+.flash dd, .static_flash dd { padding-left: 1em; font-weight: normal; }
+.flash dd:before , .static_flash dd:before{ content: "⚫ " }
+
+.bounceInDown { -webkit-animation: 1.5s bounceInDown alternate ease-in-out; -ms-animation: 1.5s bounceInDown alternate ease-in-out; animation: 1.5s bounceInDown alternate ease-in-out; }
+@-webkit-keyframes bounceInDown {
+  0% { opacity: 0; -webkit-transform: translateY(-200px); }
+  60% { opacity: 1; -webkit-transform: translateY(30px); }
+  80% { -webkit-transform: translateY(-10px); }
+  100% { -webkit-transform: translateY(0); }
+}
+@keyframes bounceInDown {
+  0% { opacity: 0; transform: translateY(-200px); }
+  60% { opacity: 1; transform: translateY(30px); }
+  80% { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
+}
+
+.bounceOutUp { -webkit-animation: 1.5s bounceOutUp forwards ease-in-out; -ms-animation: 1.5s bounceOutUp forwards ease-in-out; animation: 1.5s bounceOutUp forwards ease-in-out; }
+@-webkit-keyframes bounceOutUp {
+  0% { -webkit-transform: translateY(0); }
+  20% { opacity: 1; -webkit-transform: translateY(20px); }
+  100% { opacity: 0; -webkit-transform: translateY(-2000px); }
+}
+@keyframes bounceOutUp {
+  0% { transform: translateY(0); }
+  20% { opacity: 1; transform: translateY(20px); }
+  100% { opacity: 0; transform: translateY(-2000px); }
+}
+
+.no_delay { -webkit-animation-delay: 0; -ms-animation-delay: 0; animation-delay: 0; }
+.delay_2 { -webkit-animation-delay: 2s; -ms-animation-delay: 2s; animation-delay: 2s; }
+.delay_5 { -webkit-animation-delay: 5s; -ms-animation-delay: 5s; animation-delay: 5s; }
+.delay_10 { -webkit-animation-delay: 20s; -ms-animation-delay: 20s; animation-delay: 10s; }

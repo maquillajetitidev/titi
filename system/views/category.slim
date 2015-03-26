@@ -1,0 +1,34 @@
+-# coding: UTF-8
+
+- if @category.empty?
+  - @title = t.category.not_found
+- else
+  - @title = t.category.title @category.c_name
+  
+  form.grid-form action=url("/products/categories/#{@category[:c_id]}") method="post"
+    fieldset
+      legend = t.fields.desc
+      == Rack::Csrf.tag(env)
+      input type="hidden" name="_method" value="put"
+
+      div data-row-span="2"
+        div data-field-span="1"
+          label.aligner for="c_name" = t.category.fields.name
+          input autofocus="" type="text" name="c_name" size=50 maxlength=80 required="required" value="#{@category[:c_name]}"
+        div data-field-span="1"
+          label for="c_published" = t.category.fields.published
+          input type="checkbox" name="c_published" id="c_published" checked=("checked" if @category.c_published)
+
+      div data-row-span="2"
+        div data-field-span="1"
+          label for="description" = t.category.fields.description
+          textarea name="description" rows="10" cols="50" = @category[:description]
+        div data-field-span="1"
+          label for="img" = t.category.fields.img
+          img src="/images/#{@category.img}"
+
+    fieldset
+      legend = t.actions.actions
+      div data-row-span="1"
+        div data-field-span="1"
+          input.aligned type="submit" value="#{t.actions.save}"

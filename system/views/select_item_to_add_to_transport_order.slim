@@ -1,0 +1,83 @@
+- @title = t.transport.title(@order.o_id, @items.count)
+
+
+- unless @item.empty? or @item.errors.size > 0
+  == slim :product_details, locals: {product: @product }
+
+  / undo adding item
+  form action=url("#{@route}/#{@order.o_id}/item/remove") method="post"
+    == Rack::Csrf.tag(env)
+    label.aligner for="fake_label" #{t.label.fields.label}
+    input type="text" disabled="disabled" name="fake_label_id" value="#{@item[:i_id]}"
+    input type="hidden" name="id" value="#{@item[:i_id]}"
+    input type="hidden" name="p_id" value="#{@product[:p_id]}"
+    input type="hidden" name="o_id" value="#{@order[:o_id]}"
+    br
+    label for="remove_item" Si es incorrecto, puede&nbsp;
+    input name="remove_item" type="submit" value="#{t.actions.undo}"
+
+
+- unless @bulk.nil? or @bulk.empty? or @bulk.errors.size > 0
+  == slim :bulk_details, locals: {bulk: @bulk }
+
+  / undo adding bulk
+  form action=url("#{@route}/#{@order.o_id}/bulk/remove") method="post"
+    == Rack::Csrf.tag(env)
+    label.aligner for="fake_label" #{t.label.fields.label}
+    input type="text" disabled="disabled" name="fake_bulk_id" value="#{@bulk[:b_id]}"
+    input type="hidden" name="id" value="#{@bulk[:b_id]}"
+    input type="hidden" name="o_id" value="#{@order[:o_id]}"
+    br
+    label for="remove_bulk" Si es incorrecto, puede&nbsp;
+    input name="remove_bulk" type="submit" value="#{t.actions.undo}"
+
+
+
+h2 Escanee los items a agregar a la orden
+
+form action=url("#{@route}/#{@order.o_id}/add") method="post"
+  == Rack::Csrf.tag(env)
+  input type="hidden" name="o_id" value="#{@order.o_id}"
+
+  label.aligner_2 for="label" = t.order.scan_label
+  input.trim_me autofocus="autofocus" required="required" type="text" name="i_id" size=15 maxlength=15 value="" placeholder="#{t.label.read_placeholder}"
+  input type="submit" value="#{t.actions.ok}"
+  br
+  img src="/media/scan_barcode.jpg" width="100" height="100"
+
+
+
+h2 Items en esta orden
+== slim :items_list
+/ Remove single item
+- unless @items.empty?
+  a href="#{@module}#{@route}/#{@order.o_id}/item/remove" Remover un item de la orden
+
+- if @order.type == Order::WH_TO_WH
+  h2 Graneles en esta orden
+  == slim :bulks_list, locals: {show_edit_button: false, show_filters: false, stock_col: true, m_name_col: true}
+  / Remove single bulk
+  - unless @bulks.empty?
+    a href="#{@module}#{@route}/#{@order.o_id}/bulk/remove" Remover un granel de la orden
+
+
+
+
+- if @order.type == Order::WH_TO_POS
+  form.v_island_1#finish_packaging action=url("#{@route}/#{@order.o_id}/move") method="post"
+    == Rack::Csrf.tag(env)
+    input type="hidden" name="o_dst" value="STORE_1"
+    input.ajax_confirm data-confirm_message="Esto va a cerrar definitivamente la orden. Solo va a poder ser abierta nuevamente en el Local 1" type="submit" value="Cerrar la orden y transportar a Local 1"
+
+- if @order.type == Order::WH_TO_WH
+  - dest = Location::WAREHOUSES.dup; dest.delete current_location[:name]; dest = dest.join
+  form.v_island_1#finish_packaging action=url("#{@route}/#{@order.o_id}/move") method="post"
+    == Rack::Csrf.tag(env)
+    input type="hidden" name="o_dst" value="#{dest}"
+    input.ajax_confirm data-confirm_message="Esto va a cerrar definitivamente la orden. Solo va a poder ser abierta nuevamente en el #{ConstantsTranslator.new(dest).t}" type="submit" value="Cerrar la orden y transportar a #{ConstantsTranslator.new(dest).t}"
+
+- if @order.type == Order::POS_TO_WH
+  form.v_island_1#finish_packaging action=url("#{@route}/#{@order.o_id}/move") method="post"
+    == Rack::Csrf.tag(env)
+    input type="hidden" name="o_dst" value="WAREHOUSE_2"
+    input.ajax_confirm data-confirm_message="Esto va a cerrar definitivamente la orden. Solo va a poder ser abierta nuevamente en el Deposito 2" type="submit" value="Cerrar la orden y transportar a Deposito 2"

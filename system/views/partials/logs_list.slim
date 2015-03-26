@@ -1,0 +1,60 @@
+- if logs.empty?
+  p = t.logs.empty
+- else
+  - show_filters = true if show_filters.nil?
+  - focus = true if focus.nil?
+  - tablesorter_class = show_filters ? "tablesorter" : "tablesorter_nofilter"
+  - caption = show_filters ? t.tablesorter.default_caption : caption unless !caption.nil?
+
+- level_col ||= true unless level_col === false
+- bulk_col ||= true unless bulk_col === false
+- material_col ||= true unless material_col === false
+- item_col ||= true unless item_col === false
+- order_col ||= true unless order_col === false
+- product_col ||= true unless product_col === false
+
+table class="items #{tablesorter_class}"
+    caption #{caption}
+    thead
+      tr
+        th = t.event.fields.at
+        th = t.event.fields.msg
+        th = t.event.fields.u_id
+        th = t.event.fields.l_id
+        - if level_col
+          th = t.event.fields.lvl
+        - if bulk_col
+          th = t.event.fields.b_id
+        - if material_col
+          th = t.event.fields.m_id
+        - if item_col
+          th = t.event.fields.i_id_l_id
+        - if order_col
+          th = t.event.fields.o_id
+        - if product_col
+          th = t.event.fields.p_id
+    tfoot
+      tr
+        td colspan="5" = t.logs.count(logs.count)
+    tbody
+      - logs.each do |event|
+        tr.event.item
+          td.ajax_filter_by_me = Utils::local_datetime_format event[:at]
+          td.ajax_filter_by_me #{event[:msg]}
+          td.ajax_filter_by_me #{event[:username]}
+          td.ajax_filter_by_me #{ConstantsTranslator.new(event[:l_id]).t}
+          - if level_col
+            td.ajax_filter_by_me.small_content #{event[:lvl]}
+          - if bulk_col
+            td.ajax_filter_by_me #{event[:b_id]}
+          - if material_col
+            - m_id = event[:m_id] ? "#{event[:m_id]}" : ""
+            td.ajax_filter_by_me.number #{m_id}
+          - if item_col
+            td.ajax_filter_by_me #{event[:i_id]}
+          - if order_col
+            - o_id = event[:o_id] ? "#{event[:o_id]}" : ""
+            td.ajax_filter_by_me.number #{o_id}
+          - if product_col
+            - p_id = event[:p_id] ? "#{event[:p_id]}" : ""
+            td.ajax_filter_by_me.number #{p_id}

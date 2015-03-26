@@ -1,0 +1,9 @@
+-# coding: UTF-8
+- full_row = true if full_row.nil?
+- stock_col = false if stock_col.nil? unless stock_col == true
+- sku_col = false if sku_col.nil? unless sku_col == true
+- show_edit_button = false if show_edit_button.nil? unless show_edit_button == true
+- edit_link = nil if edit_link.nil?
+- show_filters = true if show_filters.nil?
+
+== slim :products_list, locals: {show_edit_button: show_edit_button, full_row: full_row, stock_col: stock_col, sku_col: sku_col, edit_link: edit_link, show_filters: show_filters, products: products}

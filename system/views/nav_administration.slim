@@ -1,0 +1,111 @@
+- if authorized? && current_user.level > 2
+  nav.collapsable role="navigation"
+    ul
+      li.autohide: ul
+        li.subsection
+          span class="#{inside?("/admin/administration/reports")}" Informes
+        li: ul
+          li
+            a class="#{inside?("/admin/administration/reports/price_list")}" href=url('/administration/reports/price_list') Lista de precios
+          li
+            a class="#{inside?("/admin/administration/reports/markups")}" href=url('/administration/reports/markups') Desviacion de markup
+          li
+            a class="#{inside?("/admin/administration/reports/products_to_buy")}" href=url('/administration/reports/products_to_buy') Productos a comprar
+          li
+            a class="#{inside?("/admin/administration/reports/materials_to_buy")}" href=url('/administration/reports/materials_to_buy') Materiales a comprar
+          li
+            a class="#{inside?("/admin/administration/reports/products_flags")}" href=url('/administration/reports/products_flags') Flags de productos
+          li
+            a class="#{inside?("/admin/administration/reports/montly")}" href=url('/administration/reports/montly') Ventas de productos por mes
+
+          li.subsection
+            span class="#{inside?("/admin/administration/reports/logins")}" Accesos
+          li: ul
+            li
+              a class="#{inside?("/admin/administration/reports/logins/cristina")}" href=url('/administration/reports/logins/cristina') Acceso de Cristina
+            li
+              a class="#{inside?("/admin/administration/reports/logins/facundo")}" href=url('/administration/reports/logins/facundo') Acceso de Facundo
+            li
+              a class="#{inside?("/admin/administration/reports/logins/gabriela")}" href=url('/administration/reports/logins/gabriela') Acceso de Gabriela
+
+      li.autohide: ul
+        li.subsection
+          span class="#{inside?("/admin/inventory")} " Ajustes
+        li: ul
+          li
+            span Productos
+          li: ul
+            li
+              a class="#{inside?("/admin/administration/adjustments/products/by_sku")}" href=url('/administration/adjustments/products/by_sku') = t.nav.backend.update_products_by_sku
+            li
+              a class="#{inside?("/admin/administration/adjustments/products/by_filter")}" href=url('/administration/adjustments/products/by_filter') = t.nav.backend.update_products_by_filter
+            li
+              form action=url("/products/update_all") method="post"
+                == Rack::Csrf.tag(env)
+                input.ajax_confirm data-confirm_message="#{t.products.sure_to_update_all}" type="submit" value="#{t.nav.backend.update_products}"
+          li
+            span Items
+          li: ul
+            li
+              a class="#{inside?("/admin/inventory/void_items")}" href=url('/inventory/void_items') = t.nav.backend.void_items
+            li
+              a class="#{inside?("/admin/inventory/transmute_items")}" href=url('/inventory/transmute_items') = t.nav.backend.transmute_items
+            li
+              a class="#{inside?("/admin/inventory/samplify_items")}" href=url('/inventory/samplify_items') = t.nav.backend.samplify_items
+          li
+            span Materiales
+          li: ul
+            li
+              a class="#{inside?("/admin/administration/adjustments/materials/by_sku")}" href=url('/administration/adjustments/materials/by_sku') = t.nav.backend.update_materials_by_sku
+            li
+              a class="#{inside?("/admin/administration/adjustments/materials/by_filter")}" href=url('/administration/adjustments/materials/by_filter') = t.nav.backend.update_materials_by_filter
+            li
+              form action=url("/materials/update_ideal_stocks") method="post"
+                == Rack::Csrf.tag(env)
+                input.ajax_confirm data-confirm_message="#{t.materials.sure_to_update_ideal_stocks}" type="submit" value="#{t.nav.backend.update_ideal_stocks_for_materials}"
+
+      li.autohide: ul
+        li.subsection
+          span Edición
+        li: ul
+          li
+            span class="#{inside?("/admin/products")}" Productos
+          li: ul
+            li
+              a class="#{current?("/admin/products")}" href=url('/products') = t.nav.backend.products
+            li
+              form action=url("/products/new") method="post"
+                == Rack::Csrf.tag(env)
+                input type="submit" value="#{t.nav.backend.new_product}"
+            li
+              a class="#{current?("/admin/products/relationships")}" href=url('/products/relationships') = t.nav.backend.products_relationships
+            li
+              a class="#{inside?("/admin/products/categories")}" href=url('/products/categories') = t.nav.backend.categories
+            li
+              a class="#{inside?("/admin/products/sku")}" href=url('/products/sku') = t.nav.backend.sku
+          li
+            span class="#{inside?("/admin/materials")}" Materiales
+          li: ul
+            li
+              a class="#{current?("/admin/materials")}" href=url('/materials') = t.nav.backend.materials_list
+            li
+              form action=url("/materials/new") method="post"
+                == Rack::Csrf.tag(env)
+                input type="submit" value="#{t.nav.backend.new_material}"
+          li
+            span class="#{inside?("/admin/distributors")}" = t.nav.backend.distributors
+          li: ul
+            li
+              a class="#{current?("/admin/distributors")}" href=url('/distributors') = t.nav.backend.distributors
+            li
+              form action=url("/distributors/new") method="post"
+                == Rack::Csrf.tag(env)
+                input type="submit" value="#{t.nav.backend.new_distributor}"
+
+      - if settings.accounts_enabled
+        li: ul
+          li.subsection
+            span class="#{inside?("/admin/materials")}" Contabilidad
+          li: ul
+            li
+              a class="#{inside?("/admin/accounts")}" href=url('/accounts') = t.nav.backend.accounts

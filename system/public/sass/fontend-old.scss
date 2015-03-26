@@ -1,0 +1,50 @@
+.center{margin-left:auto; margin-right:auto}
+p{line-height:1.6em}
+#contenido {position:absolute;top:0;width:728px;margin:0 auto 20px auto; padding:20px; border:3px solid black; background:#edefef;}
+#footer {border:1px dotted #333; padding:20px; background:white}
+
+
+
+#contacto {margin:150px 0 0; padding-bottom:50px; background: #edefef url(/media/contacto.jpg) center 150px; background-attachment:fixed; background-repeat:no-repeat}
+#contacto li {margin-left:23px; list-style: circle; line-height:150%}
+
+
+
+#fotos, #index, #not_found {margin:150px 0 20px; }
+#fotos img {width:450px; height:450px}
+#fotos a small {font-size:12px}
+.photoList td {vertical-align:top; padding-bottom:50px;}
+.photoList td img {padding-right:15px}
+
+.extraImg {clear:both; text-align:right}
+
+
+#topmenu {margin:-23px; width:768px; position:fixed; background:#edefef; border-top:3px solid black; border-left:3px solid black; border-right:3px solid black;}
+#topmenu * {padding:0;margin:0; text-decoration:none; font-size:17px; font-weight:bold; color:black;}
+#topmenu dl {margin-left:45px}
+
+#topmenu dt {display:none; }
+#topmenu dd {width:140px; height:150px; float:left}
+#topmenu dd.lnk a {width:140px; display:block; position:absolute; padding:60px 0 70px 0}
+#topmenu dd.lnk a:hover, #topmenu dd.lnk a:active, #topmenu a.active {color: #ddae20}
+body[id=prod] #topmenu, body[id=fot] #topmenu {border-bottom:1px dotted #333}
+
+#prodCat {margin-top:150px; background: #edefef url(/media/prodCat.jpg) center 150px; background-attachment:fixed; background-repeat:no-repeat}
+.prodCat {height:118px; margin-bottom:20px;border:1px solid transparent; }
+.prodCat .col1 {width:300px}
+.prodCat .col2 {float:right; width:400px}
+.prodCat .prodDesc {overflow:hidden; height:120px}
+.prodCat .prodDesc a {color:#333; text-decoration:none}
+.prodCat .prodDesc:hover a {text-decoration:underline}
+.prodCat .prodDesc a:first-letter {padding-left:0.5em;}
+
+.prodCat .prodDesc h1 {padding-bottom:0; padding-top:0}
+.prodCat:hover { border:1px dotted #333}
+.prodCat:hover h1{color:black}
+.cat1 {margin-top:30px}
+
+.prodImg a {display:block; width:300px; height:120px;}
+.prodImg a span {display:none}
+div.prodBigImg {float:right}
+.prodList .prodDesc {min-height:200px; clear:both; padding:20px}
+p.prodInfo:first-letter {padding:0;}

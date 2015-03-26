@@ -1,0 +1,104 @@
+- full_row = false if full_row.nil?
+- show_edit_button = true if show_edit_button.nil?
+- edit_link ||= "void"
+- list_mode ||= "normal"
+
+- orders ||= []
+- orders = @orders unless @orders.nil?
+
+- if orders.empty?
+  p = t.orders.empty
+- else
+  - show_filters = true if show_filters.nil?
+  - focus = true if focus.nil?
+  - tablesorter_class = show_filters ? "tablesorter" : "tablesorter_nofilter"
+  - caption = show_filters ? t.tablesorter.default_caption : caption unless !caption.nil?
+  table class="items #{tablesorter_class}"
+    caption #{caption}
+    thead
+      tr
+        th.sm_cell = t.order.fields.id
+        - if full_row
+          th = t.order.fields.code
+          th.filter-select.filter-onlyAvail = t.order.fields.type
+          th.filter-select.filter-onlyAvail = t.order.fields.status
+        th.md_cell.date = t.order.fields.created_at
+        th.filter-select.filter-onlyAvail = t.order.fields.user
+        - if full_row
+          - if list_mode == "normal"
+            th.filter-select.filter-onlyAvail = t.order.fields.location
+          - if list_mode == "transport"
+            th.filter-select.filter-onlyAvail = t.order.fields.origin
+            th.filter-select.filter-onlyAvail = t.order.fields.destination
+        - if show_edit_button
+          th.filter-false.sorter-false.sm_cell = t.actions.actions
+    tfoot
+      tr
+        - colspan = 2
+        td colspan="#{colspan}" = t.orders.count(orders.count)
+    tbody
+      - orders.each do |order|
+        - ajax_edit = show_edit_button ? " ajax_item" : ""
+        tr class="item#{ajax_edit}"
+          td = order.o_id
+          - if full_row
+            td = order.o_code_with_dash
+            td = ConstantsTranslator.new(order.type).t
+            td = ConstantsTranslator.new(order.o_status).t
+          td.date = Utils::local_datetime_format order.created_at
+          td = order[:username]
+          - if full_row
+            - if list_mode == "normal"
+              td = ConstantsTranslator.new(order.o_loc).t
+            - if list_mode == "transport"
+              td = ConstantsTranslator.new(order.o_loc).t
+              td = ConstantsTranslator.new(order.o_dst).t
+          - if show_edit_button
+            td
+              - if edit_link == "void"
+                a.text_icon href="#" ✎
+
+              - if edit_link == "/admin/transport/departures/wh_to_pos/order.o_id/add"
+                a.text_icon href="/admin/transport/departures/wh_to_pos/#{order.o_id}/add" ✎
+              - if edit_link == "/admin/transport/departures/wh_to_wh/order.o_id/add"
+                a.text_icon href="/admin/transport/departures/wh_to_wh/#{order.o_id}/add" ✎
+              - if edit_link == "/sales/transport/departures/pos_to_wh/order.o_id/add"
+                a.text_icon href="/sales/transport/departures/pos_to_wh/#{order.o_id}/add" ✎
+
+              - if edit_link == "/sales/admin/inventory_review/o_id"
+                a.text_icon href="/sales/admin/inventory_review/#{order.o_id}" ✎
+
+              - if edit_link == "/admin/inventory/inventory_review/o_id"
+                a.text_icon href="/admin/inventory/inventory_review/#{order.o_id}" ✎
+
+              - if edit_link == "/sales/admin/inventory_verification/o_id"
+                a.text_icon href="/sales/admin/inventory_verification/#{order.o_id}" ✎
+
+              - if edit_link == "/sales/transport/arrivals/o_id"
+                a.text_icon href="/sales/transport/arrivals/#{order.o_id}" ✎
+              - if edit_link == "/admin/transport/arrivals/o_id"
+                a.text_icon href="/admin/transport/arrivals/#{order.o_id}" ✎
+
+
+              - if edit_link == "/admin/inventory/inventory_verification/o_id"
+                a.text_icon href="/admin/inventory/inventory_verification/#{order.o_id}" ✎
+
+              - if edit_link == "/sales/admin/inventory_imputation/o_id"
+                a.text_icon href="/sales/admin/inventory_imputation/#{order.o_id}" ✎
+
+              - if edit_link == "/admin/inventory/inventory_imputation/o_id"
+                a.text_icon href="/admin/inventory/inventory_imputation/#{order.o_id}" ✎
+
+              - if edit_link == "/admin/production/packaging/o_id"
+                a.text_icon href="/admin/production/packaging/#{order.o_id}" ✎
+              - if edit_link == "/admin/production/assembly/o_id"
+                a.text_icon href="/admin/production/assembly/#{order.o_id}" ✎
+
+              - if edit_link == "/admin/production/verification/o_id"
+                a.text_icon href="/admin/production/verification/#{order.o_id}" ✎
+              - if edit_link == "/admin/production/allocation/o_id"
+                a.text_icon href="/admin/production/allocation/#{order.o_id}" ✎
+
+              - if edit_link.start_with?("/admin/orders/") or  edit_link.start_with?("/sales/orders/")
+                a.text_icon href="#{edit_link}/#{order.o_id}" ✎
+

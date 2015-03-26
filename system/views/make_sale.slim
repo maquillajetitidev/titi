@@ -1,0 +1,18 @@
+
+form.grid-form.narrow action=url("/make_sale/add_item") method="post"
+  fieldset
+    == Rack::Csrf.tag(env)
+    input type="hidden" name="o_id" value="#{order.o_id}"
+    legend = t.sales.make_sale.add_item
+    div data-row-span="1"
+      div data-field-span="1"
+        label for="i_id" = t.sales.make_sale.scan_item
+        input autofocus="autofocus" type="text" name="i_id" id="i_id" value=""
+
+h2 = t.sales.make_sale.items_list
+- if cart.empty?
+  p
+    i = t.sales.make_sale.scan_codes_to_add
+- else
+  == slim :items_cart, locals: {show_edit_button: true, show_filters: false, cart: cart}
+  a href="/sales/make_sale/remove_item" = t.sales.make_sale.remove_item

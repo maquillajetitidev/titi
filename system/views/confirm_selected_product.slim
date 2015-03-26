@@ -1,0 +1,16 @@
+-# coding: UTF-8
+- @title = t.production.packaging_order.title(@order.o_id)
+
+== slim :product_details, locals: {product: @product }
+
+
+form action=url("/production/packaging/assign") method="post"
+  == Rack::Csrf.tag(env)
+  label.aligner for="fake_label" #{t.label.fields.label}
+  input type="text" disabled="disabled" name="fake_label_id" value="#{@label[:i_id]}"
+  input type="hidden" name="label" value="#{@label[:i_id]}"
+  input type="hidden" name="p_id" value="#{@product[:p_id]}"
+  input type="hidden" name="o_id" value="#{@order[:o_id]}"
+  br
+  input.aligner  autofocus="autofocus" type="submit" value="#{t.actions.ok}"
+  a.aligned href="/admin/production/packaging/#{@order.o_id}/add/" #{t.actions.cancel}

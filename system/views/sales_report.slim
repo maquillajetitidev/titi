@@ -1,0 +1,35 @@
+- ap sec_nav
+- products ||= []
+
+- if products.empty?
+  p = t.products.empty
+- else
+  table class="items tablesorter"
+    caption  = t.tablesorter.default_caption
+    thead
+      tr
+        th.sm_cell.small_content = t.product.fields.id
+        th = t.product.fields.name
+        th.md_cell.filter-select.filter-onlyAvail = t.product.fields.distributor
+        th.sm_cell.small_content.filter-false #{t.product.fields.unit_cost}
+        - months.each_key do |month|
+          th.sm_cell.filter-false = month
+        th.sm_cell.filter-false Rec
+        th.sm_cell.filter-false Ideal
+        th.smm_cell.filter-false.sorter-false = t.actions.actions
+    tfoot
+      tr
+        td.row_count colspan="17" = t.products.count(products.count)
+    tbody
+      - products.each do |product|
+        tr class="item"
+          td #{product.p_id}
+          td #{I18n.transliterate( product.p_name )}
+          td #{product.d_name}
+          td.number #{Utils::money_format product[:buy_cost], 2}
+          - months.each_key do |month|
+            td.sm_cell.number = product[:sales][month]
+          td.sm_cell.number #{Utils::number_format product[:sales][:recomended], 1}
+          td.number #{Utils::number_format product.supply.s1_whole_ideal, 1}
+          td.actions
+            a.text_icon href="/admin/products/#{product.p_id}" ✎

@@ -1,0 +1,34 @@
+- cart ||= []
+- cart = @cart unless @cart.nil?
+
+- if cart.empty?
+  p = t.items.empty
+- else
+    table.items.tablesorter_nofilter
+      thead
+        tr
+          th = t.product.fields.id
+          th = t.product.fields.name
+          th = t.cart.fields.qty
+          th.number = t.cart.fields.price_u
+          th.number = t.cart.fields.price
+      tbody
+        - count = 0
+        - cart_total = 0
+        - cart.each do |line_item|
+          - count += line_item[:qty]
+          - cart_total += line_item.i_price*line_item[:qty]
+          tr.item
+            td #{line_item.p_id}
+            td #{line_item.p_name}
+            td #{line_item[:qty]}
+            td.number #{Utils::money_format line_item.i_price, 2}
+            td.number #{Utils::money_format line_item.i_price*line_item[:qty], 2}
+      tfoot
+        tr
+          td
+          td = t.cart.totals
+          td.counter = t.cart.count count
+          td
+          td.number #{Utils::money_format cart_total, 2}
+

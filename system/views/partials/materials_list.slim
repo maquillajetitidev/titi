@@ -1,0 +1,100 @@
+- id ||= ""
+- show_edit_button ||= false
+- sku_col ||= false
+- stock_col ||= true if stock_col.nil?
+- ideal_stock_col ||= false
+- multi_stock_col ||= false
+- stock_col = multi_stock_col ? false : stock_col
+- deviation_for_period_col ||= false
+- price_updated_at_col ||= false
+- distributor_col ||= false
+- price_col ||= true unless price_col === false
+
+- materials ||= []
+- materials = @materials unless @materials.nil?
+
+
+- if materials.empty?
+  p = t.materials.empty
+- else
+  - show_filters = true if show_filters.nil?
+  - focus = true if focus.nil?
+  - tablesorter_class = show_filters ? "tablesorter" : "tablesorter_nofilter"
+  - caption = show_filters ? t.tablesorter.default_caption : caption unless !caption.nil?
+  table class="items #{tablesorter_class}" id="#{id}"
+    caption #{caption}
+    thead
+      tr
+        th.sm_cell.small_content = t.material.fields.id
+        th.md_cell.filter-select.filter-onlyAvail = t.material.fields.category
+        th = t.material.fields.name
+        - if sku_col
+          th = t.material.fields.SKU
+        - if distributor_col
+          th.filter-select.filter-onlyAvail = t.material.fields.distributor
+
+        - if (stock_col or multi_stock_col) and price_col
+          th.md_cell.small_content = t.material.fields.price
+        - if price_updated_at_col
+          th = t.material.fields.price_updated_at
+        - if stock_col
+          th.md_cell.small_content
+            | #{t.material.fields.qty}
+            br
+            | #{t.material.fields.units}
+
+
+        - if ideal_stock_col
+          th.sm_cell = t.material.fields.ideal_stock
+        - if multi_stock_col
+          th.sm_cell = t.locations.short.WAREHOUSE_1
+          th.sm_cell = t.locations.short.WAREHOUSE_2
+          th.sm_cell = t.locations.short.STORE_1
+        - if multi_stock_col
+          th = t.material.fields.ideal_stock
+        - if deviation_for_period_col
+          th.sm_cell = t.material.fields.stock_deviation
+          th.sm_cell.small_content = t.material.fields.stock_deviation_percentile
+        - if show_edit_button
+          th.sm_cell.sorter-false = t.bulk.fields.actions
+    tfoot
+      tr
+        td colspan="5" = t.materials.count(materials.count)
+    tbody
+      - ajax_item = show_edit_button ? " ajax_item" : ""
+      - materials.each do |material|
+        tr.item class="#{ajax_item}"
+          td.number #{material.m_id}
+          td #{I18n.transliterate( material[:c_name] ) if material[:c_name] }
+          td.m_name #{ I18n.transliterate( material.m_name )}
+          - if sku_col
+            td #{material[:SKU]}
+          - if distributor_col
+            td #{material.d_name}
+
+
+          - if (stock_col or multi_stock_col) and price_col
+            td.number == Utils::money_format material[:m_price], 2
+          - if price_updated_at_col
+            td.date = material.price_updated_at.strftime "%d/%m/%Y" unless material.price_updated_at.nil?
+          - if stock_col
+            td.md_cell.number = Utils::number_format material[:m_qty], 0
+          - if ideal_stock_col
+            td.sm_cell.number = Utils::number_format material[:m_ideal_stock]*settings.desired_months_worth_of_bulk_in_warehouse, 0
+          - if multi_stock_col
+            td.sm_cell.number = Utils::number_format material[:stock_warehouse_1], 0
+            td.sm_cell.number = Utils::number_format material[:stock_warehouse_2], 0
+            td.sm_cell.number = Utils::number_format material[:stock_store_1], 0
+          - if multi_stock_col
+            td.number == Utils::number_format material[:m_ideal_stock], 0
+
+          - if deviation_for_period_col
+            - col_class = (material[:stock_deviation] > 0) ? "number overstocked" : (material[:stock_deviation] < 0) ? "number understocked" : "number"
+            - stock_deviation = material[:stock_deviation] == 0 ? "-" : Utils::number_format(material[:stock_deviation], 0)
+            td.sm_cell class="#{col_class}" #{stock_deviation}
+            - col_class = (material.stock_deviation_percentile > 0) ? "number overstocked" : (material.stock_deviation_percentile < 0) ? "number understocked" : "number"
+            - stock_deviation_percentile = material.stock_deviation_percentile == 0 ? "-" : "#{Utils::number_format material.stock_deviation_percentile, 1} %"
+            td.sm_cell class="#{col_class}" #{stock_deviation_percentile}
+          - if show_edit_button
+            td.sm_cell
+              a.text_icon href="/admin/materials/#{material[:m_id]}" data-id="#{material[:m_id]}" ✎

@@ -1,0 +1,7 @@
+- @title = t.sales.inventory_review_select.title
+
+== slim :orders_list, locals: {edit_link: "/sales/admin/inventory_review/o_id", full_row: true}
+
+form action=url("/admin/inventory_review/new") method="post"
+  == Rack::Csrf.tag(env)
+  input type="submit" value="#{t.order.new}"

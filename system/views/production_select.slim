@@ -1,0 +1,45 @@
+-# coding: UTF-8
+
+- if action.to_sym == :packaging
+
+  - if orders.nil? or orders.empty?
+    p = t.production.packaging_select.empty
+  - else
+    == slim :orders_list, locals: {full_row: true, show_edit_button: true, show_filters: false, edit_link: "/admin/production/#{action}/o_id", orders: orders}
+
+  form action=url("/production/#{action}/new") method="post"
+    == Rack::Csrf.tag(env)
+    input type="submit" value="#{t.order.new}"
+
+
+- if action.to_sym == :assembly
+
+  - if orders.nil? or orders.empty?
+    p = t.production.assembly_select.empty
+  - else
+    == slim :orders_list, locals: {full_row: true, show_edit_button: true, show_filters: false, edit_link: "/admin/production/#{action}/o_id", orders: orders}
+
+  form action=url("/production/#{action}/new") method="post"
+    == Rack::Csrf.tag(env)
+    input type="submit" value="#{t.order.new}"
+
+
+
+- if action.to_sym == :verification
+  - @title = t.production.verification_select.title
+
+  - if orders.nil? or orders.empty?
+    p = t.production.verification_select.empty
+  - else
+    == slim :orders_list, locals: {full_row: true, show_edit_button: true, show_filters: false, edit_link: "/admin/production/#{action}/o_id", orders: orders}
+
+
+
+
+- if action.to_sym == :allocation
+  - @title = t.production.allocation_select.title
+
+  - if orders.nil? or orders.empty?
+    p = t.production.allocation_select.empty
+  - else
+    == slim :orders_list, locals: {full_row: true, show_edit_button: true, show_filters: false, edit_link: "/admin/production/#{action}/o_id", orders: orders}

@@ -1,0 +1,15 @@
+-# coding: UTF-8
+- show_backlink = show_backlink.nil? ? false : true
+- @title = "Item anulado"
+
+p
+  |La etiqueta 
+  b #{@item.i_id} 
+  |fue anulada.
+
+p.action El producto tiene que ser reetiquetado para poder ser vendido nuevamente.
+
+
+
+- if show_backlink
+  a href="#{backlink}" Volver a la orden

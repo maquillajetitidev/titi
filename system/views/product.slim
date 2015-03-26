@@ -1,0 +1,317 @@
+-# coding: UTF-8
+
+- @title = t.product.not_found
+
+- if @product.nil?
+  - @title = t.product.not_found
+- else
+  - @title = "Editando #{@product[:p_name]}"
+
+- if @product.nil?
+  p No tengo productos con el id especificado
+- else
+  form.grid-form action=url("/products/#{@product[:p_id]}") method="post"
+    == Rack::Csrf.tag(env)
+    input type="hidden" name="_method" value="put"
+
+    fieldset
+      legend Nombre
+      div data-row-span="10"
+        div data-field-span="4"
+          label for="p_short_name" = t.product.fields.p_short_name
+          input type="text" name="p_short_name" size=20 maxlength=100 required="required" value="#{@product[:p_short_name]}"
+        div data-field-span="2"
+          label for="brand" = t.product.fields.brand
+          select name="brand" required="required"
+            option value="" ELEGIR
+            - @brands.each do |brand|
+              option selected=("selected" if brand.br_id == @product.br_id) value="#{JSON.generate({br_id: brand.br_id, br_name: brand.br_name})}" =  brand.br_name
+        div data-field-span="1"
+          label for="packaging" = t.product.fields.packaging
+          input type="text" name="packaging" size=10 maxlength=50 value="#{@product[:packaging]}"
+        div data-field-span="1"
+          label for="size" = t.product.fields.size
+          input type="text" name="size" size=5 maxlength=10 value="#{@product[:size]}"
+
+        div data-field-span="1"
+          label for="color" = t.product.fields.color
+          input type="text" name="color" size=10 maxlength=35 value="#{@product[:color]}"
+
+        div data-field-span="1"
+          label for="public_sku" = t.product.fields.public_sku
+          input type="text" name="public_sku" size=5 maxlength=60 value="#{@product[:public_sku]}"
+
+    fieldset
+      legend Valores
+      div data-row-span="9"
+        div data-field-span="1"
+          label for="buy_cost" = t.product.fields.buy_cost
+          - buy_cost_filler = @product[:sale_cost] == 0 ? "" : 0
+          input.positive.number type="tel"  name="buy_cost" id="ajax_product_buy_cost" autofocus="" size=5 maxlength=10 required="required" value="#{Utils::number_format @product[:buy_cost], 2, buy_cost_filler}"
+
+        div.readonly data-field-span="1"
+          label for="parts_cost" = t.product.fields.parts_cost
+          input.positive.number type="tel"  name="parts_cost" id="ajax_product_parts_cost" size=5 maxlength=10 readonly="readonly" tabindex="-1" value="#{Utils::number_format @product[:parts_cost], 2, 0}"
+
+        div.readonly data-field-span="1"
+          label for="materials_cost" = t.product.fields.materials_cost
+          input.positive.number type="tel"  name="materials_cost" id="ajax_product_materials_cost" size=5 maxlength=10 readonly="readonly" tabindex="-1" value="#{Utils::number_format @product[:materials_cost], 2, 0}"
+
+        div.readonly data-field-span="1"
+          label for="sale_cost" = t.product.fields.sale_cost
+          input.positive.number type="tel"  name="sale_cost" id="ajax_product_sale_cost" size=5 maxlength=10 readonly="readonly" tabindex="-1" value="#{Utils::number_format @product[:sale_cost], 2, 0}"
+        div data-field-span="1"
+          label for="ideal_markup" = t.product.fields.ideal_markup
+          input.positive.number type="tel" name="ideal_markup" id="ajax_product_ideal_markup" size=5 maxlength=10 required="required" value="#{Utils::number_format @product[:ideal_markup], 3, ""}"
+        div.readonly data-field-span="1"
+          label for="real_markup" = t.product.fields.real_markup
+          input.positive.number type="tel" name="real_markup" id="ajax_product_real_markup" size=5 maxlength=10 readonly="readonly" tabindex="-1" value="#{Utils::number_format @product[:real_markup], 3, ""}"
+        div.readonly data-field-span="1"
+          label for="exact_price" = t.product.fields.exact_price
+          input.positive.number type="tel"  name="exact_price" id="ajax_product_exact_price" size=5 maxlength=10 readonly="readonly" tabindex="-1" required="required" value="#{Utils::number_format @product[:exact_price], 5, ""}"
+        div data-field-span="1"
+          label for="price" = t.product.fields.price
+          input.positive.number type="tel" name="price" id="ajax_product_price" size=5 maxlength=10 required="required" value="#{Utils::number_format(@product.price, 2, "") }"
+        div.readonly data-field-span="1"
+          label for="price_pro" = t.product.fields.price_pro
+          input.positive.number type="tel"  name="price_pro" readonly="" value="#{Utils::number_format @product[:price_pro], 2, 0}"
+
+
+      div data-row-span="9"
+        div.readonly data-field-span="1"
+          label for="price_updated_at" = t.product.fields.price_updated_at
+          input type="text"  name="price_updated_at" id="price_updated_at" readonly="readonly" tabindex="-1" value="#{l @product[:price_updated_at]}"
+        div.readonly data-field-span="1"
+          label for="created_at" = t.product.fields.created_at
+          input type="text"  name="created_at" id="created_at" readonly="readonly" tabindex="-1" value="#{l @product[:created_at]}"
+
+      div data-row-span="4"
+
+        div data-field-span="2"
+          label for="notes" = t.product.fields.notes
+          textarea name="notes" rows="3" cols="50" = @product[:notes]
+        div data-field-span="1"
+          label for="d_id" = t.product.fields.distributor
+          div#ajax_distributors
+            == slim :item_distributors, locals: {i_distributors: @i_distributors}
+          select#ajax_add_distributor data-url="/admin/products/#{@product.p_id}/ajax_add_distributor/" data-csrf-key="#{Rack::Csrf.key}" data-csrf-token="#{Rack::Csrf.token(env)}" name="d_id"
+            option value=""
+            - @distributors.each do |distributor|
+              option selected=("selected" if params['d_id'].to_i == distributor.d_id) value="#{distributor.d_id}" = distributor.d_name
+
+        div data-field-span="1"
+          label for="sku" = t.product.fields.sku
+          input type="text" name="sku" size=5 maxlength=60 value="#{@product[:sku]}"
+
+    fieldset
+      legend Stock
+      div data-row-span="8"
+        div.readonly data-field-span="1"
+          label for="stock_warehouse_1" = t.product.fields.stock_warehouse_1
+          input.positive.number type="tel" name="stock_warehouse_1" size=3 maxlength=4 readonly="readonly" tabindex="-1" value="#{Utils::number_format @product.supply.w1_whole_future, 0, 0}"
+        div.readonly data-field-span="1"
+          label for="stock_warehouse_2" = t.product.fields.stock_warehouse_2
+          input.positive.number type="tel" name="stock_warehouse_2" size=3 maxlength=4 readonly="readonly" tabindex="-1" value="#{Utils::number_format @product.supply.w2_whole_future, 0, 0}"
+        div.readonly data-field-span="1"
+          label for="stock_store_1" = t.product.fields.stock_store_1
+          input.positive.number type="tel" name="stock_store_1" size=3 maxlength=4 readonly="readonly" tabindex="-1" value="#{Utils::number_format @product.supply.s1_whole_future, 0, 0}"
+        div data-field-span="1"
+          label for="direct_ideal_stock" ideal de unidades
+          input.positive.number type="tel" name="direct_ideal_stock" size=3 maxlength=6 required="required" value="#{Utils::number_format @product.supply.s1_whole_ideal, 2, 0}"
+
+
+        div data-field-span="1"
+          label for="direct_ideal_stock" ideal de partes
+          input.positive.number type="tel" name="single_indirect_ideal_stock" size=3 maxlength=6 required="required" value="#{Utils::number_format @product.supply.s1_part_ideal, 2, 0}"
+
+        div.readonly data-field-span="1"
+          label for="ideal_stock" suma de ideales
+          input.positive.number type="tel" name="ideal_stock" size=3 maxlength=6 readonly="readonly" tabindex="-1" value="#{Utils::number_format @product.supply.s1_ideal, 2, 0}"
+
+        div.readonly data-field-span="1"
+          label for="stock_deviation" = t.product.fields.stock_deviation
+          input.number type="tel" name="stock_deviation" size=3 maxlength=4 readonly="readonly" tabindex="-1" value="#{Utils::number_format @product.supply.s1_deviation, 2, 0}"
+        div.readonly data-field-span="1"
+          label for="stock_deviation" = t.product.fields.stock_deviation_percentile
+          input.number type="tel" name="stock_deviation" size=3 maxlength=4 readonly="readonly" tabindex="-1" value="N/A"
+
+
+    fieldset
+      legend.toggle_link Flags especiales (click para ayuda)
+      div.toggle_me data-row-span="2"
+        div data-field-span="1"
+          ul.bullet
+            li Un producto debe ser o bien "Comprable" o bien "Envasable"
+            li De esta categorizacion dependen todos los reportes
+
+        div data-field-span="1"
+          ul.bullet
+            li Ciclo de vida
+            li Para productos en produccion se usa "Activo"
+            li "Fin de vida" indica que un producto debe seguir vendiendose hasta agotar existencias. Si hay stock en deposito y no en local, el sistema va a pedir su transferencia. Una vez agotadas las existencias, sera "Archivado" automaticamente
+            li "Archivado" se utiliza cuando un producto no se desea seguir comercializando. No figurara mas en ningun reporte de produccion o compra.
+
+      div data-row-span="3"
+        div data-field-span="1"
+          label Tipo
+          input type="radio" name="tercerized" id="is_tercerized" value="true" checked=("checked" if @product.tercerized)
+          label for="is_tercerized" = t.product.fields.is_tercerized
+          br
+          input type="radio" name="tercerized" id="non_tercerized" value="false" checked=("checked" if !@product.tercerized)
+          label for="non_tercerized" = t.product.fields.non_tercerized
+
+        div data-field-span="1"
+          label = t.product.fields.sale_mode.title
+          input type="radio" name="sale_mode" id="normal" value="normal" checked=("checked" if not (@product.on_request and @product.non_saleable) )
+          label for="normal" = t.product.fields.sale_mode.normal
+          br
+          input type="radio" name="sale_mode" id="on_request" value="on_request" checked=("checked" if @product.on_request)
+          label for="on_request" = t.product.fields.sale_mode.on_request
+          br
+          input type="radio" name="sale_mode" id="non_saleable" value="non_saleable" checked=("checked" if @product.non_saleable)
+          label for="non_saleable" = t.product.fields.sale_mode.non_saleable
+
+
+        div data-field-span="1"
+          label = t.product.fields.life_cycle.title
+          input type="radio" name="life_phase" id="active" value="active" checked=("checked" if not (@product.end_of_life and @product.archived) )
+          label for="active" = t.product.fields.life_cycle.active
+          br
+          input type="radio" name="life_phase" id="end_of_life" value="end_of_life" checked=("checked" if @product.end_of_life)
+          label for="end_of_life" = t.product.fields.life_cycle.end_of_life
+          br
+          input type="radio" name="life_phase" id="archived" value="archived" checked=("checked" if @product.archived)
+          label for="archived" = t.product.fields.life_cycle.archived
+    fieldset
+      legend Atributos para la pagina publica
+      div data-row-span="3"
+        div data-field-span="1"
+          label for="c_id" = t.product.fields.category
+          select name="c_id"
+              - @categories.each do |category|
+                option selected=("selected" if category.c_id == @product.c_id) value="#{category.c_id}" = category.c_name
+        div data-field-span="1"
+          label for="published" = t.product.fields.published
+          input type="checkbox" name="published" id="published" checked=("checked" if @product.published)
+        div data-field-span="1"
+          label for="published_price" = t.product.fields.published_price
+          input type="checkbox" name="published_price" id="published_price" checked=("checked" if @product.published_price)
+      div data-row-span="3"
+        div data-field-span="2"
+          label for="description" = t.product.fields.description
+          textarea name="description" rows="4" cols="50" = @product[:description]
+        div data-field-span="1"
+          label for="img" Imagen
+          - img = (@product[:img] != "") ? "/images/#{@product[:img]}" : '/media/not_found.png'
+          img width="150" height="120" src="#{img}"
+
+
+    fieldset
+      legend Acciones
+      div data-row-span="1"
+        div data-field-span="1"
+          input type="submit" value="Guardar"
+
+
+  // Product duplication
+  form.grid-form action=url("/products/#{@product[:p_id]}/dup") method="post"
+    fieldset
+      legend Especiales
+      == Rack::Csrf.tag(env)
+      div data-row-span="2"
+        div data-field-span="1"
+          p Si queres duplicar un producto e hiciste cambios, guardalos primero.
+        div data-field-span="1"
+          label for="dup" Duplicar este producto:
+          input type="submit" id="dup" value="Duplicar"
+
+
+  // Materials list
+  div.grid-form#materials
+    fieldset
+      legend Materiales
+      - @p_materials.each do |p_material|
+        form action=url("/products/#{@product[:p_id]}/materials") method="post"
+          input type="hidden" name="_method" value="put"
+          == Rack::Csrf.tag(env)
+          div data-row-span="4"
+            div data-field-span="2"
+              label for="m_id" Material
+              input type="hidden" name="m_id" value="#{Utils::number_format p_material[:m_id], 0}"
+              input type="text" name="m_name" tabindex="-1" disabled="disabled" value="#{p_material.m_name}"
+            div data-field-span="1"
+              label for="m_qty" Cantidad (0 para borrar)
+              input.number.positive type="tel" name="m_qty" value="#{Utils::number_format p_material[:m_qty], 2}"
+            div data-field-span="1"
+              label for="action" Actualizar
+              input type="submit" name="action" value="Actualizar"
+
+
+    // Materials addition
+    form action=url("/products/#{@product[:p_id]}/materials/add") method="post"
+      == Rack::Csrf.tag(env)
+      div data-row-span="4"
+        div data-field-span="2"
+          label for="m_id" Material a agregar
+          select name="m_id" required="required"
+            option value=""
+            - @materials.each do |material|
+              option value="#{material.m_id}" = material.m_name
+        div data-field-span="1"
+          label for="m_qty" Cantidad
+          input.number.positive type="tel" name="m_qty" value="" required="required"
+        div data-field-span="1"
+          label for="action" Agregar
+          input type="submit" name="action" value="Agregar"
+
+
+  // Parts list
+  div.grid-form#parts
+    fieldset
+      legend Partes
+      - @p_parts.each do |p_part|
+        form action=url("/products/#{@product[:p_id]}/parts") method="post"
+          input type="hidden" name="_method" value="put"
+          == Rack::Csrf.tag(env)
+          div data-row-span="4"
+            div data-field-span="2"
+              label for="part_id" Parte
+              input type="hidden" name="part_id" value="#{Utils::number_format p_part[:p_id], 0}"
+              input type="text" name="p_name" tabindex="-1" disabled="disabled" value="#{p_part.p_name}"
+            div data-field-span="1"
+              label for="part_qty" Cantidad (0 para borrar)
+              input.number.positive type="tel" name="part_qty" value="#{Utils::number_format p_part[:part_qty], 2}"
+            div data-field-span="1"
+              label for="action" Actualizar
+              input type="submit" name="action" value="Actualizar"
+
+
+    // Parts addition
+    form action=url("/products/#{@product[:p_id]}/parts/add") method="post"
+      == Rack::Csrf.tag(env)
+      div data-row-span="4"
+        div data-field-span="2"
+          label for="part_id" Parte a agregar
+          select name="part_id" required="required"
+            option value=""
+            - @parts.each do |part|
+              option value="#{part.p_id}" = part.p_name
+        div data-field-span="1"
+          label for="part_qty" Cantidad
+          input.number.positive type="tel" name="part_qty" value="" required="required"
+        div data-field-span="1"
+          label for="action" Agregar
+          input type="submit" name="action" value="Agregar"
+
+
+  // Assemblies list
+  form.grid-form action="#" method="post"
+    fieldset
+      - if @p_assemblies.empty?
+        legend = t.product.assemblies.not_found
+      - else
+        legend = t.product.assemblies.list
+        div data-row-span="1"
+          div data-field-span="1"
+            - @products = @p_assemblies
+            == slim :products_list, locals: {show_edit_button: true, edit_link: "edit_product", focus: false}

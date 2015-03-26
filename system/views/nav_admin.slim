@@ -1,0 +1,25 @@
+- if authorized?
+  nav.main_nav role="navigation"
+    dl
+      dt Menu
+      dd.lnk
+        span class="current" href="#" = ("#{current_user.username}@#{current_location[:translation]}" if current_user.username and current_location)
+
+      dd.lnk
+        a class="#{inside?("/admin/production")}" href=url('/production') = t.production.title
+
+      - if current_user.level > 2
+        dd.lnk
+          a class="#{inside?("/admin/administration")}" href=url('/administration') = t.administration.title
+
+
+      dd.lnk
+        a class="#{inside?("/admin/orders")}" href=url('/orders') = t.nav.backend.orders
+      dd.lnk
+        a class="#{inside?("/admin/logs")}" href=url('/logs') = t.nav.backend.logs
+      dd.lnk
+        a href=url('/logout') = t.nav.backend.logout
+
+  - if sec_nav
+    aside
+      == slim sec_nav

@@ -1,0 +1,15 @@
+-# coding: UTF-8
+
+form action=url("/production/labels/new") method="post"
+  == Rack::Csrf.tag(env)
+  label.aligner for="qty" = t.label.fields.qty
+  input type="text" name="qty" size=5 maxlength=5 value="1"
+  input type="submit" value="#{t.label.new}"
+
+- if labels.empty?
+  h2 = t.labels.empty
+- else
+  form action=url("/production/labels/csv") method="post"
+    == Rack::Csrf.tag(env)
+    input class="ajax_hide_items" type="submit" value="#{t.labels.download(labels.count)}"
+  == slim :labels_list, locals: {labels: labels}

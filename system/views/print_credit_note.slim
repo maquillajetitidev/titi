@@ -1,0 +1,14 @@
+-# coding: UTF-8
+
+- @title = t.credit_note.title
+
+form.grid-form action=url("/credit_notes/get_pdf/#{o_code}") method="post"
+  == Rack::Csrf.tag(env)
+  fieldset
+    legend = t.credit_note.generated(credit_total, o_code)
+    div data-row-span="2"
+      div data-field-span="1"
+        label for="action" = t.credit_note.print_instructions
+        input.ajax_hide_on_click type="submit" name="action" value="#{t.actions.print}"
+      div data-field-span="1"
+        a href="/sales" Volver

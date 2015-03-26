@@ -1,0 +1,11 @@
+- @title = t.sales.inventory_imputation.title(@order.o_id)
+
+== slim :items_list, locals: {full_row: true, show_edit_button: false}
+
+form.v_island_1#finish_packaging action=url("/admin/inventory_imputation/#{@order.o_id}/finish") method="post"
+  == Rack::Csrf.tag(env)
+  input type="submit" value="#{t.actions.finish}"
+
+form.v_island_1#finish_packaging action=url("/admin/inventory_imputation/#{@order.o_id}/cancel") method="post"
+  == Rack::Csrf.tag(env)
+  input.ajax_confirm data-confirm_message="#{t.order.sure_to_cancel_load_order}" type="submit" value="#{t.actions.cancel}"

@@ -1,0 +1,8 @@
+h2 #{error}
+
+p Tipo de error: #{error.class}
+p Mensaje: #{error.message}
+
+- unless backtrace.nil?
+  h2 Stack:
+  code #{backtrace}

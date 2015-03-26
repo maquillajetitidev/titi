@@ -1,0 +1,21 @@
+development: &common_settings
+  db_host: localhost
+  db_user: root
+  db_pass: 'hasar50'
+  cookie_secret: 'W"HLI>>VuPl1rk+gM@<<Niwt>N*(ijx0,9=MT7E[&BKxPEO^$BF3TZ;sOeA@Pwn3'
+  session_length: 3600
+  accounts_enabled: false
+  accounts_file: accounts.yml
+  desired_months_worth_of_items_in_store: 3
+  desired_months_worth_of_items_in_warehouse: 3
+  desired_months_worth_of_bulk_in_warehouse: 24
+  reports_percentage_threshold: -33
+  base_path: /home/lucas/titi/system
+  price_updated_at_threshold: 28
+  debug_sql: false
+test:
+production:
+  <<: *common_settings
+  db_pass: 'hasar50'
+  base_path: /home/lucas/titi/system
+

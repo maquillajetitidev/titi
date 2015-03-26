@@ -1,0 +1,13 @@
+#!/bin/bash    
+thin_mem=$(ps --no-headers -o %mem -p $(cat /run/thin.80.pid))
+thin_mem=$(bc <<< $thin_mem*10/10)
+if [ $thin_mem -gt 35 ] 
+then
+	echo $(date)
+	echo "$thin_mem% used restarting server"
+	rvmsudo /etc/init.d/thin restart
+else
+	echo $(date)
+	echo "Memory ok $thin_mem% used"
+fi
+ 

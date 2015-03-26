@@ -1,0 +1,32 @@
+-# coding: UTF-8
+
+h2 Items en esta orden
+== slim :items_list, locals: {items: items, show_filters: false}
+
+/ h2 Materiales necesarios
+/ == slim :materials_list, locals: {show_filters: false, show_edit_button: false, id: :needed_materials, materials: needed_materials}
+
+/ h2 Graneles a utilizar
+/ p = "(Las cantidades ya tienen restado el uso)"
+/ == slim :bulks_list, locals: {full_row: true, show_edit_button: false, show_filters: false, bulks: used_bulks, m_name_col: true}
+
+
+
+- if !missing_materials.empty?
+  h2 = t.production.packaging.missing_materials_cant_allocate
+  == slim :materials_list, locals: {show_filters: false, stock_col: true, id: :missing_materials, show_edit_button: true, materials: missing_materials}
+- else
+  h2 La casa esta en orden
+  p Tengo todos los graneles necesarios para completar la orden
+  p Esta orden va a imputarse a #{current_location[:translation]}
+
+  form.v_island_1 action=url("/production/allocation/#{order[:o_id]}") method="post"
+    == Rack::Csrf.tag(env)
+    input#impute type="submit" value="#{ t.production.allocation.allocate current_location[:translation] }"
+
+
+form.v_island_1#finish_packaging action=url("/production/#{order.type.downcase}/#{order.o_id}/cancel") method="post"
+  == Rack::Csrf.tag(env)
+  input type="hidden" name="o_id" value="#{order.o_id}"
+  input.ajax_confirm data-confirm_message="#{t.order.sure_to_cancel_load_order}" type="submit" value="#{t.actions.cancel_order}"
+

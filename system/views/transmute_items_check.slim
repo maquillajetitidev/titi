@@ -1,0 +1,30 @@
+-# coding: UTF-8
+- @title = t.transmute_items.title
+- if @item.empty?
+  form.grid-form action=url("/inventory/transmute_items") method="post"
+    == Rack::Csrf.tag(env)
+
+    fieldset
+      legend Accion potencialmente destructiva
+      div data-row-span="1"
+        div data-field-span="1"
+          p Este herramienta convierte un item de un producto a otro. No utilizarla si no se tiene el item en la mano.
+      div data-row-span="2"
+        div data-field-span="1"
+          label for="i_id" = t.order.scan_label
+          input autofocus="autofocus" required="required" type="text" name="i_id" id="i_id" value="" placeholder="#{t.label.read_placeholder}"
+        div data-field-span="1"
+          label for="verify" Iniciar verificacion del item
+          input type="submit" name="verify" value="#{t.actions.verify}"
+
+- unless @item.empty?
+  h2 Producto actualmente asociado
+  == slim :product_details, locals: {product: @product}
+
+
+  h2 Producto hacia el cual cambiar la asociacion
+
+/ Initial product selection
+- unless @products.empty?
+  section#prod_list_selector
+    == slim :products_list, locals: {focus: true, full_rows: false, show_edit_button: true, edit_link: "transmutation_select_product", order: @order}

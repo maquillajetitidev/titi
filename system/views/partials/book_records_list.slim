@@ -1,0 +1,24 @@
+- if @records.empty?
+  p = t.book_records.empty
+- else
+  table.items.tablesorter_nofilter
+    thead
+      tr
+        th.sm_cell.small_content = t.book_record.fields.r_id
+        th.sm_cell.small_content = t.book_record.fields.o_id
+        th = t.book_record.fields.created_at
+        th.filter-select.filter-onlyAvail = t.book_record.fields.r_type
+        th = t.book_record.fields.r_description
+        th.md_cell.small_content = t.book_record.fields.r_ammount
+    tfoot
+      tr
+        td colspan="5" Mostrando #{@records.count} movimientos
+    tbody
+      - @records.each do |record|
+        tr class="item"
+          td.number #{record[:r_id]}
+          td.number #{record[:o_id]}
+          td.date = Utils::local_datetime_format record.created_at
+          td #{record[:type]}
+          td #{record[:description]}
+          td.number #{Utils::money_format record[:amount], 2}

@@ -1,0 +1,489 @@
+--- &1 !ruby/object:Tree::TreeNode
+content: Plan de cuentas
+name: Cuentas
+parent: 
+children_hash:
+  Activos: &2 !ruby/object:Tree::TreeNode
+    content: Todo lo que tengo
+    name: Activos
+    parent: *1
+    children_hash:
+      Disponibilidades: &3 !ruby/object:Tree::TreeNode
+        content: 
+        name: Disponibilidades
+        parent: *2
+        children_hash:
+          Caja: &4 !ruby/object:Tree::TreeNode
+            content: 
+            name: Caja
+            parent: *3
+            children_hash: {}
+            children: []
+          Banco: &5 !ruby/object:Tree::TreeNode
+            content: 
+            name: Banco
+            parent: *3
+            children_hash: {}
+            children: []
+        children:
+        - *4
+        - *5
+      Bienes de cambio: &6 !ruby/object:Tree::TreeNode
+        content: 
+        name: Bienes de cambio
+        parent: *2
+        children_hash:
+          Materiales: &7 !ruby/object:Tree::TreeNode
+            content: 
+            name: Materiales
+            parent: *6
+            children_hash:
+              TODOS LOS MATERIALES: &8 !ruby/object:Tree::TreeNode
+                content: 
+                name: TODOS LOS MATERIALES
+                parent: *7
+                children_hash: {}
+                children: []
+              Liquido corporal blanco: &9 !ruby/object:Tree::TreeNode
+                content: 
+                name: Liquido corporal blanco
+                parent: *7
+                children_hash: {}
+                children: []
+              Liquido corporal rojo: &10 !ruby/object:Tree::TreeNode
+                content: 
+                name: Liquido corporal rojo
+                parent: *7
+                children_hash: {}
+                children: []
+            children:
+            - *8
+            - *9
+            - *10
+          Productos: &11 !ruby/object:Tree::TreeNode
+            content: 
+            name: Productos
+            parent: *6
+            children_hash:
+              TODOS LOS PRODUCTOS: &12 !ruby/object:Tree::TreeNode
+                content: 
+                name: TODOS LOS PRODUCTOS
+                parent: *11
+                children_hash: {}
+                children: []
+            children:
+            - *12
+        children:
+        - *7
+        - *11
+      Reservas: &13 !ruby/object:Tree::TreeNode
+        content: 
+        name: Reservas
+        parent: *2
+        children_hash:
+          Reserva aguinaldos: &14 !ruby/object:Tree::TreeNode
+            content: 
+            name: Reserva aguinaldos
+            parent: *13
+            children_hash: {}
+            children: []
+          Reserva vacaciones: &15 !ruby/object:Tree::TreeNode
+            content: 
+            name: Reserva vacaciones
+            parent: *13
+            children_hash: {}
+            children: []
+        children:
+        - *14
+        - *15
+      Bienes de uso: &16 !ruby/object:Tree::TreeNode
+        content: 
+        name: Bienes de uso
+        parent: *2
+        children_hash: {}
+        children: []
+    children:
+    - *3
+    - *6
+    - *13
+    - *16
+  Pasivos: &17 !ruby/object:Tree::TreeNode
+    content: Todo lo que debo
+    name: Pasivos
+    parent: *1
+    children_hash:
+      Deudas comerciales: &18 !ruby/object:Tree::TreeNode
+        content: 
+        name: Deudas comerciales
+        parent: *17
+        children_hash:
+          Fondo de comercio a pagar: &19 !ruby/object:Tree::TreeNode
+            content: 
+            name: Fondo de comercio a pagar
+            parent: *18
+            children_hash: {}
+            children: []
+          Servicios a pagar: &20 !ruby/object:Tree::TreeNode
+            content: 
+            name: Servicios a pagar
+            parent: *18
+            children_hash: {}
+            children: []
+          Señas recibidas: &21 !ruby/object:Tree::TreeNode
+            content: 
+            name: Señas recibidas
+            parent: *18
+            children_hash: {}
+            children: []
+          Tarjeta de credito a pagar: &22 !ruby/object:Tree::TreeNode
+            content: 
+            name: Tarjeta de credito a pagar
+            parent: *18
+            children_hash: {}
+            children: []
+        children:
+        - *19
+        - *20
+        - *21
+        - *22
+      Deudas Sociales: &23 !ruby/object:Tree::TreeNode
+        content: 
+        name: Deudas Sociales
+        parent: *17
+        children_hash:
+          Jornales a pagar: &24 !ruby/object:Tree::TreeNode
+            content: 
+            name: Jornales a pagar
+            parent: *23
+            children_hash: {}
+            children: []
+          Comisiones a pagar: &25 !ruby/object:Tree::TreeNode
+            content: 
+            name: Comisiones a pagar
+            parent: *23
+            children_hash: {}
+            children: []
+          Sueldos a pagar: &26 !ruby/object:Tree::TreeNode
+            content: 
+            name: Sueldos a pagar
+            parent: *23
+            children_hash: {}
+            children: []
+          Aguinaldos a pagar: &27 !ruby/object:Tree::TreeNode
+            content: 
+            name: Aguinaldos a pagar
+            parent: *23
+            children_hash: {}
+            children: []
+          Vacaciones a pagar: &28 !ruby/object:Tree::TreeNode
+            content: 
+            name: Vacaciones a pagar
+            parent: *23
+            children_hash: {}
+            children: []
+          Cargas sociales a pagar: &29 !ruby/object:Tree::TreeNode
+            content: 
+            name: Cargas sociales a pagar
+            parent: *23
+            children_hash: {}
+            children: []
+        children:
+        - *24
+        - *25
+        - *26
+        - *27
+        - *28
+        - *29
+      Deudas fiscales: &30 !ruby/object:Tree::TreeNode
+        content: 
+        name: Deudas fiscales
+        parent: *17
+        children_hash:
+          Impuestos a pagar: &31 !ruby/object:Tree::TreeNode
+            content: 
+            name: Impuestos a pagar
+            parent: *30
+            children_hash: {}
+            children: []
+          IIBB a pagar: &32 !ruby/object:Tree::TreeNode
+            content: 
+            name: IIBB a pagar
+            parent: *30
+            children_hash: {}
+            children: []
+        children:
+        - *31
+        - *32
+      Otras deudas: &33 !ruby/object:Tree::TreeNode
+        content: 
+        name: Otras deudas
+        parent: *17
+        children_hash: {}
+        children: []
+    children:
+    - *18
+    - *23
+    - *30
+    - *33
+  Resultados: &34 !ruby/object:Tree::TreeNode
+    content: 
+    name: Resultados
+    parent: *1
+    children_hash:
+      Ventas: &35 !ruby/object:Tree::TreeNode
+        content: 
+        name: Ventas
+        parent: *34
+        children_hash:
+          Venta por mostrador: &36 !ruby/object:Tree::TreeNode
+            content: 
+            name: Venta por mostrador
+            parent: *35
+            children_hash: {}
+            children: []
+          Venta por internet: &37 !ruby/object:Tree::TreeNode
+            content: 
+            name: Venta por internet
+            parent: *35
+            children_hash: {}
+            children: []
+        children:
+        - *36
+        - *37
+      Costo mercaderia vendida: &68 !ruby/object:Tree::TreeNode
+        content: 
+        name: Costo mercaderia vendida
+        parent: *34
+        children_hash: {}
+        children: []
+      Gastos variables: &38 !ruby/object:Tree::TreeNode
+        content: 
+        name: Gastos variables
+        parent: *34
+        children_hash:
+          Comisiones: &42 !ruby/object:Tree::TreeNode
+            content: 
+            name: Comisiones
+            parent: *38
+            children_hash: {}
+            children: []
+          Jornales: &43 !ruby/object:Tree::TreeNode
+            content: 
+            name: Jornales
+            parent: *38
+            children_hash: {}
+            children: []
+          IIBB: &44 !ruby/object:Tree::TreeNode
+            content: 
+            name: IIBB
+            parent: *38
+            children_hash: {}
+            children: []
+          Fletes: &45 !ruby/object:Tree::TreeNode
+            content: 
+            name: Fletes
+            parent: *38
+            children_hash: {}
+            children: []
+          Proveedores: &39 !ruby/object:Tree::TreeNode
+            content: 
+            name: Proveedores
+            parent: *38
+            children_hash:
+              TODOS LOS PROVEEDORES: &40 !ruby/object:Tree::TreeNode
+                content: 
+                name: TODOS LOS PROVEEDORES
+                parent: *39
+                children_hash: {}
+                children: []
+              Laca: &41 !ruby/object:Tree::TreeNode
+                content: 
+                name: Laca
+                parent: *39
+                children_hash: {}
+                children: []
+            children:
+            - *40
+            - *41
+        children:
+        - *42
+        - *43
+        - *44
+        - *45
+        - *39
+      Gastos fijos: &46 !ruby/object:Tree::TreeNode
+        content: 
+        name: Gastos fijos
+        parent: *34
+        children_hash:
+          ABL: &52 !ruby/object:Tree::TreeNode
+            content: 
+            name: ABL
+            parent: *46
+            children_hash: {}
+            children: []
+          Expensas: &53 !ruby/object:Tree::TreeNode
+            content: 
+            name: Expensas
+            parent: *46
+            children_hash: {}
+            children: []
+          Luz: &54 !ruby/object:Tree::TreeNode
+            content: 
+            name: Luz
+            parent: *46
+            children_hash: {}
+            children: []
+          Internet: &55 !ruby/object:Tree::TreeNode
+            content: 
+            name: Internet
+            parent: *46
+            children_hash: {}
+            children: []
+          Alquiler: &56 !ruby/object:Tree::TreeNode
+            content: 
+            name: Alquiler
+            parent: *46
+            children_hash: {}
+            children: []
+          Sueldos: &57 !ruby/object:Tree::TreeNode
+            content: 
+            name: Sueldos
+            parent: *46
+            children_hash: {}
+            children: []
+          Aguinaldos: &58 !ruby/object:Tree::TreeNode
+            content: 
+            name: Aguinaldos
+            parent: *46
+            children_hash: {}
+            children: []
+          Vacaciones: &59 !ruby/object:Tree::TreeNode
+            content: 
+            name: Vacaciones
+            parent: *46
+            children_hash: {}
+            children: []
+          Tarjeta de credito: &60 !ruby/object:Tree::TreeNode
+            content: 
+            name: Tarjeta de credito
+            parent: *46
+            children_hash: {}
+            children: []
+          Mantenimiento sistema: &61 !ruby/object:Tree::TreeNode
+            content: 
+            name: Mantenimiento sistema
+            parent: *46
+            children_hash: {}
+            children: []
+          Alojamiento servidor: &62 !ruby/object:Tree::TreeNode
+            content: 
+            name: Alojamiento servidor
+            parent: *46
+            children_hash: {}
+            children: []
+          Contador: &63 !ruby/object:Tree::TreeNode
+            content: 
+            name: Contador
+            parent: *46
+            children_hash: {}
+            children: []
+          Impuesto cartel: &64 !ruby/object:Tree::TreeNode
+            content: 
+            name: Impuesto cartel
+            parent: *46
+            children_hash: {}
+            children: []
+          Cargas sociales: &47 !ruby/object:Tree::TreeNode
+            content: 
+            name: Cargas sociales
+            parent: *46
+            children_hash:
+              INACAP: &48 !ruby/object:Tree::TreeNode
+                content: 
+                name: INACAP
+                parent: *47
+                children_hash: {}
+                children: []
+              FECyS: &49 !ruby/object:Tree::TreeNode
+                content: 
+                name: FECyS
+                parent: *47
+                children_hash: {}
+                children: []
+              Seguro la estrella: &50 !ruby/object:Tree::TreeNode
+                content: 
+                name: Seguro la estrella
+                parent: *47
+                children_hash: {}
+                children: []
+              Sindicato de comercio: &51 !ruby/object:Tree::TreeNode
+                content: 
+                name: Sindicato de comercio
+                parent: *47
+                children_hash: {}
+                children: []
+            children:
+            - *48
+            - *49
+            - *50
+            - *51
+          Monotributo: &65 !ruby/object:Tree::TreeNode
+            content: 
+            name: Monotributo
+            parent: *46
+            children_hash: {}
+            children: []
+        children:
+        - *52
+        - *53
+        - *54
+        - *55
+        - *56
+        - *57
+        - *58
+        - *59
+        - *60
+        - *61
+        - *62
+        - *63
+        - *64
+        - *47
+        - *65
+      Otros gastos: &66 !ruby/object:Tree::TreeNode
+        content: 
+        name: Otros gastos
+        parent: *34
+        children_hash:
+          Viaticos: &67 !ruby/object:Tree::TreeNode
+            content: 
+            name: Viaticos
+            parent: *66
+            children_hash: {}
+            children: []
+        children:
+        - *67
+      Resultado por tenencia: &69 !ruby/object:Tree::TreeNode
+        content: 
+        name: Resultado por tenencia
+        parent: *34
+        children_hash: {}
+        children: []
+      Recaudacion: &70 !ruby/object:Tree::TreeNode
+        content: 
+        name: Recaudacion
+        parent: *34
+        children_hash: {}
+        children: []
+    children:
+    - *35
+    - *68
+    - *38
+    - *46
+    - *66
+    - *69
+    - *70
+children:
+- *2
+- *17
+- *34

@@ -1,0 +1,69 @@
+-# coding: UTF-8
+- @title =  t.materials.update_by_filter.title
+p = t.materials.update_by_filter.intro settings.price_updated_at_threshold
+- mod = mod.to_f > 0 ? mod.to_f : ""
+
+form.grid-form action=url("/administration/adjustments/materials/by_filter") method="post"
+  == Rack::Csrf.tag(env)
+  fieldset
+    legend Configurar
+    div data-row-span="9"
+
+      div data-field-span="1"
+        label for="mod" = t.materials.update_by_filter.mod_label
+        input.positive.number type="tel" step="any" min=0 name="mod" id="mod" size=5 maxlength=8 required="required" autofocus="" value="#{mod}"
+
+      div data-field-span="2"
+        label Atributo a modificar
+        select name="attribute" required=""
+          - [:price].each do |attribute|
+            option value="#{attribute}" selected="selected" #{t.material.fields.price}
+
+      div data-field-span="2"
+        label Seleccionar proveedor
+        select name="d_id"
+          option value=""
+          - Distributor.order(:d_name).all.each do |distributor|
+            option selected=("selected" if params['d_id'].to_i == distributor.d_id) value="#{distributor.d_id}" = distributor.d_name
+
+      div data-field-span="2"
+        label for="m_name" Nombre contiene
+        input type="text"  name="m_name" id="m_name" value="#{params['m_name'].to_s}"
+
+  fieldset
+    legend Ajustar
+    div data-row-span="2"
+      div data-field-span="1"
+        label for="test" = t.actions.test
+        input name="test" type="submit" value="#{t.materials.update_by_filter.test}"
+
+      div data-field-span="1"
+        label for="confirm" = t.actions.confirm
+        input.ajax_confirm name="confirm" data-confirm_message="#{t.materials.update_by_filter.confirm_message}" type="submit" value="#{t.materials.update_by_filter.submit_text}"
+
+- unless materials.nil?
+  - if params[:confirm].nil?
+    div.static_flash.static_warning
+      p EJECUCIÓN DE PRUEBA
+
+  table class="items tablesorter quicksearch persist_area" data-label="#{t.actions.filter}" data-quicksearch="focus"
+    thead class="persist_header"
+      tr
+        th.sm_cell = t.material.fields.id
+        th.bg_cell = t.material.fields.name
+
+        th.sm_cell = t.material.fields.price
+        th.sm_cell Nuevo
+        th.sm_cell Dif.
+
+    tfoot
+      tr
+        td colspan=9 = t.materials.update_by_sku.ok materials.size
+    tbody
+      - materials.each do |material|
+        tr
+          td.sm_cell = material.m_id
+          td.bg_cell = material.m_name
+          td.sm_cell.number = Utils::number_format material[:old_buy_cost], 2
+          td.sm_cell.number = Utils::number_format material[:new_buy_cost], 2
+          td.sm_cell.number #{Utils::number_format (material[:new_buy_cost] * 100 / material[:old_buy_cost])-100, 2} %

@@ -1,0 +1,8 @@
+- @title = "Remito #{@order.o_code.upcase.insert(3, '-')}"
+
+ul
+  li Conserve este documento. Es indispensable para efectuar devoluciónes.
+  li Documento no válido como factura
+
+== slim :items_cart, locals: {show_edit_button: true, focus: false}
+

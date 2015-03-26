@@ -1,0 +1,6 @@
+-# coding: UTF-8
+
+== slim :distributors_list, locals: {distributors: distributors, show_edit_button: true}
+  section.new
+    form action=url("/distributors/new") method="post"
+      input type="submit" value="#{t.distributor.new}"

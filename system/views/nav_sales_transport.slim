@@ -1,0 +1,15 @@
+nav role="navigation"
+  ul
+    li
+      span class="#{inside?("/sales/transport/arrivals")}" = t.nav.sales.arrivals
+    li: ul
+      li
+        a class="#{current?("/sales/transport/arrivals/select")}" href=url('/transport/arrivals/select') = t.nav.sales.pending_orders
+      li
+        a class="#{current?("/sales/transport/arrivals/pending")}" href=url('/transport/arrivals/pending')  = t.nav.sales.pending_items
+
+    li
+      span class="#{inside?("/sales/transport/departures")}" = t.nav.sales.departures
+    li: ul
+      li
+        a class="#{current?("/sales/transport/departures/pos_to_wh/select")}" href=url('/transport/departures/pos_to_wh/select') = t.nav.sales.pos_to_wh

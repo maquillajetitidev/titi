@@ -1,0 +1,14 @@
+aside
+  nav role="navigation"
+    ul
+      - if authorized?
+        li
+          a class="#{current?("/admin/materials")}" href=url('/materials') = t.nav.backend.materials_list
+        li
+          form action=url("/materials/new") method="post"
+            == Rack::Csrf.tag(env)
+            input type="submit" value="#{t.nav.backend.new_material}"
+        li
+          a class="#{current?("/admin/bulks")}" href=url('/bulks') = t.nav.backend.bulks_list
+
+

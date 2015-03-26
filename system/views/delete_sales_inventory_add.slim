@@ -1,0 +1,77 @@
+- @title = t.sales.inventory_review.title(@order.o_id, @items.count)
+
+
+- unless @product.empty?
+
+  - unless @item.empty?
+    fieldset.action_container
+      h2.no_padding #{flash[:notice]}
+      form action=url("/admin/inventory_review/#{@order.o_id}/#{@product.p_id}") method="post"
+        == Rack::Csrf.tag(env)
+        label.aligner_2 for="fake_label" #{t.label.fields.label}
+        input.aligned type="text" disabled="disabled" name="fake_label_id" value="#{@item[:i_id]}"
+        br
+        br
+        label.aligner_2 for="confirm" Si es correcto
+        input.aligned  autofocus="autofocus" name="confirm" type="submit" value="#{t.actions.ok}"
+      br
+      form action=url("/admin/inventory_review/#{@order.o_id}/#{@product.p_id}/#{@item.i_id}/undo") method="post"
+        == Rack::Csrf.tag(env)
+        label.aligner_2 for="confirm" Si es Incorrecto
+        input.aligned type="submit" value="#{t.actions.undo}"
+
+  == slim :product_details, locals: {product: @product}
+
+  - if @item.empty?
+
+    p
+      |Lee la etiqueta del proximo
+      b #{@product.p_name}
+
+    form action=url("/admin/inventory_review/#{@order.o_id}/#{@product.p_id}") method="post"
+      == Rack::Csrf.tag(env)
+      label.aligner_2 for="i_id" = t.sales.inventory_review.scan_label
+      input.aligned autofocus="autofocus" required="required" type="text" name="i_id" size=15 maxlength=15 value="" placeholder="#{t.label.read_placeholder}"
+
+    p
+      |O podes
+      a href="/sales/admin/inventory_review/#{@order.o_id}" = t.order.select_other_product
+
+
+
+
+
+
+
+
+
+
+
+
+
+- unless @products.empty?
+  section#prod_list_selector
+    form action=url("/admin/inventory_review/#{@order.o_id}") method="post"
+      == Rack::Csrf.tag(env)
+      input type="text" class="visually_hidden" name="label" id="ajax_selected_label" value="#{params[:label]}"
+      input type="hidden" name="o_id" value="#{@order.o_id}"
+      label.aligner_2 for="p_id" = t.sales.inventory_review.select_product
+      input required="required" type="text" name="p_id" id="product_selector" size=15 maxlength=15 value="" placeholder="#{t.product.read_placeholder}"
+      input type="submit" value="#{t.actions.ok}"
+
+    h2 = t.sales.inventory_review.select_product
+    == slim :products_list, locals: {focus: true, full_rows: false, show_edit_button: true, edit_link: "sales_inventory_review", order: @order}
+
+
+
+
+h2 Items agregados a esta orden
+== slim :items_list
+
+form.v_island_1#finish_packaging action=url("/admin/inventory_review/#{@order.o_id}/finish_load") method="post"
+  == Rack::Csrf.tag(env)
+  input type="submit" value="#{t.actions.finish_load}"
+
+form.v_island_1#finish_packaging action=url("/admin/inventory_review/#{@order.o_id}/cancel") method="post"
+  == Rack::Csrf.tag(env)
+  input.ajax_confirm data-confirm_message="#{t.order.sure_to_cancel_load_order}" type="submit" value="#{t.actions.cancel}"

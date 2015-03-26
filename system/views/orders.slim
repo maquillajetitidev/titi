@@ -1,0 +1,25 @@
+-# coding: UTF-8
+
+// orders list
+- if @orders
+  - list_mode = ((params[:type] == "WH_TO_POS") or (params[:type] == "INVALIDATION")) ? "transport" : "normal"
+  == slim :orders_list, locals: {full_row: true, list_mode: list_mode, edit_link: "#{base_url}"}
+
+- if @order
+  - payments_total ||= nil
+  - payment_type ||= nil
+  == slim :order, locals: {show_filters: true, payments_total: payments_total, payment_type: payment_type}
+
+
+  // reprint sale order
+
+  - if @order.type == Order::SALE
+    form.grid-form action=url("/reprint_sale/#{@order.o_id}") method="post"
+      == Rack::Csrf.tag(env)
+      fieldset
+        legend Acciones
+        div data-row-span="1"
+          div data-field-span="1"
+            label for="reprint" Reimprimir
+            input.ajax_hide_on_click name="reprint" type="submit" value="Reimprimir"
+

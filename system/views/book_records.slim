@@ -1,0 +1,49 @@
+
+- if @broad
+  p
+    a href="/sales/books/#{@broad[:machine]}" = @broad[:human]
+
+p.v_island_1
+  a href="/sales/books/#{@prev[:machine]}" = @prev[:human]
+  = " <<  #{@curr}  >> "
+  a href="/sales/books/#{@next[:machine]}" = @next[:human]
+
+- if @narrow
+  p
+    a href="/sales/books/#{@narrow[:machine]}" = @narrow[:human]
+
+h2 Resumen del periodo
+table.items.readable_1.tablesorter_nofilter
+  thead
+    tr
+      th Concepto
+      th.md_cell.small_content Monto
+  tbody
+    tr class="item"
+      td Caja inicial:
+      td.number #{Utils::money_format @starting_cash , 2}
+    tr class="item"
+      td Ventas totales:
+      td.number #{Utils::money_format @sales_total, 2}
+    tr class="item"
+      td Comisiones:
+      td.number #{Utils::money_format @commissions, 2}
+    tr class="item"
+      td Retiros:
+      td.number #{Utils::money_format @withdrawals, 2}
+    tr class="item"
+      td Gastos:
+      td.number #{Utils::money_format @expenses, 2}
+    tr class="item"
+      td Proveedores:
+      td.number #{Utils::money_format @downpayments, 2}
+    tr class="item"
+      td Diferencias de caja:
+      td.number #{Utils::money_format @diferences , 2}
+    tr class="item"
+      td Caja final:
+      td.number #{Utils::money_format @finish_cash , 2}
+
+
+h2 Detalle del periodo
+== slim :book_records_list, locals: {focus: false}

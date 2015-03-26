@@ -1,0 +1,31 @@
+-# coding: UTF-8
+- @title = "Login"
+
+- if authorized?
+    p = t.auth.hello(user_real_name)
+- else
+  - locations = []
+  - if request.env["REQUEST_PATH"].nil?
+      - locations = Location.new.warehouses
+  - unless request.env["REQUEST_PATH"].nil?
+      - locations = Location.new.warehouses if request.env["REQUEST_PATH"].include?("admin")
+      - locations = Location.new.stores if request.env["REQUEST_PATH"].include?("sales")
+      - locations = Location.new.stores if request.env["REQUEST_PATH"].include?("ventas")
+
+  form#login_form action="#{login_path}" method="POST" role="form" aria-label="#{t.auth.login}"
+    == Rack::Csrf.tag(env)
+    label.aligner for="admin_username" = t.auth.user
+    input#admin_username autofocus="autofocus" type="text" name="admin_username"
+    br
+    label.aligner for="admin_password" = t.auth.pass
+    input#admin_password type="password" name="admin_password"
+    br
+    fieldset
+      legend = t.location.title
+      - locations.each do |location|
+        label.aligner for="#{location[:name]}" #{location[:translation]}
+        input type="radio" name="location" id="#{location[:name]}" value="#{location[:name]}"
+        br
+    input.aligned#submit type="submit" value="#{t.auth.login}"
+
+

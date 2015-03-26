@@ -1,0 +1,41 @@
+- price_col ||= true unless price_col === false
+- price_pro_col ||= true unless price_pro_col === false
+
+- items ||= []
+- items = @items unless @items.nil?
+
+- if items.empty?
+  p = t.items.empty
+- else
+  - show_filters = true if show_filters.nil?
+  - focus = true if focus.nil?
+  - tablesorter_class = show_filters ? "tablesorter" : "tablesorter_nofilter"
+  - caption = show_filters ? t.tablesorter.default_caption : caption unless !caption.nil?
+  table class="items #{tablesorter_class}"
+    caption #{caption}
+    thead
+      tr
+        th.md_cell = t.item.fields.id
+        th.mdd_cell = t.item.fields.status
+        th = t.item.fields.location
+        th.sm_cell ID p
+        th = t.product.fields.name
+        - if price_col
+          th = t.item.fields.price
+        - if price_pro_col
+          th = t.item.fields.price_pro
+    tfoot
+      tr
+        td.counter colspan="7" = t.items.count(items.count)
+    tbody
+      - items.each do |item|
+        tr.item
+          td.md_cell #{item[:i_id]}
+          td.mdd_cell = ConstantsTranslator.new(item[:i_status]).t
+          td = ConstantsTranslator.new(item[:i_loc]).t
+          td #{item[:p_id]}
+          td #{ I18n.transliterate( item[:p_name] )}
+          - if price_col
+            td.number #{Utils::money_format item[:i_price], 2}
+          - if price_pro_col
+             td.number #{Utils::money_format item[:i_price_pro], 2}

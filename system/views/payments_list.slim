@@ -1,0 +1,19 @@
+- unless payments.empty?
+  - payment_total = 0
+  div.grid-form
+    fieldset
+      legend Pagos
+      - payments.each do |payment|
+        - payment_total += payment.payment_ammount
+        div data-row-span="6"
+          div data-field-span="5"
+            p = t.credit_note.title payment.payment_code.upcase.insert(3, '-')
+          div data-field-span="1"
+            p.number = Utils::money_format(payment.payment_ammount, 2, "$ 0")
+
+      - if payments.count > 1
+        div data-row-span="6"
+          div data-field-span="5"
+            p Pagos totales:
+          div data-field-span="1"
+            p.number = Utils::money_format(payment_total, 2, "$ 0")

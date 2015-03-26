@@ -1,0 +1,33 @@
+- if distributors.nil? or distributors.empty?
+  p = t.distributors.empty
+- else
+  - show_filters = true if show_filters.nil?
+  - focus = true if focus.nil?
+  - tablesorter_class = show_filters ? "tablesorter" : "tablesorter_nofilter"
+  - caption = show_filters ? t.tablesorter.default_caption : caption unless !caption.nil?
+  table class="items #{tablesorter_class}"
+    caption #{caption}
+    thead
+      tr
+        th = t.distributor.fields.d_id
+        th = t.distributor.fields.d_name
+        th.filter-select.filter-onlyAvail = t.distributor.fields.d_has_pricelist
+        th = t.distributor.fields.d_notes
+        - if show_edit_button
+          th.filter-false.sorter-false.sm_cell = t.actions.actions
+    tfoot
+      tr
+        td colspan="3" = t.distributors.count(distributors.count)
+    tbody
+      - ajax_item = show_edit_button ? " ajax_item" : ""
+      - distributors.each do |distributor|
+        tr.item class="#{ajax_item}"
+          td #{distributor.d_id}
+          td #{ I18n.transliterate( distributor.d_name )}
+          td.small_content #{distributor.d_has_pricelist ? "Si" : "No"}
+          td #{distributor.d_notes}
+
+          - if show_edit_button
+            td.sm_cell
+              a.text_icon href="/admin/distributors/#{distributor.d_id}" ✎
+

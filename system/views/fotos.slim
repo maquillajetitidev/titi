@@ -1,0 +1,16 @@
+- @body_id = :fot
+- @page_id = :fotos
+- @title = "Fotos de nuestros productos en acción"
+- @meta_description = "Fotos de efectos especiales, mascaras"
+
+- gallery.each do |element|
+  section.element
+    h2 = element.e_title
+    img.col2 src="/images/#{element.e_photo}" alt="#{element.e_title}"
+    section.info
+      p ==> element.e_description
+      - unless element.e_url.empty?
+        a href="#{element.e_url}" = element.e_url
+
+p ¿Tenes alguna foto en la que haya algun trabajo de maquillaje interesante que te gustaria ver acá?
+No dudes en enviarnosla.

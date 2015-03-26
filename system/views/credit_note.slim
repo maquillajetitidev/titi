@@ -1,0 +1,35 @@
+- @title = "Nota de crédito #{order.o_code_with_dash}"
+
+ul
+  li Conserve este documento para futura referencia.
+  li No válido como factura
+
+div.grid-form
+  fieldset
+    legend Detalles
+    div data-row-span="2"
+      div data-field-span="1"
+        p Fecha de emisión:
+      div data-field-span="1"
+        p = l order.created_at
+
+    == slim :credits_list, locals: {credits: credits}
+    / - cr_total = 0
+    / - credits.each do |credit|
+    /   - cr_total += credit.cr_ammount
+    /   div data-row-span="2"
+    /     div data-field-span="1"
+    /       p Descripción:
+    /     div data-field-span="1"
+    /       p = credit.cr_desc
+    /   div data-row-span="2"
+    /     div data-field-span="1"
+    /       p Monto:
+    /     div data-field-span="1"
+    /       p = Utils::money_format(credit.cr_ammount * -1, 2 )
+    / - if credits.count > 1
+    /   div data-row-span="2"
+    /     div data-field-span="1"
+    /       p Total:
+    /     div data-field-span="1"
+    /       p = Utils::money_format(cr_total * -1, 2 )

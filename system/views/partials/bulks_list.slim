@@ -1,0 +1,46 @@
+- m_name_col = false if m_name_col.nil?
+- show_edit_button = true if show_edit_button.nil?
+
+
+- bulks ||= []
+- bulks = @bulks unless @bulks.nil?
+
+- if bulks.empty?
+  p = t.bulks.empty
+- else
+  - show_filters = true if show_filters.nil?
+  - focus = true if focus.nil?
+  - tablesorter_class = show_filters ? "tablesorter" : "tablesorter_nofilter"
+  - caption = show_filters ? t.tablesorter.default_caption : caption unless !caption.nil?
+  table#ajax_bulks_list class="items #{tablesorter_class}"
+    caption #{caption}
+    thead
+      tr
+        th.smm_cell = t.bulk.fields.id
+        th.md_cell = t.bulk.fields.status
+        - if m_name_col
+          th.bg_cell = t.bulk.fields.m_name
+        th.md_cell.small_content
+          | #{t.bulk.fields.qty}
+          br
+          | #{t.bulk.fields.units}
+        th.bg_cell = t.bulk.fields.created_at
+        - if show_edit_button
+          th.sm_cell.sorter-false = t.bulk.fields.actions
+    tfoot
+      tr
+        - colspan = m_name_col ? 7 : 6
+        td colspan="#{colspan}" = t.bulks.count(bulks.count)
+    tbody
+      - bulks.each do |bulk|
+        tr.item
+          td.smm_cell = bulk.b_id
+          td.md_cell = ConstantsTranslator.new(bulk.b_status).t
+          - if m_name_col
+            td.bg_cell = I18n.transliterate( bulk[:m_name] )
+          td.sm_cell.number = Utils::number_format bulk.b_qty, 2
+          td.bg_cell = Utils::local_datetime_format bulk.created_at
+          - if show_edit_button
+            td.sm_cell
+              - if [Bulk::NEW, Bulk::IN_USE, Bulk::EMPTY].include?(bulk.b_status)
+                a.text_icon.edit_bulk href="/admin/bulks/#{bulk.b_id}" data-ajax="edit_bulk" data-b_id="#{bulk.b_id}" ✎

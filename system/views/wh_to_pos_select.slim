@@ -1,0 +1,8 @@
+- @title = t.transport.departures.wh_to_pos.title
+
+== slim :orders_list, locals: {edit_link: "/admin/transport/departures/wh_to_pos/order.o_id/add"}
+
+form action=url("/transport/departures/wh_to_pos/new") method="post"
+  == Rack::Csrf.tag(env)
+  input type="submit" value="#{t.order.new}"
+

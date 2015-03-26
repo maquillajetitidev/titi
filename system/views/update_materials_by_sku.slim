@@ -1,0 +1,86 @@
+-# coding: UTF-8
+- @title = t.materials.update_by_sku.title
+
+form.grid-form action=url("/administration/adjustments/materials/by_sku") method="post"
+  == Rack::Csrf.tag(env)
+  input type="hidden" name="_method" value="put"
+
+  fieldset
+    legend Configuracion
+    div data-row-span="4"
+      div data-field-span="1"
+        label Donde esta el SKU? (tilda multiples para concatenar)
+        label for="sku_on_a" Columna A
+        input type="checkbox" name="sku_on_a" id="sku_on_a" checked=("checked" unless params[:sku_on_a].nil?)
+        br
+        label for="sku_on_b"  Columna B
+        input type="checkbox" name="sku_on_b" id="sku_on_b" checked=("checked" unless params[:sku_on_b].nil?)
+        br
+        label for="sku_on_c"  Columna C
+        input type="checkbox" name="sku_on_c" id="sku_on_c" checked=("checked" unless params[:sku_on_c].nil?)
+
+      div data-field-span="1"
+        label Nuevo costo de compra
+        select name="m_price_on"
+          option value="" Sin cambios
+          - ("A".."Z").each.with_index do |letter, i|
+            option value="#{i}" selected=("selected" if params[:m_price_on].to_i==i unless params[:m_price_on].nil? || params[:m_price_on].empty?) Columna #{letter}
+
+  fieldset
+    legend Datos en bruto
+    div data-row-span="1"
+      div data-field-span="1"
+        label for="raw_data" Pegar datos
+        - params[:raw_data] = "" unless params[:confirm].nil?
+        textarea name="raw_data" rows="10" cols="50" = params[:raw_data]
+  fieldset
+    legend Acciones
+    div data-row-span="2"
+
+      div data-field-span="1"
+        label for="test" = t.actions.test
+        input name="test" type="submit" value="#{t.products.update_by_filter.test}"
+      div data-field-span="1"
+        label for="confirm" = t.actions.confirm
+        input.ajax_confirm name="confirm" data-confirm_message="#{t.materials.update_by_sku.confirm_message}" type="submit" value="#{t.materials.update_by_sku.confirm}"
+
+- unless materials.empty?
+  - if params[:confirm].nil?
+    div.static_flash.static_warning
+      p EJECUCIÓN DE PRUEBA
+  div.static_flash.static_notice
+    p = t.materials.update_by_sku.ok materials.size
+  - unless missing_skus.empty?
+    div.static_flash.static_error
+      p = t.materials.update_by_sku.errors_found missing_skus.size
+      dl
+        - missing_skus.each do |sku|
+          dd = sku
+
+  table class="items tablesorter quicksearch persist_area" data-label="#{t.actions.filter}" data-quicksearch="focus"
+    thead class="persist_header"
+      tr
+        th.sm_cell = t.material.fields.id
+        th.bg_cell = t.material.fields.name
+
+        th.sm_cell = t.material.fields.price
+        th.sm_cell Nuevo
+        th.sm_cell Dif.
+
+        th.sm_cell Editar
+    tfoot
+      tr
+        td colspan=6 = t.materials.update_by_sku.ok materials.size
+    tbody
+      - materials.each do |material|
+        tr
+          td.sm_cell = material.m_id
+          td.bg_cell = material.m_name
+
+          td.sm_cell.number = Utils::number_format material.m_price, 3
+          td.sm_cell.number = Utils::number_format material[:new_m_price], 3
+          td.sm_cell.number #{Utils::number_format (material[:new_m_price] / material.m_price - 1 ) * 100, 3} %
+
+          td.sm_cell
+            a href="/admin/materials/#{material.m_id}"
+              img src="/media/Icon-Edit.png" width="32" height="32"

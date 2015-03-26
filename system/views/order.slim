@@ -1,0 +1,20 @@
+-# coding: UTF-8
+
+// single order
+h2 = @order.o_code ? t.order.title_with_code(ConstantsTranslator.new(@order.type).t, @order.o_id, @order.o_code_with_dash) : t.order.title(ConstantsTranslator.new(@order.type).t, @order.o_id)
+
+h3 = t.items.title
+- payments_total ||= nil
+- payment_type ||= nil
+- price_col = payment_type == "profesional" ? false : true
+- price_pro_col = payment_type == "normal" ? false : true
+== slim :items_list, locals: {show_edit_button: false, show_filters: show_filters, price_col: price_col, price_pro_col: price_pro_col}
+
+- unless payments_total.nil?
+  table.items
+    tr
+      td.number Venta #{payment_type} #{Utils::money_format(payments_total, 2)}
+
+- unless @bulks.nil? || @bulks.empty?
+  h3 = t.bulks.title
+  == slim :bulks_list, locals: {show_edit_button: false, show_filters: true, m_name_col: true}

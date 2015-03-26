@@ -1,0 +1,28 @@
+doctype 5
+html lang="es"
+  head
+    title = @title || "NO TENGO TITULO"
+    meta charset="utf-8"
+    meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"
+    link rel="stylesheet" href="/backend.css"
+  body
+    == slim :nav_admin
+
+    section.messages
+      == styled_flash
+
+      
+    - sec_nav ||= nil
+    - if sec_nav
+      == slim sec_nav
+
+
+    article
+      h1=@title
+      section.main
+        == yield
+        a href="/admin/inventory/inventory_verification/#{@order.o_id}" Volver a la orden
+      footer
+        script src="/jquery-2.0.3.min.js"
+        script src="/jquery.plugins-min.js"
+        script src="/backend-min.js"

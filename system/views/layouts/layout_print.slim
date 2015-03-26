@@ -1,0 +1,26 @@
+doctype 5
+html lang="es"
+  head
+    title = @title || "NO TENGO TITULO"
+    meta charset="utf-8"
+    meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"
+    link rel="stylesheet" href="/backend.css"
+    link rel="stylesheet" href="/print.css"
+
+  body
+    article
+      div#x #{"[x]"}
+      img.header src="#{settings.base_path}/public/media/logo_titi_print.png"
+
+      h1=@title
+      section.main
+        == yield
+      footer
+        section
+          p Maquillaje TITI - www.maquillajetiti.com.ar
+
+          p
+            img width="16" height="16" src="#{settings.base_path}/public/media/logo_fb_print.png"
+            | acebook.com/MaquillajeTITI
+          p Sarmiento 1179 Local 3 - Esq. Libertad
+          p Tel: 4382-5977 - Cel: 15-5515-4688

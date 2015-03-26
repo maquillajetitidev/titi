@@ -1,0 +1,59 @@
+-# coding: UTF-8
+- if pending_items.empty?
+  h2 = t.production.verification.empty
+- else
+  fieldset.action_container
+    h2.action = t.production.verification.scan_next
+    form action=url("/production/verification/#{order.o_id}") method="post"
+      == Rack::Csrf.tag(env)
+      input type="text" class="visually_hidden" name="item" id="ajax_selected_label" value="#{params[:item]}"
+      input type="hidden" name="o_id" value="#{order.o_id}"
+      item.aligner_2 for="i_id" = t.production.verification.scan_item
+      input.trim_me autofocus="autofocus" required="required" type="text" name="i_id" id="trim_me" size=15 maxlength=15 value="" placeholder="#{t.label.read_placeholder}"
+      input type="submit" value="#{t.actions.ok}"
+    / br
+    / img src="/media/scan_barcode.jpg"
+
+
+- unless current_product.p_id.nil?
+  fieldset.action_container
+    div.ajax_response
+      h2.action La etiqueta  #{current_item.i_id} fue verificada con el producto
+
+      section.flex_container
+        section.flex_item.flex_6
+          == slim :product_details, locals: {product: current_product }
+
+        section.flex_item.flex_2
+          form action=url("/production/verification/#{order.o_id}/#{current_item.i_id}/void") method="post"
+            == Rack::Csrf.tag(env)
+            input type="hidden" name="i_id" value="#{current_item.i_id}"
+            p Si es correcto, escanee el siguiente producto a verificar, sino haga click en "Destruir"
+            input.ajax_void_item data-confirm_message="Esto va a anular la etiqueta y eliminar el item de la orden" type="submit" value="Destruir"
+
+
+- items = pending_items
+- unless items.empty?
+  h3 = t.production.verification.pending_items
+  == slim :items_list, locals: {items: items, show_filters: false, price_pro_col: false}
+
+- items = verified_items
+- unless items.empty?
+  h3 = t.production.verification.verified_items
+  == slim :items_list, locals: {items: items, show_filters: false, price_pro_col: false}
+
+- unless pending_items.empty? and verified_items.empty?
+  / Remove single item
+  a href="/admin/production/packaging/#{order.o_id}/item/remove" Remover un item de la orden
+
+
+form.v_island_1#finish_packaging action=url("/production/verification/#{order.o_id}/finish") method="post"
+  == Rack::Csrf.tag(env)
+  input type="hidden" name="o_id" value="#{order.o_id}"
+  input type="submit" value="#{t.actions.finish_verification}"
+
+
+form.v_island_1#finish_packaging action=url("/production/#{order.type.downcase}/#{order.o_id}/cancel") method="post"
+  == Rack::Csrf.tag(env)
+  input type="hidden" name="o_id" value="#{order.o_id}"
+  input.ajax_confirm data-confirm_message="#{t.order.sure_to_cancel_load_order}" type="submit" value="#{t.actions.cancel_order}"

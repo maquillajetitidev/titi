@@ -1,0 +1,38 @@
+- @title = "Agregar movimientos de caja"
+
+form action=url("/books/add") method="post"
+  fieldset
+    legend Datos del movimiento de caja a agregar
+    == Rack::Csrf.tag(env)
+    p Fecha: #{Utils::local_datetime_format Time.now}
+    dl 
+      dt
+        label for="type" Tipo:
+      dd 
+        select name="type" id="type" required="required"
+          option value="" 
+          option value="" disabled="disabled" ----------------
+          option value="Caja inicial" disabled="disabled" Caja inicial
+          
+          option value="Sobrante de caja" Sobrante de caja
+          option value="Faltante de caja" Faltante de caja
+          option value="" disabled="disabled" ----------------
+          option value="Comisiones" Comisiones
+          option value="Recaudacion" Recaudacion
+          option value="" disabled="disabled" ----------------
+          option value="Pago a proveedor" Pago a proveedores (descripcion obligatoria)
+          option value="Otros gastos" Otros gastos (descripcion obligatoria)
+          option value="" disabled="disabled" ----------------
+
+      dt 
+        label for="description" Descripcion:
+      dd 
+        input type="text" size="40" id="description" name="description" value='' maxlength="50"
+      dt 
+        label for="amount" Monto:
+      dd 
+        input type="text" size="40" id="amount" name="amount" value='' maxlength="50" required="required"
+
+      dt
+      dd
+        input type="submit" value="Guardar"

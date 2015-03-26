@@ -1,0 +1,42 @@
+-# coding: UTF-8
+- @body_id = :prod
+- @page_id = :prodCat
+- @title = "Nuestros productos"
+
+/ div class="cat#{category.c_id} prodCat"
+/   div.col2
+/     div.prodDesc
+
+/       h1 #{category.c_name}
+/       p
+/         a href="/productos/cat/#{category.c_id}" title="Ver todos los productos en la categoria #{category.c_name}" #{category.description}
+/       div.col1
+/       div.prodImg
+/       a href="/productos/cat/#{category.c_id}" title="Ver todos los articulos en la categoria #{category.c_name}" span #{category.c_name}
+
+div class="cat#{category.c_id} prodCat"
+  div class="col2"
+    div class="prodDesc"
+      h1 = category.c_name
+      p = category.description
+  div class="prodImg"
+    div class="col1"
+
+
+
+
+- products.each do |product|
+  - unless product.img.empty?
+    div.prodList
+      div.prodDesc
+        div.prodBigImg
+          img src="/images/#{product.img}" alt="#{product.p_name}" width="200" height="200"
+        h1 = product.p_name
+        p = product.description
+        p.prodInfo
+          strong Marca:
+          = product[:br_name]
+          br
+          strong Presentación:
+          = product.packaging
+        div.extraImg

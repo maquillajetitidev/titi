@@ -1,0 +1,8 @@
+- if bulk.nil?
+  h2 = t.bulk.not_found
+-else
+  div.flex_container#selector
+    section.flex_item.bulk_features
+      h3 Material: #{bulk[:m_name]} (#{bulk.m_id})
+      p Contenido #{Utils::number_format bulk.b_qty, 2}
+

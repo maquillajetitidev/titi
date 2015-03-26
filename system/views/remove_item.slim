@@ -1,0 +1,7 @@
+p Lea la etiqueta del producto a remover de la orden
+
+form action=url(action_url) method="post"
+  == Rack::Csrf.tag(env)
+  label.aligner_2 for="id" = t.actions.scan_label
+  input.aligned autofocus="autofocus" required="required" type="text" name="id" id="id" size=15 maxlength=15 value="" placeholder="#{t.label.read_placeholder}"
+  input type="submit" value="#{t.actions.ok}"

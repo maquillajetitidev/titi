@@ -1,0 +1,15 @@
+-# coding: UTF-8
+- show_backlink = show_backlink.nil? ? false : true
+- @title = "Granel anulado"
+
+p
+  |La etiqueta 
+  b #{@bulk.b_id} 
+  |fue anulada.
+
+p.action El granel tiene que ser reetiquetado para poder ser utilizado nuevamente.
+
+
+
+- if show_backlink
+  a href="#{backlink}" Volver a la orden

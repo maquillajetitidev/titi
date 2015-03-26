@@ -1,0 +1,38 @@
+nav.main_nav role="navigation"
+  dl
+    dt Menu
+    - if authorized?
+      dd.lnk
+        span class="current" href="#" = ("#{current_user.username}@#{current_location[:translation]}" if current_user.username and current_location)
+
+      dd.lnk
+        a class="#{inside?("/make_sale")}" href=url('/make_sale') = t.nav.sales.make_sale
+
+      dd.lnk
+        a class="#{inside?("/returns")}" href=url('/returns') = t.nav.sales.returns
+
+      dd.lnk
+        a class="#{inside?("/products")}" href=url('/products') = t.nav.sales.products
+
+      dd.lnk
+        a class="#{inside?("/transport")}" href=url('/transport/arrivals') = t.nav.sales.transport
+
+      dd.lnk
+        a class="#{inside?("/books")}" href=url('/books') Caja
+
+      dd.lnk
+        a class="#{inside?("/orders")}" href=url('/orders') = t.nav.backend.orders
+
+      dd.lnk
+        a class="#{inside?("/logs")}" href=url('/logs') Logs
+
+
+      dd.lnk
+        a href=url('/logout') = t.nav.sales.logout
+    - else
+      dd.lnk
+        a class="#{current?("/sales/login")}" href=url('/login') = t.nav.sales.login
+
+- if sec_nav
+  section.sec_nav
+    == slim sec_nav

@@ -1,0 +1,115 @@
+-# coding: UTF-8
+- @title = t.products.update_by_sku.title
+
+form.grid-form action=url("/administration/adjustments/products/by_sku") method="post"
+  == Rack::Csrf.tag(env)
+  input type="hidden" name="_method" value="put"
+
+  fieldset
+    legend Configuracion
+    div data-row-span="4"
+      div data-field-span="1"
+        label Donde esta el SKU? (tilda multiples para concatenar)
+        label for="sku_on_a" Columna A
+        input type="checkbox" name="sku_on_a" id="sku_on_a" checked=("checked" unless params[:sku_on_a].nil?)
+        br
+        label for="sku_on_b"  Columna B
+        input type="checkbox" name="sku_on_b" id="sku_on_b" checked=("checked" unless params[:sku_on_b].nil?)
+        br
+        label for="sku_on_c"  Columna C
+        input type="checkbox" name="sku_on_c" id="sku_on_c" checked=("checked" unless params[:sku_on_c].nil?)
+
+      div data-field-span="1"
+        label Nuevo costo de compra
+        select name="buy_cost_on"
+          option value="" Sin cambios
+          - ("A".."Z").each.with_index do |letter, i|
+            option value="#{i}" selected=("selected" if params[:buy_cost_on].to_i==i unless params[:buy_cost_on].nil? || params[:buy_cost_on].empty?) Columna #{letter}
+
+      div data-field-span="1"
+        label Nuevo markup ideal
+        select name="ideal_markup_on"
+          option value="" Sin cambios
+          - ("A".."Z").each.with_index do |letter, i|
+            option value="#{i}" selected=("selected" if params[:ideal_markup_on].to_i==i unless params[:ideal_markup_on].nil? || params[:ideal_markup_on].empty?) Columna #{letter}
+
+      div data-field-span="1"
+        label Nuevo precio
+        select name="price_on"
+          option value="" Sin cambios
+          - ("A".."Z").each.with_index do |letter, i|
+            option value="#{i}" selected=("selected" if params[:price_on].to_i==i unless params[:price_on].nil? || params[:price_on].empty?) Columna #{letter}
+
+
+
+  fieldset
+    legend Datos en bruto
+    div data-row-span="1"
+      div data-field-span="1"
+        label for="raw_data" Pegar datos
+        - params[:raw_data] = "" unless params[:confirm].nil?
+        textarea name="raw_data" rows="10" cols="50" = params[:raw_data]
+  fieldset
+    legend Acciones
+    div data-row-span="2"
+
+      div data-field-span="1"
+        label for="test" = t.actions.test
+        input name="test" type="submit" value="#{t.products.update_by_filter.test}"
+      div data-field-span="1"
+        label for="confirm" = t.actions.confirm
+        input.ajax_confirm name="confirm" data-confirm_message="#{t.products.update_by_sku.confirm_message}" type="submit" value="#{t.products.update_by_sku.confirm}"
+
+- unless products.empty?
+  - if params[:confirm].nil?
+    div.static_flash.static_warning
+      p EJECUCIÓN DE PRUEBA
+  div.static_flash.static_notice
+    p = t.products.update_by_sku.ok products.size
+  - unless missing_skus.empty?
+    div.static_flash.static_error
+      p = t.products.update_by_sku.errors_found missing_skus.size
+      dl
+        - missing_skus.each do |sku|
+          dd = sku
+
+  table class="items tablesorter quicksearch persist_area" data-label="#{t.actions.filter}" data-quicksearch="focus"
+    thead class="persist_header"
+      tr
+        th.sm_cell = t.product.fields.id
+        th.bg_cell = t.product.fields.name
+        th.md_cell = t.product.fields.brand
+
+        th.sm_cell = t.product.fields.buy_cost
+        th.sm_cell Nuevo
+        th.sm_cell Dif.
+
+        th.sm_cell = t.product.fields.ideal_markup
+        th.sm_cell Nuevo
+        th.sm_cell Dif.
+
+        th.sm_cell = t.product.fields.price
+        th.sm_cell Nuevo
+        th.sm_cell Dif.
+
+    tfoot
+      tr
+        td colspan=6 = t.products.update_by_sku.ok products.size
+    tbody
+      - products.each do |product|
+        tr
+          td.sm_cell = product.p_id
+          td.bg_cell = product.p_name
+          td.md_cell = product[:br_name]
+
+          td.sm_cell.number = Utils::number_format product.buy_cost, 2
+          td.sm_cell.number = Utils::number_format product[:new_buy_cost], 2
+          td.sm_cell.number #{Utils::number_format (product[:new_buy_cost] / product.buy_cost - 1) * 100, 2} %
+
+          td.sm_cell.number = Utils::number_format product.ideal_markup, 3
+          td.sm_cell.number = Utils::number_format product[:new_ideal_markup], 3
+          td.sm_cell.number #{Utils::number_format (product[:new_ideal_markup] / product.ideal_markup - 1) * 100, 3} %
+
+          td.sm_cell.number = Utils::number_format product.price, 2
+          td.sm_cell.number = Utils::number_format product[:new_price], 2
+          td.sm_cell.number #{Utils::number_format (product[:new_price] / product.price - 1) * 100, 2} %

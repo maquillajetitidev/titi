@@ -1,0 +1,57 @@
+- @title = t.return.title
+
+/ Ask for order
+- if @sale_order.empty?
+  form.grid-form action=url("/returns") method="post"
+    == Rack::Csrf.tag(env)
+
+    fieldset
+      legend = t.return.verify_order_code_legend
+      div data-row-span="2"
+        div data-field-span="1"
+          label for="o_code" = t.return.enter_order_code
+          input autofocus="autofocus" required="required" type="text" name="o_code" id="o_code" value="" placeholder="#{t.order.code_placeholder}"
+        div data-field-span="1"
+          label for="verify" = t.actions.start_verification
+          input type="submit" name="verify" value="#{t.actions.verify}"
+
+
+/ Ask for item
+- unless @sale_order.empty?
+  form.grid-form action=url("/returns/#{@sale_order.o_code}") method="post"
+    == Rack::Csrf.tag(env)
+
+    fieldset
+      legend = t.return.scan_label
+      div data-row-span="2"
+        div data-field-span="1"
+          input autofocus="autofocus" required="required" type="text" name="i_id" id="i_id" value="" placeholder="#{t.label.read_placeholder}"
+        div data-field-span="1"
+          input type="submit" name="confirm" value="#{t.actions.confirm}"
+
+/ If there are items
+- unless @return_order.nil?
+  h2 = t.return.return_details @return_order.o_id, @return_order.o_code_with_dash
+  - @cart = @return_cart
+  == slim :items_cart_detailed, locals: {}
+
+  / Actions
+  div.grid-form
+    fieldset
+      legend = t.actions.actions
+      div data-row-span="2"
+        div data-field-span="1"
+          form action=url("/returns/#{@return_order.o_id}/cancel") method="post"
+            == Rack::Csrf.tag(env)
+            input.ajax_confirm data-confirm_message="#{t.order.sure_to_cancel_return_order}" type="submit" value="#{t.actions.cancel_order}"
+        div data-field-span="1"
+          form action=url("/returns/#{@return_order.o_id}/finish") method="post"
+            == Rack::Csrf.tag(env)
+            input.ajax_confirm data-confirm_message="#{t.order.sure_to_finish_return_order}" type="submit" value="#{t.actions.finish}"
+
+/ Original sales
+- unless @sale_order.empty?
+  h2 = t.return.sale_details @sale_order.o_id, @sale_order.o_code_with_dash
+  - @cart = @sale_cart
+  == slim :items_cart, locals: {}
+

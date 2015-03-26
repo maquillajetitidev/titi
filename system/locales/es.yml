@@ -1,0 +1,816 @@
+actions:
+  continue: Continuar
+  finish: Terminar
+  finish_load: Terminar carga
+  finish_verification: Terminar verificacion
+  allocate: Imputar
+  ok: Aceptar
+  apply: "Aplicar"
+  save: "Guardar"
+  cancel: Cancelar
+  cancel_sale: Cancelar venta
+  cancel_order: Cancelar orden
+  undo: Deshacer
+  edit: Editar
+  open: Abrir
+  start_verification: Inicial verificacion
+  verify: Verificar
+  test: Probar
+  confirm: Confirmar
+  void: Invalidar
+  transmute: Transmutar
+  samplify: A muestra
+  actions: Acciónes
+  filter: Filtrar
+  click_to_toggle: Click para ver/ocultar detalles
+  click_to_edit: Click para editar
+  changed_order_status: Estado de orden cambiado a %1
+  changed_item_status: Estado de item cambiado a %1
+  changed_bulk_status: Estado de granel cambiado a %1
+  scan_label: Escanee el ID
+  select_product: Seleccionar el producto
+  print: Imprimir
+
+errors:
+  nil_params: "Los parametros dados son de un valor nulos"
+  invalid_params: Los parametros dados son invalidos
+  must_be_numeric: "Debe ser numérico. %1 (%2) dado"
+  must_be_positive: "Debe ser positivo. %1 dado"
+  must_be_positive_or_zero: "Debe ser positivo o cero. %1 dado"
+  bad_label_reading: "Las etiquetas deben ser leidas con el lector"
+  inexistent_label: "Etiqueta inexistente"
+  inexistent_item: "Item inexistente"
+  inexistent_bulk: "Bulk inexistente"
+  inexistent_order: "Orden inexistente"
+  invalid_order_id: "Identificador de orden inválido"
+  inexistent_product: "Código de producto inexistente"
+  invalid_label: "Etiqueta inválida"
+  cant_add_empty_items_to_order: "No se pueden agregar items vacios a una orden"
+  sale_id_missmatch: "La orden de venta dada no se corresponde con devolucion actual"
+  previously_assigned_label: "Etiqueta previamente asignada a otro item"
+  void_label: "Etiqueta invalidada por sistema"
+  invalid_label_status: "Etiqueta con estado inválido: %1"
+  invalid_item_status: "Item en estado inválido: %1"
+  modifying_status_of_void_item: Intento de modificacion de estado de un item ANULADO %1
+  modifying_status_of_void_label: Intento de modificacion de estado de una etiqueta ANULADA %1
+  modifying_status_of_void_bulk: Intento de modificacion de estado de un granel ANULADO %1
+  modifying_status_of_nil_product_item: Intento de modificacion de estado de un item que no tiene ningun producto asignado %1
+  label_wasnt_printed: "Segun mis regitros, la etiqueta todavia no fue impresa"
+  bulk_in_undefined_status: Este bulk esta en un estado indefinido
+  not_a_inter_warehouse_order: Esta operacion solo se puede efectuar en ordenes de movimiento entre depositos
+  label_from_different_order: Esta etiqueta pertenece a otra orden.
+  this_is_not_a_label: Esto no es una etiqueta (%1)
+  this_is_not_an_item: Esto no es un item (%1)
+  this_is_not_a_bulk: Esto no es un bulk (%1)
+  empty_transaction: La transacción no puede estar vacia
+  inexistent_account: No existe ninguna cuenta llamada "%1"
+  invalid_account: La cuenta "%1" no acepta operaciones
+  accounts_of_same_group: No se permiten operaciones en las que las cuentas pertenecen al mismo grupo "%1", "%2"
+  record_without_transaction: "El registro de operacion no esta asociado a ninguna transacción"
+  record_without_origin: "El registro de operacion no tiene cuenta de origen (haber)"
+  record_without_destination: "El registro de operacion no tiene cuenta de destino (debe)"
+  sequel_start: sequel_start
+  joiner: " , "
+  exact_length: "debe tener exactamente %1 caracteres"
+  min_length: "no puede tener menos de %1 caracteres"
+  max_length: "no puede tener más de %1 caracteres"
+  length_range: "debe tener entre %1 y %2 caracateres"
+  include: "debe ser uno de los siguientes valores: %1"
+  presence: "no puede estar en blanco"
+  unique: "ya fué usado"
+  type: "debe ser de tipo %1"
+  valid: "no es un %1 válido"
+  numeric: "deber ser un número"
+  numeric_feedback: "debe ser un múmero '%1' (%2) dado"
+  integer: "debe ser un múmero entero"
+  positive_feedback: "debe ser un múmero positivo '%1' dado"
+  string: "no es una cadena de texto"
+  sequel_end: sequel_end
+
+fields:
+  t_id: "El ID de la transacción"
+  t_desc: "La descripción de la transacción"
+  desc: Descripción
+  details: Detalles
+
+nav:
+
+  frontend:
+    products: "Productos"
+    contact: "Contacto"
+    photos: "Fotos y links"
+
+  backend:
+    materials: "Materiales"
+    materials_list: Materiales
+    distributors: Proveedores
+    update_ideal_stocks_for_materials: Actualizar stocks ideales
+    update_products: Recalcular productos
+    bulks_list: Graneles disponibles
+    products: "Productos"
+    new_product: "Crear producto"
+    new_material: "Crear material"
+    new_distributor: "Crear proveedor"
+    products_relationships: "Relaciones"
+    categories: "Categorías"
+    sku: Editar SKUs
+    items: Items disponibles
+    void_items: Invalidacion de items
+    transmute_items: Transmutacion de items
+    samplify_items: Convertir items a muestra
+    pendig_items: Items pendientes
+    labels: Impresion de etiquetas
+    credits: "Notas de Crédito"
+    login: "Iniciar sesión"
+    logout: "Salir"
+    sec: Sub Secciónes
+    production: Producción
+    packaging: Envasado y etiquetado
+    assembly: Armado de kits
+    verify_packaging: Verificacion de ordenes
+    packaging_orders_allocation: Imputacion al inventario
+    inventory_balance: Balance de inventario
+    logs: Logs
+    logistics: Logistica
+    transport: Transporte
+    wh_to_wh: Hacia otro deposito
+    wh_to_pos: Hacia punto de venta
+    orders: Ordenes
+    update_products_by_sku: "Actualizacion por SKU"
+    update_products_by_filter: "Actualizacion por Filtro"
+    update_materials_by_sku: "Actualizacion por SKU"
+    update_materials_by_filter: "Actualizacion por Filtro"
+    reports:
+      products_to_transport: Informe de productos por enviar
+
+    accounts: Plan de cuentas
+    arrivals: Ingresos de mercaderia
+    arrivals_list: Ordenes por verificar
+    arrivals_verifying: Verificando
+
+  sales:
+    admin: Administracion
+    inventory_review: Carga de inventario
+    inventory_verification: Verificacion de carga
+    inventory_imputation: Imputacion de carga
+    login: "Iniciar sesión"
+    logout: "Salir"
+    items: Items
+    make_sale: Hacer venta
+    returns: Devoluciónes
+    products: "Productos"
+    transport: Transporte de mercaderia
+    arrivals: Ingresos de mercaderia
+    arrivals_list: Ordenes por verificar
+    pending_orders: Ordenes por verificar
+    pending_items: Items por verificar
+    arrivals_verifying: Verificando
+    departures: Salidas de mercaderia
+    pos_to_wh: Hacia deposito
+
+auth:
+  must_login: "Para acceder esta area es necesario iniciar sesión"
+  user: Usuario
+  pass: Clave
+  login: Ingresar
+  invalid: "Usuario, password o localizacion incorrectos. "
+  loggedin: "Sesión iniciada como %1"
+  loggedout: "Sesión terminada"
+  hello: "Hola %1"
+
+administration:
+  title: Administración
+
+materials:
+  title: Materiales
+  empty: "No hay materiales para listar"
+  count: !!pl
+    0: "Mo hay materiales para listar"
+    1: "1 material listado"
+    n: "%1 materiales listados"
+
+  sure_to_update_ideal_stocks: Esta accion ejecuta un proceso muy intensivo y LENTO sobre la base de datos. Estas seguro de continuar?
+  updating_in_background: "Actualizando materiales en background. La tarea tarda aproximadamente 2 minutos"
+  update_by_sku:
+    title: "Actualizacion de materiales por SKU"
+    confirm: Actualizar los costos de compra
+    confirm_message: Esto va a modificar los costos de compra. No se puede deshacer
+    errors_found: !!pl
+      0: "No hay errores"
+      1: "Hay un SKU erroneo"
+      n: "Error en los siguientes %1 SKUs"
+    ok: !!pl
+      0: "Ningun material fue actualizado"
+      1: "Un material actualizado correctamente"
+      n: "%1 materiales actualizados correctamente"
+  update_by_filter:
+    title: Ajuste de costos de materiales por medio de filtro
+    intro: "Esto aplicara un ajuste de valores a todos los materiales alcanzados por el filtro dado. Los valores se multiplican por el factor ingresado. Los materiales cuyo costo fue modificado en los ultimos %1 días no seran afectados."
+    mod_label: Modificador
+    confirm_message: Estas seguro de modificar todos los valores?
+    submit_text: Actualizar todos los materiales listados
+    test: Ejecucion de prueba
+
+material:
+  updated: "Cambios guardados con exito"
+  new: Crear nuevo
+  created: "Material creado con exito"
+  there_can_be_only_one_new:  "Solo puede haber un material sin completar por vez"
+  updated: "Material actualizado con exito"
+  default_name: "! NUEVO MATERIAL"
+  not_found: "Material inexistente"
+  missing: No tengo ningun material con el identificador dado (%1)
+  editing: "Editando %1"
+  price_and_qty_explanation: "El precio es por unidad de la cantidad dada, ya sea gramos, cc o cm"
+  products_list: Productos asociados con este material
+  products_not_found: No hay productos asociados con este material
+  bulks_list: Graneles asociados con este material
+  bulks_not_found: No hay graneles asociados con este material
+  fields:
+    id: ID
+    SKU: SKU
+    category: Categoría
+    name: "Nombre"
+    m_notes: Notas internas
+    qty: "Cantidad"
+    ideal_stock: Ideal
+    stock_deviation: Desvio
+    stock_deviation_percentile: "%"
+    price: "Costo"
+    units: "(cc, gr o cm)"
+    edit: Editar
+    actions: Acciones
+    created_at: Creado el
+    price_updated_at: Costo actualizado
+    distributor: Proveedor
+
+relationships:
+  title: Relaciones
+  empty: "No hay relaciones registradas"
+  count: "%1 relaciones listadas"
+
+bulks:
+  title: Lista de graneles
+  empty: No hay graneles para listar
+  count: "%1 graneles listados"
+
+bulk:
+  not_found: "Granel inexistente"
+  editing: "Editando granel %1 (%2)"
+  price_and_qty_explanation: "El precio es por unidad de la cantidad dada, ya sea gramos, cc o cm"
+  created: Granel creado
+  updated: "Cambios guardados con exito"
+  missing: No tengo ningun granel con el identificador dado (%1)
+  fields:
+    id: ID
+    m_name: Nombre
+    qty: Cant
+    price: Precio
+    units: "(cc, gr o cm)"
+    status: Estado
+    created_at: Creado
+    edit: Editar
+    actions: Acciones
+
+labels:
+  title: Etiquetas para productos
+  empty: No hay Etiquetas cargadas en la base
+  count: "%1 etiquetas disponibles"
+  list: Etiquetas disponibles
+  download: "Bajar archivo para imprimir %1 etiquetas"
+
+label:
+  new: Crear nueva
+  read_placeholder: "ej: 329.b4d224e4"
+  fields:
+    label: Etiqueta
+    id: ID
+    status: Estado
+    created_at: Creado
+    qty: Cantidad
+  created: Etiqueta creada
+  assigned: "Etiqueta %1 asignada al producto %2"
+
+items:
+  title: Lista de items
+  empty: No hay items para listar
+  count: "%1 items listados"
+
+item:
+  fields:
+    id: ID
+    i_id: ID
+    p_id: Producto
+    price: Precio
+    price_pro: Precio pro
+    status: Estado
+    location: Ubicacion
+    created_at: Creado
+  invalid: Identificador de item invalido
+  missing: No tengo ningun item con el identificador dado (%1)
+  deleted_from_order: "Item borrado de la orden. Sigue siendo un item valido para utilizarlo en otra orden"
+
+void_items:
+  title: Invalidacion de items
+  write_reason: Escriba la razon de invalidacion
+  reason_example: "ej: Mal etiquetado"
+  sure?: "Esto va a invalidar el item. La etiqueta no va a servir mas y el item va a eliminarse del stock"
+
+transmute_items:
+  title: Transmutacion de items
+  write_reason: Escriba la razon de transmutacion
+  reason_example: "ej: Mal etiquetado"
+  sure?: "Esto va a transmutar el item"
+  title_transmuted: Item transmutado
+
+samplify_items:
+  title: Conversion a muestra de items
+  write_reason: Escriba la razon
+  reason_example: "ej: frasco dañado"
+  sure?: "Esto va a convertir el item en una muestra. No se va a poder hacer ningun tipo de operacion sobre el."
+  samplified_items: Items convertidos a muestra
+  how_to_use: Estos items solo pueden ser utilizados para muestra. El sistema no va a permitir ningun tipo de operacion sobre ellos
+
+cart:
+  fields:
+    id: ID
+    p_id: Producto
+    price_u: Precio Unit
+    price: Precio Final
+    qty: Cant.
+  totals: Totales
+  count: !!pl
+    0: No hay ningun item
+    1: "%1 item"
+    n: "%1 items"
+
+products:
+  title: Productos
+  empty: No hay productos para listar
+  count: "%1 productos listados"
+  list: Productos disponibles
+  sku_editor:
+    title: "Edicion rapida de SKUs"
+    caption: "Copia y pega los SKUs de la lista tal cual estan. El sistema va a limpiar espacios multiples, tabulaciones o cualquier otro caracter de control."
+  sure_to_update_all: Esta accion recalcula los valores de todos los productos. Estas seguro de continuar?
+  updating_in_background: "Actualizando productos en background. La tarea tarda aproximadamente 30 segundos"
+  update_by_sku:
+    title: "Actualizacion de productos por SKU"
+    confirm: Actualizar los valores seleccionados
+    confirm_message: Esto va a modificar los valores seleccionados. No se puede deshacer
+    errors_found: !!pl
+      0: "No hay errores"
+      1: "Hay un SKU erroneo:"
+      n: "Error en los siguientes %1 SKUs:"
+    ok: !!pl
+      0: "Ningun producto fue actualizado"
+      1: "Un producto actualizado correctamente"
+      n: "%1 productos actualizados correctamente"
+  update_by_filter:
+    title: Ajuste de valores de productos por medio de filtro
+    intro: "Esto aplicara un ajuste de valores a todos los productos alcanzados por el filtro dado. Los valores se multiplican por el factor ingresado. Los productos cuyo costo fue modificado en los ultimos %1 días no seran afectados."
+    mod_label: Modificador
+    confirm_message: Estas seguro de modificar todos los valores?
+    submit_text: Actualizar todos los productos listados
+    test: Ejecucion de prueba
+
+product:
+  read_placeholder: "ej: 4256"
+  not_found: "Product inexistente"
+  missing: No tengo ningun producto con el identificador dado (%1)
+  editing: "Editando %1"
+  items_list: Items asociados con este producto
+  items_not_found: No hay items asociados con este producto
+  item_removed: Etiqueta disociada del producto
+  created: "Producto creado. Pero es necesario completar los datos."
+  duplicated: "Producto duplicado con exito"
+  there_can_be_only_one_new:  "Solo puede haber un producto sin completar por vez"
+  updated: "Cambios guardados con exito"
+  mass_update: "Recalculando producto: %1"
+  mass_update_error: "Error recalculando producto %1: %2"
+  material_added: "Agregado %1 x %2"
+  material_updated: "Actualizado %1 x %2"
+  material_removed: "Borrado %1"
+  part_added: "Agregado %1 x %2"
+  part_updated: "Actualizado %1 x %2"
+  part_removed: "Borrado %1"
+  no_distributor: No tengo proveedor
+  distributor_select_explanation: Selecciona de la lista para agregar o quitar proveedores
+  errors:
+    archived: Este producto esta archivado, no podes usarlo
+  fields:
+    id: ID
+    category: Categoría
+    name: "Nombre"
+    long_name: "Nombre largo"
+    p_short_name: "Nombre corto"
+    packaging: Presentacion
+    brand: Marca
+    size: Tamaño
+    color: Color
+    sku: SKU
+    public_sku: SKU publico
+    description: Descripción
+    notes: Notas internas
+    qty: "Cantidad"
+    materials: "Materiales"
+    parts: "Partes"
+    direct_ideal_stock: "Ideal para una locacion (directo)"
+    indirect_ideal_stock: "Ideal global kits (indirecto)"
+    ideal_stock: "Ideal global"
+    stock_warehouse_1: "Deposito 1"
+    stock_warehouse_2: "Deposito 2"
+    stock_store_1: "Local 1"
+    stock_store_2: "Local 2"
+    stock_deviation: "Desvio del ideal"
+    stock_deviation_percentile: "%"
+    cost: "Costo"
+    buy_cost: "Costo de compra"
+    unit_cost: "Costo unitario"
+    total_cost: "Costo total"
+    parts_cost: "Partes"
+    materials_cost: "Materiales"
+    sale_cost: "Costo de venta"
+    ideal_markup: "Markup ideal"
+    real_markup: "Markup"
+    markup_deviation_percentile: "%"
+    exact_price: "Precio exacto"
+    price: "Precio"
+    price_pro: Pro
+    published: Publicar en pagina?
+    published_price: Publicar precio?
+    units: "(cc, gr o cm)"
+    tercerized: Comprable / Envasable
+    is_tercerized: Comprable
+    non_tercerized: Envasable
+    created_at: Creado el
+    price_updated_at: Costo actualizado
+    life_cycle:
+      title: Ciclo de vida
+      life_phase: Fase
+      active: Activo
+      end_of_life: Fin de vida
+      archived: Archivado
+    sale_mode:
+      title: Modo de venta
+      mode: Venta
+      normal: Normal
+      on_request: "Por pedido"
+      non_saleable: "Solo kits"
+    distributor: Proveedor
+  assemblies:
+    not_found: Este producto no es parte de ningun otro
+    list: Productos que usan al actual como parte
+
+production:
+  title: Proceso productivo
+  explanation: Explicación del proceso productivo
+  select_product: Seleccionar el producto
+  invalid_label: "La etiqueta %1 es invalida"
+  invalid_status: "La etiqueta %1 no puede ser asignada a un producto (estado inválido para la accion)"
+  packaging_select:
+    title: "Ordenes de envasado/etiquedado"
+    empty: No hay ordenes de carga abiertas
+  packaging:
+    title: "Orden de envasado/etiquedado nº %1 (%2 items)"
+    count: "%1 ordenes disponibles"
+    scan_label: Escanee el ID
+    scan_product: Escanee el producto
+    add_next_item: Proximo item a agregar
+    scan_next_item: Lee la etiqueta del próximo item
+    assigned: "Etiqueta %1 asignada a %1"
+    missing_materials_cant_allocate: Materiales faltantes. No puedo imputar la orden haste que haya suficientes graneles en estado "En Uso"
+
+  assembly_select:
+    title: "Ordenes de armado de kits"
+    empty: No hay ordenes de armado de kits abiertas
+  assembly:
+    title: "Orden de armado de kits nº %1 (%2 items)"
+    count: "%1 ordenes disponibles"
+    # scan_label: Escanee el ID
+    # scan_product: Escanee el producto
+    # assigned: "Etiqueta %1 asignada a %1"
+    # missing_materials_cant_allocate: Materiales faltantes. No puedo imputar la orden haste que haya suficientes graneles en estado "En Uso"
+
+  verification_select:
+    title: Ordenes de envasado a verificar
+    empty: No hay ordenes pendientes por verificar
+  verification:
+    title: "Verificacion de orden de envasado nº %1 (%2 / %3 items)"
+    empty: No hay items pendientes de verificacion
+    scan_item: Escanee el ID
+    pending_items: Items pendientes
+    still_pending_items: Todavia quedan items pendientes
+    verified_items: Items Verificados
+    scan_next: Proximo item a verificar
+  allocation_select:
+    title: Ordenes de envasado a imputar
+    empty: No hay ordenes pendientes por imputar
+  allocation:
+    title: "Imputando la orden Nº %1 al inventario"
+    empty: No hay items para imputar
+    allocate: Imputar orden a %1
+    ok: "Orden Nº %1 procesada e imputada al inventario"
+  remotion:
+    title: Eliminacion de item de la orden de carga Nº %1
+  bulk_remotion:
+    title: Eliminacion de granel de la orden de carga Nº %1
+
+logs:
+  title: Registro de eventos
+  empty: "No hay eventos registrados"
+  count: "%1 eventos registrados"
+
+event:
+  fields:
+    at: Cuando
+    msg: Mensaje
+    u_id: Quien
+    l_id: Donde
+    lvl: Nivel
+    b_id: Bulk
+    m_id: Material
+    i_id: Item
+    i_id_l_id: Item / Etiq.
+    o_id: Orden
+    p_id: Producto
+
+logistics:
+  title: Logistica
+
+constant:
+  title: Constantes del sistema
+  OPEN: Abierto
+  ASSIGNED: Asignado
+  FINISHED: Finalizado
+  READY: Listo
+  VERIFIED: Verificado
+  MUST_VERIFY: Necesita Verificacion
+  PRINTED: Impreso
+  PACKAGING: Envasado
+  ASSEMBLY: Armado de kits
+  INVENTORY: Carga inicial de inventario
+  INVALIDATION: Invalidacion de items
+  TRANSMUTATION: Transmutacion de items
+  RETURN: Devolución de items
+  USED: Utilizado
+  CREDIT_NOTE: Nota de crédito
+  IN_USE: En Uso
+  EMPTY: Vacio
+  NEW: Nuevo
+  WH_TO_WH: Deposito -> Deposito
+  WH_TO_POS: Deposito -> PDV
+  POS_TO_WH: PDV -> Deposito
+  SYSTEM: Interna
+  UNDEFINED: No definida
+  WAREHOUSE_1: Deposito 1
+  WAREHOUSE_2: Deposito 2
+  STORE_1: Local 1
+  STORE_2: Local 2
+  GLOBAL: Global
+  EN_ROUTE: En ruta
+  VOID: Invalido
+  ERROR: Erroneo
+  SALE: Venta
+  ON_CART: En carrito
+  IN_ASSEMBLY: En kit
+  SOLD: Vendido
+  RETURNING: En devolución
+  SAMPLE: Muestra
+  SAMPLIFICATION: A Muestra
+
+location:
+  title: Ubicacion
+
+locations:
+  WAREHOUSE_1: Deposito 1
+  WAREHOUSE_2: Deposito 2
+  STORE_1: Local 1
+  STORE_2: Local 2
+  short:
+    WAREHOUSE_1: Dep 1
+    WAREHOUSE_1_FUTURE: Dep 1 (f)
+    WAREHOUSE_2: Dep 2
+    WAREHOUSE_2_FUTURE: Dep 2 (f)
+    STORE_1: Loc 1
+    STORE_1_FUTURE: Loc 1 (f)
+    STORE_2: Loc 2
+    STORE_2_FUTURE: Loc 2 (f)
+
+sales:
+  title: Punto de venta
+  inventory_review_select:
+    title: Ordenes de carga de inventario
+    empty: No hay ordenes para listas
+    count: "%1 ordenes disponibles"
+  inventory_review:
+    title: "Orden de carga de inventario nº %1 (%2 items)"
+    scan_label: Escanear el ID
+    select_product: Seleccionar el producto
+    assigned: "Etiqueta %1 asignada a %1"
+  inventory_verification_select:
+    title: "Verificacion de ordenes de carga de inventario"
+  inventory_verification:
+    title: "Verificacion de orden de carga de inventario nº %1 (%2 / %3 items)"
+    scan_label: Escanear el item
+  inventory_imputation_select:
+    title: "Imputacion de ordenes de carga de inventario"
+  inventory_imputation:
+    title: "Imputacion de stock de orden nº %1"
+    scan_label: Escanear el item
+  make_sale:
+    title: Carrito de compras nº %1 (%2) [%3 items, %4]
+    checkout: Cobrar venta
+    cant_checkout_empty_order: "No podes cobrar una venta vacia"
+    items_list: Lista de items en esta venta
+    add_item: Agregar item a la venta
+    scan_item: Leer el código del item
+    remove_item: Remover un item de la venta
+    scan_codes_to_add: Leer los codigos de los items para agregarlos a la venta actual
+    profesional: Profesional
+    regular: Regular
+  checkout:
+    title: Detalle de la venta %1
+
+orders:
+  title: Revision de ordenes
+  empty: No hay ordenes para listar
+  count: "%1 ordenes listadas"
+  select_type: Seleccione el tipo de ordenes a listar en el menu lateral
+
+order:
+  type:
+    UNDEFINED: Indefinido
+    PACKAGING: "Envasado y etiquetado"
+    INVENTORY: Inventario
+  fields:
+    id: ID
+    code: Cod.
+    type: Tipo
+    status: Estado
+    user: Usuario
+    location: Ubicacion
+    origin: Origen
+    destination: Destino
+    created_at: Creado
+  title: "Orden de tipo %1 Nº %2"
+  title_with_code: "Orden de tipo %1 Nº %2 (%3)"
+  details: "Detalles de la orden de tipo %1 Nº %2 (%3)"
+  new: Crear nueva
+  created: Nueva orden creada %1
+  item_added: "%1 agregado a la orden %2"
+  item_removed: Item eliminado de la orden
+  bulk_removed: Granel eliminado de la orden
+  bulk_added: "%1 agregado a la orden %2"
+  bulk_removed: Bulk eliminado de la orden
+  all_items_removed: Todos los items fueron eliminados de la orden
+  all_bulks_removed: Todos los graneles fueron eliminados de la orden
+  void: Orden invalidada VOID
+  user_is_editing: "%1 esta editando la orden de tipo %2 Nº %3"
+  user_is_editing_nil: "%1 esta tratando de abrir la orden de tipo %2 Nº %3 que no existe"
+  ready_for_verification: "La orden esta lista para ser verificada"
+  ready_for_allocation: "La orden esta lista para ser imputada"
+  user_is_verifying: "%1 esta verificando la orden de tipo %2 Nº %3"
+  user_is_verfying_order_in_invalid_status: "%1 esta intentando verificar una orden de tipo %2 Nº %3 que esta es un estado inválido %4"
+  user_is_verfying_order_of_wrong_type: "%1 esta intentando verificar la orden Nº %2 con estado %3 que es de un tipo inválido %4"
+  sure_to_cancel_load_order: "Esto borrara la orden. Todas las etiquetas y productos seran dissociados."
+  sure_to_cancel_sale_order: "Esto borrara la orden. Todos los items volveran a estar disponibles para la venta"
+  sure_to_cancel_return_order: "Esto borrara la orden. Todos los items volveran al estado Vendido"
+  sure_to_finish_return_order: "Esto finalizara la devolución. Se generara una nota de crédito y los items volveran a estar disponibles para la venta"
+  cancelled: "La orden Nº %1 fue cancelada. Todas las etiquetas y productos (si los hubo) fueron dissociados."
+  non_destructive_cancelled: "La orden Nº %1 fue cancelada. Todos los productos (si los hubo) estan disponibles."
+  not_a_packaging: Esta no es una orden de carga
+  missing: Orden %1 inexistente o inaccesible desde este modulo
+  scan_label: Escanee el ID de item
+  scan_labels: Escanee los ID de items (uno por linea)
+  scan_product: Escanee el producto
+  code_placeholder: "ej: ZYX-123"
+  select_other_product: Seleccionar un producto distinto
+  assembly_relation_created: Relación entre orden %1 y kit %2 creada
+return:
+  title: Devolución de items
+  verify_order_code_legend: Las devoluciones solo se pueden hacer con el código de la venta original
+  enter_order_code: Ingrese el código de la orden de venta original
+  scan_label: Escanee el proximo item a devolver
+  sale_details: "Detalles de la venta original Nº %1 (%2)"
+  return_details: "Detalles de la devolucion Nº %1 (%2)"
+  finished: "Devolucion finalizada"
+  failed: "Devolución fallida"
+  errors:
+    invalid_status: "Estado inválido"
+    this_item_is_not_in_sold_status: "Este item no esta en estado Vendido. No podes operar sobre el."
+
+credit_note:
+  title: Nota de crédito %1
+  generated: Se generó una nota de crédito por %1 con el código identificador %2
+  print_instructions: Bajar un pdf para imprimir
+
+transport:
+  title: "Orden de movimiento de items nº %1 (%2 items)"
+  arrivals:
+    title: Ingresos de mercaderia
+    verification:
+      title: "Verificando ingreso de mercaderia nº %1 (%2 / %3 items)"
+    ok: !!pl
+      0: "No se ingreso ningun item a %2"
+      1: "%1 item ingresado correctamente a %2"
+      n: "%1 items ingresados correctamente a %2"
+    pending_items_and_errors:
+      title: "Verificaciones y problemas pendientes"
+  departures:
+    pos_to_wh:
+      title: Transporte de mercaderia desde local hacia deposito
+    wh_to_pos:
+      title: "Transporte de mercaderia entre deposito y punto de venta"
+    wh_to_wh:
+      title: "Transporte de mercaderia entre depositos"
+
+verification:
+  ok: "Etiqueta %1 verificada con “%2”"
+
+accounts:
+  plan:
+    title: Plan de cuentas
+
+categories:
+  title: "Edición de categorías"
+  empty: No hay categorías para listar
+  count: "%1 categorías listadas"
+  list: Categorías disponibles
+
+category:
+  not_found: "Categoría inexistente"
+  missing: No tengo ninguna categoría con el identificador dado (%1)
+  title: "Editando %1"
+  updated: "Cambios guardados con exito"
+  fields:
+    id: ID
+    name: Nombre
+    description: Descripción
+    published: Visible?
+    img: Foto
+
+reports_products_to_buy: !!pl
+  0: "Reporte de productos por comprar en el dia del juicio final"
+  1: "Reporte de productos por comprar para un mes"
+  n: "Reporte de productos por comprar para %1 meses"
+reports_materials_to_buy: !!pl
+  0: "Reporte de materiales por comprar en el dia del juicio final"
+  1: "Reporte de materiales por comprar para un mes"
+  n: "Reporte de materiales por comprar para %1 meses"
+reports_products_to_move: !!pl
+  0: "Reporte de productos por mover desde %2 hacia Local 1 en el dia del juicio final"
+  1: "Reporte de productos por mover desde %2 hacia Local 1 para un mes"
+  n: "Reporte de productos por mover desde %2 hacia Local 1 para %1 meses"
+
+returns:
+  title: Devolución de items
+  verify_order_code_legend: Las devoluciones solo se pueden hacer con el código de la venta original
+  enter_order_code: Ingrese el código de la orden de venta original
+
+distributors:
+  title: "Edición de proveedores"
+  empty: No hay proveedores para listar
+  count: "%1 proveedores listados"
+  list: proveedores disponibles
+
+distributor:
+  title: Editando proveedor “%1”
+  new: Creando un nuevo proveedor
+  updated: "Cambios guardados con exito"
+  duplicated_name:  "El nombre “%1” ya esta siendo utilizado"
+  missing: No tengo ningun proveedor con el identificador dado (%1)
+  fields:
+    d_id: ID
+    d_name: Nombre
+    d_has_pricelist: ¿Da lista de precios?
+    d_notes: Notas
+
+book_records:
+  title: "Movimientos de caja"
+  empty: No tengo movimientos registrados
+  count: "%1 movimientos listados"
+
+book_record:
+  new: Creando un nuevo movimiento de caja
+  updated: "Cambios guardados con exito"
+  fields:
+    r_id: ID
+    o_id: Orden
+    created_at: Fecha
+    r_type: Tipo
+    r_description: Descripcion
+    r_ammount: Monto
+
+tablesorter:
+  legend: Filtro dinámico
+  default_caption: 'Click en las flechas para ordenar. Shift+Click para ordenar por multiples columnas. Para filtrar la tabla separa las palabras con doble espacio (ej: "base [espacio] [espacio] fluo").'
+  operators_explanation: 'Escribi en los cuadros para filtrar la tabla. Utiliza operadores lógicos "o", "y" (ej: "base y fluo"). Solo un operador por vez.'
+  online_help_url: "http://mottie.github.io/tablesorter/docs/example-widget-filter.html#notes"
+
+inventory:
+  missing_x_units_of_material: !!pl
+    0: "%2 no tiene faltantes"
+    1: "Falta %1 unidad de %2"
+    n: "Faltan %1 unidades de %2"
+

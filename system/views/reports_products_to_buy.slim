@@ -1,0 +1,14 @@
+form.grid-form action=url("/administration/reports/products_to_buy") method="post"
+  == Rack::Csrf.tag(env)
+
+  fieldset
+    legend Recalcular periodo
+    div data-row-span="10"
+      div data-field-span="1"
+        label for="months" Meses
+        input type="text" name="months" size=3 maxlength=3 required="required" value="#{months}"
+      div data-field-span="1"
+        label for="submit" &nbsp;
+        input type="submit" value="Recalcular"
+
+== slim :products_list, locals: {full_row: true, buy_cost_col: true, price_col: false, price_pro_col: false, stock_col: false, multi_stock_col: true, show_future_availability: true, deviation_for_period_col: true, distributor_col: true, brand_col: false, is_report_to_buy: true, months: months, locations: locations, total_cost: total_cost, products: products }

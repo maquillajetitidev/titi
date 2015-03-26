@@ -1,0 +1,36 @@
+-# coding: UTF-8
+- @title = t.transmute_items.title
+
+
+
+
+form.grid-form action=url("/inventory/transmute_items/#{@item.i_id}/#{@new_product.p_id}") method="post"
+  == Rack::Csrf.tag(env)
+
+  fieldset
+    legend Producto actualmente asociado
+    == slim :product_details, locals: {product: @product}
+  fieldset
+    legend Nuevo producto
+    == slim :product_details, locals: {product: @new_product}
+  
+  fieldset
+    legend Justificar accion
+    div data-row-span="2"
+      div data-field-span="1"
+        label for="reason" = t.transmute_items.write_reason
+        input autofocus="autofocus" required="required" type="text" name="reason" id="reason" size=30 value="" placeholder="#{t.transmute_items.reason_example}"
+      div.readonly data-field-span="1"
+        label for="i_id" Item a transmutar
+        input required="required" type="text" readonly="" name="i_id" id="i_id" value="#{@item.i_id}"
+
+  fieldset
+    legend Confirmar accion
+    div data-row-span="1"
+      div data-field-span="1"
+        label for="transmute" Ultimo aviso
+        input.ajax_confirm data-confirm_message="#{t.transmute_items.sure?}" name="transmute" type="submit" value="#{t.actions.transmute}"
+   
+
+
+

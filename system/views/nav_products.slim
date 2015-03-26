@@ -1,0 +1,21 @@
+nav role="navigation"
+  ul
+    - if inside?("/admin")
+      li
+        a class="#{current?("/admin/products")}" href=url('/products') = t.nav.backend.products
+      li
+        form action=url("/products/new") method="post"
+          == Rack::Csrf.tag(env)
+          input type="submit" value="#{t.nav.backend.new_product}"
+      li
+        a class="#{current?("/admin/products_relationships")}" href=url('/products_relationships') = t.nav.backend.products_relationships
+      li
+        a class="#{inside?("/admin/products/categories")}" href=url('/products/categories') = t.nav.backend.categories
+      li
+        a class="#{inside?("/admin/products/items")}" href=url('/products/items') = t.nav.backend.items
+
+    - if inside?("/sales")
+      li
+        a class="#{current?("/sales/products")}" href=url('/products') = t.nav.backend.products
+      li
+        a class="#{inside?("/sales/products/items")}" href=url('/products/items') = t.nav.backend.items

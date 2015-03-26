@@ -1,0 +1,10 @@
+- if product.nil?
+  h2 = t.product.not_found
+-else
+  div.flex_container.product_details#selector
+    section.flex_item.product_features
+      h3 #{product.p_name}
+      p #{product.description}
+    section.flex_item.product_image
+      - img = (product.img != "") ? "/images/#{product.img}" : '/media/not_found.png'
+      img width="150" height="120" src="#{img}"

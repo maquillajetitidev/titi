@@ -1,0 +1,22 @@
+doctype 5
+html lang="es"
+  head
+    title = title
+    meta charset="utf-8"
+    link rel="shortcut icon" href="/media/favicon.ico"
+    == slim :mobile_meta
+    - date = Time.now.strftime("%Y%m%d")
+    link rel="stylesheet" href="/backend.css?#{date}"
+  body
+
+    section.messages
+      == styled_flash
+
+    article
+      h1=title
+      section.main
+        == yield
+      footer
+        script src="/jquery-2.0.3.min.js"
+        script src="/jquery.plugins-min.js"
+        script src="/backend-min.js?#{date}"

@@ -1,0 +1,24 @@
+-# coding: UTF-8
+
+- if @pending_items.empty? and @void_items.empty? and @pending_bulks.empty? and @void_bulks.empty?
+  p No hay pendientes
+
+
+- unless @pending_items.empty?
+  - @items = @pending_items
+  == slim :items_list, locals: {show_edit_button: false, show_filters: false, price_pro_col: false}
+
+- unless @void_items.empty?
+  h1 Items con problemas
+  - @items = @void_items
+  == slim :items_list, locals: {show_edit_button: false, show_filters: false, price_pro_col: false}
+
+- unless @pending_bulks.empty?
+  h1 Graneles pendientes de verificacion
+  - @bulks = @pending_bulks
+  == slim :bulks_list, locals: {show_edit_button: false, show_filters: false}
+
+- unless @void_bulks.empty?
+  h1 Graneles con problemas
+  - @bulks = @void_bulks
+  == slim :bulks_list, locals: {show_edit_button: false, show_filters: false}

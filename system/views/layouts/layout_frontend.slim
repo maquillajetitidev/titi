@@ -1,0 +1,26 @@
+doctype 5
+html lang="es"
+  head
+    title = @title || "NO TENGO TITULO"
+    meta charset="utf-8"
+    == slim :mobile_meta
+    - meta_description = @meta_description || "Maquillaje escénico para caracterización, teatro, cine, danzas y televisión; Fiestas infantiles, mimos y halloween; Pestañas, barbas, bigotes y postizos; Efectos especiales."
+    meta name="description" content="#{meta_description}"
+    meta name="keywords" content="Maquillajes pinturas Pestañas barbas bigotes postizos Efectos especiales"
+    link rel="stylesheet" type="text/css" title="Titi" href="/frontend.css"
+    link rel="stylesheet" type="text/css" title="Titi" href="/cats.css"
+  body id=@body_id
+    div#contenido
+
+      == slim :nav_frontend
+
+      div id=@page_id
+        h1=@title
+        == yield
+      div#footer
+        p Sarmiento 1179 Local 3 - Capital Federal - Buenos Aires - Argentina
+        p Horario: Lunes a Viernes de 10:30 a 18:30 hs.
+        p Tel:4382-5977 - e-mail: <a href="mailto:info@maquillajetiti.com.ar">info@maquillajetiti.com.ar</a>
+
+    javascript:
+     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-55407745-1', 'auto');ga('send', 'pageview');

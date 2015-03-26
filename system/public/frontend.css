@@ -1,0 +1,109 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-weight: inherit;
+  font-style: inherit;
+  font-family: inherit;
+  vertical-align: baseline;
+  font-family: Helvetica, verdana, Frutiger, Univers, arial, helvetica, "lucida grande", geneva, lucida, sans-serif;
+  font-size:15px;
+}
+/* remember to define focus styles! */
+:focus {
+  outline: 0;
+}
+body {
+  line-height: 1;
+  color: #333;
+  background: #FFF;
+}
+ol, ul {
+  list-style: none;
+}
+/* tables still need 'cellspacing="0"' in the markup */
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: "";
+}
+blockquote, q {
+  quotes: "" "";
+}
+
+
+/* */
+body {width:770px; margin-left:auto; margin-right:auto}
+#contenido {position:absolute;top:0;width:728px;margin:0 auto 20px auto; padding:20px; border:3px solid black; background:#edefef;}
+#footer {border:1px dotted #333; padding:20px; background:white}
+
+h1{font-size:18px; font-weight:bold; padding:20px 0 9px 23px; color: #ddae20}
+h2{font-size:16px; font-weight:bold; padding:24px 0 12px 0}
+
+
+p{line-height:125%; padding:0.5em 0}
+p:first-letter {padding-left:0.5em;}
+strong {font-weight:bold}
+
+#topmenu {margin:-23px; width:768px; position:fixed; background:#edefef; border-top:3px solid black; border-left:3px solid black; border-right:3px solid black;}
+#topmenu * {padding:0;margin:0; text-decoration:none; font-size:17px; font-weight:bold; color:black;}
+#topmenu dl {margin-left:45px}
+
+#topmenu dt {display:none; }
+#topmenu dd {width:140px; height:150px; float:left}
+#topmenu dd.lnk a {width:140px; display:block; position:absolute; padding:60px 0 70px 0}
+#topmenu dd.lnk a:hover, #topmenu dd.lnk a:active, #topmenu a.active {color: #ddae20}
+body[id=prod] #topmenu, body[id=fot] #topmenu {border-bottom:1px dotted #333}
+
+#prodCat {margin-top:150px; background: #edefef url(/media/prodCat.jpg) center 150px; background-attachment:fixed; background-repeat:no-repeat}
+.prodCat {height:118px; margin-bottom:20px;border:1px solid transparent; padding: 0.5em 0}
+.prodCat .col1 {width:300px}
+.prodCat .col2 {float:right; width:400px}
+.prodCat .prodDesc {overflow:hidden; height:120px}
+a .prodCat {color:#333; text-decoration:none}
+a .prodCat:hover {color:#000; background-color: rgba(0,0,0,0.1) !important}
+a .prodCat:hover h1{color:black}
+
+.prodCat .prodDesc a:first-letter {padding-left:0.5em;}
+
+.prodCat .prodDesc h1 {padding-bottom:0; padding-top:0}
+
+.cat1 {margin-top:30px}
+/* fotos como links en categorias */
+
+.prodImg {display:block; width:300px; height:120px;}
+
+div.prodBigImg {float:right}
+.prodList .prodDesc {min-height:200px; clear:both; padding:20px}
+p.prodInfo:first-letter {padding:0;}
+
+
+#contacto {margin:150px 0 0; padding-bottom:50px; background: #edefef url(/media/contacto.jpg) center 150px; background-attachment:fixed; background-repeat:no-repeat}
+#contacto li {margin-left:23px; list-style: circle; line-height:150%}
+
+#fotos, #index {margin:150px 0 20px; }
+#fotos img {width:450px; height:450px}
+#fotos a small {font-size:12px}
+.photoList td {vertical-align:top; padding-bottom:50px;}
+.photoList td img {padding-right:15px}
+
+.extraImg {clear:both; text-align:right}
+
+/* new */
+.element .info {width:250px; float: right}
+.element .info p {font-family: serif; line-height: 1.5em

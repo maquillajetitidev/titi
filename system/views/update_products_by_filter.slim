@@ -1,0 +1,92 @@
+-# coding: UTF-8
+- @title =  t.products.update_by_filter.title
+p = t.products.update_by_filter.intro days
+- mod = mod.to_f > 0 ? mod.to_f : ""
+
+form.grid-form action=url("/administration/adjustments/products/by_filter") method="post"
+  == Rack::Csrf.tag(env)
+  fieldset
+    legend Configurar
+    div data-row-span="10"
+
+      div data-field-span="1"
+        label for="days" Días
+        input.positive.number type="tel" name="days" size=3 maxlength=3 required="required" value="#{days}"
+
+      div data-field-span="1"
+        label for="mod" = t.products.update_by_filter.mod_label
+        input.positive.number type="tel" step="any" min=0 name="mod" id="mod" size=5 maxlength=8 required="required" autofocus="" value="#{mod}"
+
+      div data-field-span="2"
+        label Atributo a modificar
+        select name="attribute" required=""
+          option value=""
+          - [:buy_cost, :price].each do |attribute|
+            option value="#{attribute}" selected=("selected" if params['attribute'].to_sym==attribute unless params[:attribute].nil? || params[:attribute].empty?) #{eval("t.product.fields.#{attribute}")}
+
+      div data-field-span="2"
+        label Seleccionar marca
+        select name="br_id"
+          option value=""
+          - Brand.all.each do |brand|
+            option value="#{brand.br_id}" selected=("selected" if params['br_id'].to_i == brand.br_id unless params[:br_id].nil? || params[:br_id].empty?) #{brand.br_name}
+
+      div data-field-span="2"
+        label Seleccionar proveedor
+        select name="d_id"
+          option value=""
+          - Distributor.order(:d_name).all.each do |distributor|
+            option selected=("selected" if params['d_id'].to_i == distributor.d_id) value="#{distributor.d_id}" = distributor.d_name
+
+      div data-field-span="2"
+        label for="p_name" Nombre contiene
+        input type="text"  name="p_name" id="p_name" value="#{params['p_name'].to_s}"
+
+  fieldset
+    legend Ajustar
+    div data-row-span="2"
+      div data-field-span="1"
+        label for="test" = t.actions.test
+        input name="test" type="submit" value="#{t.products.update_by_filter.test}"
+
+      div data-field-span="1"
+        label for="confirm" = t.actions.confirm
+        input.ajax_confirm name="confirm" data-confirm_message="#{t.products.update_by_filter.confirm_message}" type="submit" value="#{t.products.update_by_filter.submit_text}"
+
+- unless products.nil?
+  - if params[:confirm].nil?
+    div.static_flash.static_warning
+      p EJECUCIÓN DE PRUEBA
+
+  table class="items tablesorter quicksearch persist_area" data-label="#{t.actions.filter}" data-quicksearch="focus"
+    thead class="persist_header"
+      tr
+        th.sm_cell = t.product.fields.id
+        th.bg_cell = t.product.fields.name
+        th.md_cell = t.product.fields.brand
+
+        th.sm_cell = t.product.fields.buy_cost
+        th.sm_cell Nuevo
+        th.sm_cell Dif.
+
+        th.sm_cell = t.product.fields.price
+        th.sm_cell Nuevo
+        th.sm_cell Dif.
+
+    tfoot
+      tr
+        td colspan=9 = t.products.update_by_sku.ok products.size
+    tbody
+      - products.each do |product|
+        tr
+          td.sm_cell = product.p_id
+          td.bg_cell = product.p_name
+          td.md_cell = product[:br_name]
+
+          td.sm_cell.number = Utils::number_format product[:old_buy_cost], 2
+          td.sm_cell.number = Utils::number_format product[:new_buy_cost], 2
+          td.sm_cell.number #{Utils::number_format (product[:new_buy_cost] * 100 / product[:old_buy_cost])-100, 2} %
+
+          td.sm_cell.number = Utils::number_format product[:old_price], 2
+          td.sm_cell.number = Utils::number_format product[:new_price], 2
+          td.sm_cell.number #{Utils::number_format (product[:new_price] * 100 / product[:old_price])-100, 2} %
