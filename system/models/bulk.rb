@@ -278,7 +278,7 @@ class Bulk < Sequel::Model
   def update_from_hash(hash_values)
     raise ArgumentError, t.errors.nil_params if hash_values.nil?
     wanted_keys = [ :b_qty, :b_status ]
-    hash_values.select { |key, value| self[key.to_sym]=value.to_s.gsub(',', '.') if wanted_keys.include? key.to_sym unless value.nil?}
+    hash_values.select {|key, value| self[key.to_sym]=value.to_s.gsub('.', '').gsub(',', '.') if wanted_keys.include? key.to_sym unless value.nil?}
     if (BigDecimal.new self[:b_qty]) < 0.01
       self[:b_qty] = 0
       self[:b_status] = Bulk::EMPTY
