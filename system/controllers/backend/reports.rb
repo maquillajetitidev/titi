@@ -187,7 +187,10 @@ class Backend < AppController
     months = params[:months].to_i unless params[:months].nil?
     months ||= settings.desired_months_worth_of_items_in_store
     products ||= []
-    raw_products = Product.new.get_all.where(archived: false, tercerized: true, end_of_life: false, on_request: false).limit(50).all
+    # antes estaba limitado a 50 y por eso no le traia todos
+    #raw_products = Product.new.get_all.where(archived: false, tercerized: true, end_of_life: false, on_request: false).limit(50).all
+    raw_products = Product.new.get_all.where(archived: false, tercerized: true, end_of_life: false, on_request: false).all
+
     distributors = Distributor.all
 
     total_cost = 0
@@ -221,7 +224,6 @@ class Backend < AppController
       end
       products << product if product[:deviation_for_period] < 0
     end
-
 
     products.sort_by! { |product| [ product[:distributor][:ponderated_deviation], product.inventory(months).global.v_deviation_percentile, product.inventory(months).global.v_deviation ] }
 
