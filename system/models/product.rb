@@ -33,10 +33,6 @@ class Category < Sequel::Model
 end
 
 
-
-
-
-
 class Product < Sequel::Model
 
   STORE_ONLY_1 = "STORE_ONLY_1"
@@ -322,17 +318,16 @@ class Product < Sequel::Model
 
   def update_from_hash(hash_values)
     raise ArgumentError, t.errors.nil_params if hash_values.nil?
-
     hash_values.select do |key, value|
       if Product::NUMERICAL_ATTRIBUTES.include? key.to_sym
         unless value.nil? or (value.class == String and value.length == 0)
-          if Utils::is_numeric? value.to_s.gsub(',', '.')
-            self[key.to_sym] = BigDecimal.new(value, 2)
+          modified_value = value.to_s.gsub(',', '.')
+          if Utils::is_numeric? modified_value
+            self[key.to_sym] = BigDecimal.new(modified_value, 2)
           end
         end
       end
     end
-
 
     alpha_keys = [ :c_id, :p_short_name, :packaging, :size, :color, :sku, :public_sku, :description, :notes, :img, :img_extra ]
     hash_values.select { |key, value| eval("self.#{key}=value.to_s") if alpha_keys.include? key.to_sym unless value.nil?}
