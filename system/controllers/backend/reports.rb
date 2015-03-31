@@ -1,5 +1,7 @@
 class Backend < AppController
+  include Logs
   require 'descriptive_statistics'
+
   DescriptiveStatistics.empty_collection_default_value = 0.0
 
   get '/administration/reports/montly' do
@@ -51,7 +53,6 @@ class Backend < AppController
   end
 
   route :get, '/administration/reports/logins/:username' do
-    include Logs
     get_and_render_logins params[:username]
   end
 
@@ -84,11 +85,6 @@ class Backend < AppController
       products: products
     }
   end
-
-
-
-
-
 
   get '/production/reports/to_package/:mode' do
     products = Product.new.get_all.where(archived: false, tercerized: false, end_of_life: false).all
@@ -128,9 +124,6 @@ class Backend < AppController
     }
   end
 
-
-
-
   route :get, :post, '/administration/reports/materials_to_buy' do
     months = params[:months].to_i unless params[:months].nil? || params[:months] == 0
     months ||= settings.desired_months_worth_of_bulk_in_warehouse
@@ -148,9 +141,6 @@ class Backend < AppController
       materials: materials
     }
   end
-
-
-
 
   route :get, :post, '/production/reports/products_to_move_s1' do
     months = params[:months].to_i unless params[:months].nil?
@@ -181,7 +171,6 @@ class Backend < AppController
       locations: 1
     }
   end
-
 
   route :get, :post, '/administration/reports/products_to_buy' do
     months = params[:months].to_i unless params[:months].nil?
