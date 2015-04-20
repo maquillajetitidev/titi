@@ -237,7 +237,7 @@
           div data-row-span="4"
             div data-field-span="2"
               label for="m_id" Material
-              input type="hidden" name="m_id" value="#{Utils::number_format p_material[:m_id], 0}"
+              input type="hidden" name="m_id" value="#{p_material[:m_id]}"
               input type="text" name="m_name" tabindex="-1" disabled="disabled" value="#{p_material.m_name}"
             div data-field-span="1"
               label for="m_qty" Cantidad (0 para borrar)
@@ -276,7 +276,7 @@
           div data-row-span="4"
             div data-field-span="2"
               label for="part_id" Parte
-              input type="hidden" name="part_id" value="#{Utils::number_format p_part[:p_id], 0}"
+              input type="hidden" name="part_id" value="#{p_part[:p_id]}"
               input type="text" name="p_name" tabindex="-1" disabled="disabled" value="#{p_part.p_name}"
             div data-field-span="1"
               label for="part_qty" Cantidad (0 para borrar)
