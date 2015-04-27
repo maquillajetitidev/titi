@@ -321,12 +321,15 @@ class Backend < AppController
     redirect to("/products/#{product[:p_id]}#materials")
   end
 
-
   def edit_product p_id
     @product = Product.new.get(p_id)
     redirect_if_nil_product @product, p_id, "/products" if @product.empty?
     @materials = Material.order(:m_name).all
-    @parts = Product.filter(archived: false, end_of_life: false).order(:p_name).all
+    addedPartsIds = []
+    ProductsPart.where(:product_id => p_id).join(Product, :p_id => :part_id).select(:p_id, :p_name).all.each do |product|
+      addedPartsIds << product.values[:p_id]
+    end
+    @parts = Product.filter(archived: false, end_of_life: false).exclude(:p_id => addedPartsIds).select(:p_id, :p_name).order(:p_name).all
     @p_parts = @product.parts
     @p_materials = @product.materials
     @p_assemblies = @product.assemblies
