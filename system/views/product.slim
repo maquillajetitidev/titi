@@ -295,7 +295,7 @@
           select name="part_id" required="required"
             option value=""
             - @parts.each do |part|
-              option value="#{part.p_id}" = part.p_name
+              option value="#{part[:p_id]}" = part[:p_name]
         div data-field-span="1"
           label for="part_qty" Cantidad
           input.number.positive type="tel" name="part_qty" value="" required="required"
