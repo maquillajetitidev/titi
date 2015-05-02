@@ -339,7 +339,7 @@ class Product < Sequel::Model
   end
   def parts_cost
     cost = BigDecimal.new 0, 2
-    self.parts.map { |part| cost += part.materials_cost }
+    self.parts.map { |part| cost += part.sale_cost * part[:part_qty]}
     p "el costo de partes retorno nil" if cost.nil?
     cost = BigDecimal.new 0, 2 if cost.nil?
     self.parts_cost = cost
@@ -463,6 +463,7 @@ class Product < Sequel::Model
     return false if part[:part_qty] <= 0
     ProductsPart.unrestrict_primary_key
     ProductsPart.create(product_id: self[:p_id], part_id: part[:p_id], part_qty: part[:part_qty])
+    save
   end
 
   def remove_products_part part
@@ -471,6 +472,7 @@ class Product < Sequel::Model
 
   def remove_part part
     ProductsPart.filter(product_id: self[:p_id], part_id: part[:p_id]).first.delete
+    save
   end
 
   def update_part part
@@ -485,6 +487,7 @@ class Product < Sequel::Model
     prod_part =  ProductsPart.filter(product_id: self[:p_id], part_id: part[:p_id]).first
     prod_part[:part_qty] = part[:part_qty]
     prod_part.save
+    save
   end
 
 
@@ -503,6 +506,7 @@ class Product < Sequel::Model
     return false if material[:m_qty] <= 0
     ProductsMaterial.unrestrict_primary_key
     ProductsMaterial.create(product_id: self[:p_id], m_id: material[:m_id], m_qty: material[:m_qty])
+    save
   end
 
   def update_material material
@@ -512,11 +516,13 @@ class Product < Sequel::Model
     end
     if material[:m_qty] == 0
       remove_material material
+      save
       return true
     end
     prod_mat =  ProductsMaterial.filter(product_id: self[:p_id], m_id: material[:m_id]).first
     prod_mat[:m_qty] = material[:m_qty]
     prod_mat.save
+    save
   end
 
   def assemblies

@@ -114,7 +114,7 @@ class Product < Sequel::Model
   end
 
   def recalculate_sale_cost
-    self[:sale_cost] = BigDecimal.new(@values[:buy_cost] + @values[:parts_cost] + @values[:materials_cost], 2)
+    self[:sale_cost] = BigDecimal.new(self[:buy_cost] + self[:parts_cost] + self[:materials_cost], 2)
     recalculate_markups
   end
 
@@ -137,7 +137,7 @@ class Product < Sequel::Model
   end
 
   def sale_cost
-    BigDecimal.new(@values[:buy_cost] + @values[:parts_cost] + @values[:materials_cost], 2)
+    BigDecimal.new(self[:buy_cost] + self[:parts_cost] + self[:materials_cost], 2)
   end
 
   def buy_cost_mod mod
