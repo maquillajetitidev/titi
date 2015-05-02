@@ -6,6 +6,7 @@ class InitTest < Test::Unit::TestCase
     @@only_once = "only_once, can make several with different names"
   end
 
+
   def setup
     @valid_item = Item.new
     @valid_item.i_id = (rand * 1000).to_s[0..11]
