@@ -46,7 +46,7 @@
       div data-row-span="9"
         div data-field-span="1"
           label for="buy_cost" = t.product.fields.buy_cost
-          - buy_cost_filler = @product[:sale_cost] == 0 ? "" : 0
+          - buy_cost_filler = @product[:buy_cost] == 0 ? "" : 0
           input.positive.number type="tel"  name="buy_cost" id="ajax_product_buy_cost" autofocus="" size=5 maxlength=10 required="required" value="#{Utils::number_format @product[:buy_cost], 2, buy_cost_filler}"
 
         div.readonly data-field-span="1"
