@@ -110,6 +110,7 @@ class Product < Sequel::Model
   def recalculate_markups
     self[:real_markup] = self[:price] / self[:sale_cost] if self[:sale_cost] > 0
     self[:ideal_markup] = self[:real_markup] if self[:ideal_markup] == 0 and self[:real_markup] > 0
+    self[:price_pro] = BigDecimal.new(self[:price], 2) * 0.9
     self
   end
 
@@ -200,9 +201,7 @@ class Product < Sequel::Model
   end
 
   def price= price
-    price = price > 100 ? price.round : price.round(1)
-    self[:price] = BigDecimal.new(price, 1)
-    self.price_pro = (self.price * 0.95).round(1)
+    recalculate_markups
   end
 
   def price
@@ -350,6 +349,9 @@ class Product < Sequel::Model
     self[:p_name] = ""
     [self[:p_short_name], self[:br_name], self[:packaging], self[:size], self[:color], self[:public_sku] ].map  { |part| self[:p_name] += " " + part unless part.nil?}
     @values[:ideal_stock] = @values[:direct_ideal_stock] + @values[:indirect_ideal_stock]
+
+    recalculate_markups
+
     self
   end
 
