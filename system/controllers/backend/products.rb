@@ -324,10 +324,14 @@ class Backend < AppController
   def edit_product p_id
     @product = Product.new.get(p_id)
     redirect_if_nil_product @product, p_id, "/products" if @product.empty?
-    @materials = Material.order(:m_name).all
+    addedMaterialsIds = []
+    ProductsMaterial.where(:product_id => p_id).select(:m_id).all.each do |material|
+      addedMaterialsIds << material.values[:m_id]
+    end
+    @materials = Material.exclude(:m_id => addedMaterialsIds).select(:m_id, :m_name).order(:m_name).all
     addedPartsIds = []
-    ProductsPart.where(:product_id => p_id).join(Product, :p_id => :part_id).select(:p_id, :p_name).all.each do |product|
-      addedPartsIds << product.values[:p_id]
+    ProductsPart.where(:product_id => p_id).select(:part_id).all.each do |product|
+      addedPartsIds << product.values[:part_id]
     end
     @parts = Product.filter(archived: false, end_of_life: false).exclude(:p_id => addedPartsIds).select(:p_id, :p_name).order(:p_name).all
     @p_parts = @product.parts
