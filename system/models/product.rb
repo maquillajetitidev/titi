@@ -201,6 +201,8 @@ class Product < Sequel::Model
   end
 
   def price= price
+    price = price > 100 ? price.round : price.round(1)
+    self[:price] = BigDecimal.new(price, 1)
     recalculate_markups
   end
 
