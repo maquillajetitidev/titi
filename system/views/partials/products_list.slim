@@ -159,7 +159,7 @@
 
 
           - if deviation_for_period_col
-            td.number.understocked = Utils::number_format(product[:deviation_for_period], 0, "-")
+            td.number.understocked = Utils::integer_format(product[:deviation_for_period], "-")
             td.number.understocked = "#{Utils::number_format(product[:deviation_for_period_percentile], 0)} %"
 
           - if to_move_col
