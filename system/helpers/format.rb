@@ -12,6 +12,16 @@ module Utils
       ret
     end
 
+    def integer_format number, empty_replacement="-"
+      if number.nil? or number == 0
+        empty_replacement
+      elsif number > 0
+        number.ceil
+      else
+        number.floor
+      end
+    end
+
     def money_format number, dec, empty_replacement="-"
       num = number_format(number, dec, empty_replacement)
       num = "$ #{num}" unless num == empty_replacement
