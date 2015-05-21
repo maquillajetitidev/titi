@@ -11,6 +11,15 @@ class Backend < AppController
     end
   end
 
+  # Se fija si ya existe una muestra de este mismo p_id, y si existe pregunta al user si desea
+  # anularla para poner este item como la nueva muestra, devuelve true si puede continuar con la conversion
+  def void_old_samples item
+    existent = Item.filter(i_status: Item::SAMPLE, p_id: item.p_id).all
+    existent.each do |itemToVoid|
+      itemToVoid.void! "Se genera nueva muestra de este producto con el item id #{item[:o_id]}"
+    end
+  end
+
   def samplify_items
     i_ids = Item.new.split_input_into_ids(params[:i_ids])
     items = Item.filter(i_id: i_ids).all
@@ -20,10 +29,20 @@ class Backend < AppController
       redirect to('/inventory/samplify_items')
       return false
     end
-
+    items.each do |item|
+      if !item.inStore then
+        flash[:error] = "El item con ID #{item.i_id} no esta en el local. Se cancela la operacion."
+        redirect to('/inventory/samplify_items')
+        return false
+      end
+    end
     begin
       messages = []
-      items.each { |item| messages << item.samplify!(params[:reason]) }
+      items.each do |item|
+        if void_old_samples(item) then
+          messages << item.samplify!(params[:reason])
+        end
+      end
       flash.now[:notice] = messages.flatten.to_s
       slim :samplify_items, layout: :layout_backend, locals: {
         title: "Conversion a muestra correcta",
@@ -38,10 +57,6 @@ class Backend < AppController
       redirect to('/inventory/samplify_items')
     end
   end
-
-
-
-
 
   post '/products/update_all' do
     Product.order(:p_name).all.each { |product| enqueue product }
