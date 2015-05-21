@@ -327,7 +327,7 @@ samplify_items:
   title: Conversion a muestra de items
   write_reason: Escriba la razon
   reason_example: "ej: frasco dañado"
-  sure?: "Esto va a convertir el item en una muestra. No se va a poder hacer ningun tipo de operacion sobre el."
+  sure?: "Esto va a convertir el item en una muestra. No se va a poder hacer ningun tipo de operacion sobre el. Ademas se anularan los items del mismo producto que esten como muestra."
   samplified_items: Items convertidos a muestra
   how_to_use: Estos items solo pueden ser utilizados para muestra. El sistema no va a permitir ningun tipo de operacion sobre ellos
 
