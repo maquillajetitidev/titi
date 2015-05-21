@@ -134,14 +134,13 @@ class Item < Sequel::Model
     end
     order = Order.new.create_samplification self.i_loc
     origin = @values[:i_loc].dup
-    @values[:i_loc] = Location::VOID
     @values[:i_status] = Item::SAMPLE
     order.add_item self
     save validate: false
 
     current_user_id =  User.new.current_user_id
     message = "#{R18n.t.actions.changed_item_status(ConstantsTranslator.new(Item::SAMPLE).t)}. Razon: #{reason}"
-    log = ActionsLog.new.set(msg: message, u_id: current_user_id, l_id: origin, lvl: ActionsLog::NOTICE, i_id: @values[:i_id], o_id: order.o_id)
+    log = ActionsLog.new.set(msg: message, u_id: current_user_id, l_id: origin, lvl: ActionsLog::NOTICE, i_id: @values[:i_id])
     log.set(p_id: @values[:p_id]) unless @values[:p_id].nil?
     log.save
 
@@ -151,7 +150,6 @@ class Item < Sequel::Model
     order.change_status Order::FINISHED
     message
   end
-
 
   def change_status_security_check status, o_id
     if self.i_status == Item::VOID
@@ -195,6 +193,14 @@ class Item < Sequel::Model
 
   def i_loc= location
     @values[:i_loc] = location
+  end
+
+  def inStore
+    if (@values[:i_loc] == Location::S1 || @values[:i_loc] == Location::S2)
+      true
+    else
+      false
+    end
   end
 
   def print
