@@ -350,6 +350,7 @@ class Item < Sequel::Model
     return self if missing(i_id)
     update_from Item[i_id]
     return self if has_been_void
+    return self if is_sample
     return self if is_from_another_location
     return self if has_been_sold # TODO: anulacion de venta
     return self if is_in_some_order o_id
