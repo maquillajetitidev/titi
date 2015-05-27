@@ -72,6 +72,20 @@ class Backend < AppController
     }
   end
 
+  get '/administration/reports/items_sample' do
+    items = Item.filter(i_status: Item::SAMPLE).order(:p_name).all
+    slim :items_list, layout: :layout_backend, locals: {
+      title: "Reporte de Items en muestra", sec_nav: :nav_administration,
+      show_edit_button: true, edit_link: :edit_product,
+      price_col: true,
+      price_pro_col: false,
+      stock_col: false,
+      price_updated_at_col: true,
+      flags_cols: true,
+      items: items
+    }
+  end
+
   get '/administration/reports/markups' do
     products = Product.new.get_live.all
     products.sort_by! { |product| product[:markup_deviation_percentile] }
