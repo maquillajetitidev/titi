@@ -234,6 +234,14 @@ class Item < Sequel::Model
     return false
   end
 
+  def is_sample
+    if @values[:i_status] == Item::SAMPLE
+      errors.add("Item convertido a muestra", "Este item fue convertido a muestra. No podes hacer esta operacion sobre el.")
+      return true
+    end
+    return false
+  end
+
   def is_returning
     if self.i_status == Item::RETURNING
       errors.add("Item en devolución", "Este item ya está en la devolución. No podes agregarlo nuevamente.")
@@ -312,7 +320,7 @@ class Item < Sequel::Model
     return self if is_from_another_location
     return self if is_in_some_order o_id
     return self if is_a_different_product missing_parts
-    errors.add("Error inesperado", "Que hacemos?")
+    errors.add("Error inesperado", "Reportar a soporte.")
     return self
   end
 
@@ -329,7 +337,8 @@ class Item < Sequel::Model
     return self if is_on_cart o_id
     return self if has_been_sold
     return self if is_non_saleable
-    errors.add("Error inesperado", "Que hacemos?")
+    return self if is_sample
+    errors.add("Error inesperado", "Reportar a soporte.")
     return self
   end
 
@@ -344,7 +353,7 @@ class Item < Sequel::Model
     return self if is_from_another_location
     return self if has_been_sold # TODO: anulacion de venta
     return self if is_in_some_order o_id
-    errors.add("Error inesperado", "Que hacemos?")
+    errors.add("Error inesperado", "Reportar a soporte.")
     return self
   end
 
@@ -358,7 +367,7 @@ class Item < Sequel::Model
     return self if is_from_another_location
     return self if has_been_sold # TODO: anulacion de venta
     return self if is_in_some_order o_id
-    errors.add("Error inesperado", "Que hacemos?")
+    errors.add("Error inesperado", "Reportar a soporte.")
     return self
   end
 
@@ -371,7 +380,7 @@ class Item < Sequel::Model
     return self if has_been_void
     return self if has_been_sold
     return self if is_not_ready
-    errors.add("Error inesperado", "Que hacemos?")
+    errors.add("Error inesperado", "Reportar a soporte.")
     return self
   end
 
@@ -416,7 +425,7 @@ class Item < Sequel::Model
     return self if is_from_production
     return self if is_from_another_location
     return self if is_on_cart return_id
-    errors.add("Error inesperado", "Que hacemos?")
+    errors.add("Error inesperado", "Reportar a soporte.")
     return self
   end
 
