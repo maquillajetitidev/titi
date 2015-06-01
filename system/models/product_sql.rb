@@ -207,7 +207,7 @@ class Product < Sequel::Model
     "p_id"
 
     supply.s1_whole = BigDecimal.new Product.select{count(i_id).as(stock_store_1)}.left_join(:items, products__p_id: :items__p_id, i_status: Item::READY, i_loc: Location::S1).where(products__p_id: @values[:p_id]).first[:stock_store_1]
-      self.stock_store_1 = supply.s1_whole
+    self.stock_store_1 = supply.s1_whole
     supply.s1_whole_en_route = BigDecimal.new Product.select{count(i_id).as(s1_whole_en_route)}.left_join(:items, products__p_id: :items__p_id, i_status: Item::MUST_VERIFY, i_loc: Location::S1).where(products__p_id: @values[:p_id]).first[:s1_whole_en_route]
     supply.s1_whole_future = supply.s1_whole + supply.s1_whole_en_route
     "s1_whole_ideal"
