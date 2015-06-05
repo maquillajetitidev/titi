@@ -201,8 +201,6 @@ class Product < Sequel::Model
     self
   end
 
-
-
   def update_stocks
     "p_id"
 
@@ -322,7 +320,14 @@ class Product < Sequel::Model
     supply.global_ideal = supply.stores_ideal + supply.warehouses_ideal
     "global_deviation"
 
+    update_stocks_parts
     self
+  end
+
+  def update_stocks_parts
+    self.parts.each do |part|
+      part.update_stocks.save
+    end
   end
 
   def update_costs
