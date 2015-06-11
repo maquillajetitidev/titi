@@ -97,6 +97,7 @@ class Backend < AppController
   put '/bulks/:b_id' do
     bulk = Bulk[params[:b_id]].update_from_hash(params)
     if bulk.valid?
+      ActionsLog.new.set(msg: "Modificacion de granel, estado: #{bulk.b_status}, cantidad: #{Utils.number_format(bulk.b_qty, 2)}", u_id: current_user_id, l_id: Location::GLOBAL, lvl: ActionsLog::INFO, b_id: bulk.b_id).save
       bulk.save()
       flash[:notice] = t.bulk.updated
       redirect to("/materials/#{bulk[:m_id]}")
@@ -107,7 +108,8 @@ class Backend < AppController
   end
   post '/bulks/new' do
     material = Material[params[:m_id].to_i]
-    Bulk.new.create params[:m_id].to_i, material[:m_price], current_location[:name]
+    bulk = Bulk.new.create params[:m_id].to_i, material[:m_price], current_location[:name]
+    ActionsLog.new.set(msg: "Se agrega granel, estado: #{bulk.b_status}, cantidad: #{Utils.number_format(bulk.b_qty, 2)}", u_id: current_user_id, l_id: Location::GLOBAL, lvl: ActionsLog::INFO, b_id: bulk.b_id).save
     redirect to("/materials/#{params[:m_id].to_i}")
   end
 end
