@@ -11,12 +11,11 @@ class Backend < AppController
     end
   end
 
-  # Se fija si ya existe una muestra de este mismo p_id, y si existe pregunta al user si desea
-  # anularla para poner este item como la nueva muestra, devuelve true si puede continuar con la conversion
+  # Se fija si ya existe una muestra de este mismo p_id, y si existe la/las anula
   def void_old_samples item
     existent = Item.filter(i_status: Item::SAMPLE, p_id: item.p_id).all
     existent.each do |itemToVoid|
-      itemToVoid.void! "Se genera nueva muestra de este producto con el item id #{item[:o_id]}"
+      itemToVoid.void! "Se genera nueva muestra de este producto con el item id #{item[:i_id]}"
     end
   end
 
