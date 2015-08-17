@@ -1,7 +1,7 @@
 class Backend < AppController
 
   route :get, :post, '/inventory/samplify_items' do
-    if params[:i_ids].nil? and params[:reason].nil?
+    if params[:i_ids].nil?
       slim :samplify_items, layout: :layout_backend, locals: {
         title: t.samplify_items.title,
         sec_nav: :nav_administration
@@ -39,7 +39,7 @@ class Backend < AppController
       messages = []
       items.each do |item|
         if void_old_samples(item) then
-          messages << item.samplify!(params[:reason])
+          messages << item.samplify!
         end
       end
       flash.now[:notice] = messages.flatten.to_s

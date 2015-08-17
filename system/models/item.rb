@@ -120,8 +120,7 @@ class Item < Sequel::Model
     message
   end
 
-  def samplify! reason
-    reason = check_reason reason
+  def samplify!
     begin
       DB.transaction do
         self.orders.dup.each do |order|
@@ -139,7 +138,7 @@ class Item < Sequel::Model
     save validate: false
 
     current_user_id =  User.new.current_user_id
-    message = "#{R18n.t.actions.changed_item_status(ConstantsTranslator.new(Item::SAMPLE).t)}. Razon: #{reason}"
+    message = "#{R18n.t.actions.changed_item_status(ConstantsTranslator.new(Item::SAMPLE).t)}."
     log = ActionsLog.new.set(msg: message, u_id: current_user_id, l_id: origin, lvl: ActionsLog::NOTICE, i_id: @values[:i_id])
     log.set(p_id: @values[:p_id]) unless @values[:p_id].nil?
     log.save
