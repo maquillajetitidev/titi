@@ -95,9 +95,12 @@ class Backend < AppController
     slim :bulk, layout: false
   end
   put '/bulks/:b_id' do
-    bulk = Bulk[params[:b_id]].update_from_hash(params)
+    bulk = Bulk[params[:b_id]]
+    old_b_status = bulk.b_status
+    old_b_qty = bulk.b_qty
+    bulk.update_from_hash(params)
     if bulk.valid?
-      ActionsLog.new.set(msg: "Modificacion de granel, estado: #{bulk.b_status}, cantidad: #{Utils.number_format(bulk.b_qty, 2)}", u_id: current_user_id, l_id: Location::GLOBAL, lvl: ActionsLog::INFO, b_id: bulk.b_id).save
+      ActionsLog.new.set(msg: "Modificacion de granel, estado anterior: #{old_b_status}, estado actual: #{bulk.b_status}, cantidad anterior: #{Utils.number_format(old_b_qty, 2)}, cantidad actual: #{Utils.number_format(bulk.b_qty, 2)}", u_id: current_user_id, l_id: Location::GLOBAL, lvl: ActionsLog::INFO, b_id: bulk.b_id).save
       bulk.save()
       flash[:notice] = t.bulk.updated
       redirect to("/materials/#{bulk[:m_id]}")
