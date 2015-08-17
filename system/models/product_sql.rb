@@ -421,10 +421,10 @@ class Product < Sequel::Model
   def duplicate debug = false
     dest_id = create_default
     dest = Product[dest_id]
+    dest.update_from self, debug
     self.parts.map { |part| dest.add_part part }
     self.materials.map { |material| dest.add_material material }
     self.distributors.map { |distributor| dest.add_distributor distributor }
-    dest.update_from self, debug
     dest.save
     dest
   end
