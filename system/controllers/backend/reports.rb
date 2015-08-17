@@ -170,7 +170,7 @@ class Backend < AppController
       product[:deviation_for_period] = BigDecimal.new(0) if product[:deviation_for_period].nan?
       product[:deviation_for_period_percentile] = product[:deviation_for_period] * 100 / product[:ideal_for_period]
       product[:deviation_for_period_percentile] = BigDecimal.new(0) if product[:deviation_for_period_percentile].nan?
-      avail_in_warehouses = product.supply.warehouses_whole_future
+      avail_in_warehouses = product.supply.warehouses_whole
       product[:to_move] = product[:missing_for_period] >= avail_in_warehouses ? avail_in_warehouses : product[:missing_for_period]
       if avail_in_warehouses > 0 && (product.end_of_life || product.ideal_stock == 0)
         product[:deviation_for_period] = avail_in_warehouses * -1
