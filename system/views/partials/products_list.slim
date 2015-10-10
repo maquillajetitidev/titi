@@ -3,6 +3,7 @@
 - multi_stock_col = false if multi_stock_col.nil? unless multi_stock_col == true
 - stock_col = multi_stock_col ? false : stock_col
 - show_future_availability ||= false
+- show_future_availability_report ||= false
 - real_markup_col ||= false
 - ideal_markup_col ||= false
 - markup_deviation_percentile_col ||= false
@@ -71,8 +72,12 @@
             th.sm_cell = t.locations.short.WAREHOUSE_2
             th.sm_cell = t.locations.short.STORE_1
           - if show_future_availability
-            th.sm_cell = t.locations.short.WAREHOUSE_1_FUTURE
-            th.sm_cell = t.locations.short.WAREHOUSE_2_FUTURE
+            - if !show_future_availability_report
+              th.sm_cell = t.locations.short.WAREHOUSE_1_FUTURE
+              th.sm_cell = t.locations.short.WAREHOUSE_2_FUTURE
+            - if show_future_availability_report
+              th.sm_cell = t.locations.short.WAREHOUSE_1
+              th.sm_cell = t.locations.short.WAREHOUSE_2
             th.sm_cell = t.locations.short.STORE_1_FUTURE
         - if stock_col or multi_stock_col
           th.sm_cell.filter-false Ideal
@@ -150,8 +155,12 @@
               td.number #{Utils::number_format product.supply.w2_whole, 0}
               td.number #{Utils::number_format product.supply.s1_whole, 0}
             - if show_future_availability
-              td.number #{Utils::number_format product.supply.w1_whole_future, 0}
-              td.number #{Utils::number_format product.supply.w2_whole_future, 0}
+              - if show_future_availability_report
+                td.number #{Utils::number_format product.supply.w1_whole, 0}
+                td.number #{Utils::number_format product.supply.w2_whole, 0}
+              - if !show_future_availability_report
+                td.number #{Utils::number_format product.supply.w1_whole_future, 0}
+                td.number #{Utils::number_format product.supply.w2_whole_future, 0}
               td.number #{Utils::number_format product.supply.s1_whole_future, 0}
           - if stock_col or multi_stock_col
             - product[:ideal_for_period] ||= product.supply.s1_ideal * months * locations
