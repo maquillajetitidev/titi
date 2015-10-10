@@ -11,4 +11,4 @@ form.grid-form action=url("/production/reports/products_to_move_s1") method="pos
         label for="submit" &nbsp;
         input type="submit" value="Recalcular"
 
-== slim :products_list, locals: {show_edit_button: false, show_hide_button: true, full_row: false, price_pro_col: false, multi_stock_col: true, show_future_availability: false, deviation_for_period_col: true, to_move_col: true, products: products, months: months, locations: locations}
+== slim :products_list, locals: {show_edit_button: false, show_hide_button: true, full_row: false, price_pro_col: false, multi_stock_col: true, show_future_availability: true, show_future_availability_report: true, deviation_for_period_col: true, to_move_col: true, products: products, months: months, locations: locations}
