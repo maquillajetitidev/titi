@@ -1,3 +1,5 @@
+require_relative '../shared/logs'
+
 class Backend < AppController
   include Logs
   require 'descriptive_statistics'
