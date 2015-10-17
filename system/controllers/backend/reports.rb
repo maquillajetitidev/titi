@@ -2,6 +2,7 @@ require_relative '../shared/logs'
 
 class Backend < AppController
   include Logs
+  include Utils
   require 'descriptive_statistics'
 
   DescriptiveStatistics.empty_collection_default_value = 0.0
@@ -165,20 +166,17 @@ class Backend < AppController
     raw_products = Product.new.get_all.where(archived: false, non_saleable: false).all
     raw_products.each do |product|
       product[:ideal_for_period] = product.supply.s1_whole_ideal * months
-      product[:missing_for_period] = product[:ideal_for_period] >= product.supply.s1_whole_future ? product[:ideal_for_period] - product.supply.s1_whole_future : BigDecimal.new(0)
-      product[:deviation_for_period] = product.supply.s1_whole_future - product[:ideal_for_period]
+      product[:missing_for_period] = product[:ideal_for_period] >= product.supply.s1_whole_future ? BigDecimal.new(Utils::integer_format(product[:ideal_for_period] - product.supply.s1_whole_future)) : BigDecimal.new(0)
+      product[:deviation_for_period] = BigDecimal.new(Utils::integer_format(product.supply.s1_whole_future - product[:ideal_for_period]))
       product[:deviation_for_period] = BigDecimal.new(0) if product[:deviation_for_period].nan?
       product[:deviation_for_period_percentile] = product[:deviation_for_period] * 100 / product[:ideal_for_period]
       product[:deviation_for_period_percentile] = BigDecimal.new(0) if product[:deviation_for_period_percentile].nan?
-#      avail_in_warehouses = product.supply.warehouses_whole_future
-
       current_location = User.new.current_location[:name]
       if current_location == Location::W2
         avail_in_warehouses = product.supply.w2_whole
       else
         avail_in_warehouses = product.supply.w1_whole
       end
-
       product[:to_move] = product[:missing_for_period] >= avail_in_warehouses ? avail_in_warehouses : product[:missing_for_period]
       if avail_in_warehouses > 0 && (product.end_of_life || product.ideal_stock == 0)
         product[:deviation_for_period] = avail_in_warehouses * -1
