@@ -14,6 +14,8 @@ nav role="navigation"
 
       li: ul
         li
+          a class="#{inside?("/admin/production/items_ingresados")}" href=url('/production/items_ingresados') = t.nav.backend.items_ingresados
+        li
           a class="#{inside?("/admin/production/labels")}" href=url('/production/labels') = t.nav.backend.labels
         li
           a class="#{inside?("/admin/production/packaging")}" href=url('/production/packaging/select') = t.nav.backend.packaging

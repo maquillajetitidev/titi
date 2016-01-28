@@ -1,6 +1,8 @@
 # coding: UTF-8
 class Backend < AppController
 
+  require 'date'
+
   get '/production/labels' do
     slim :labels, layout: :layout_backend, locals: {sec_nav: :nav_production, title: t.labels.title, labels: Label.new.get_unprinted.all}
   end
@@ -24,6 +26,48 @@ class Backend < AppController
   end
 
 
+  get '/production/items_ingresados' do
+    startOfMonth = DateTime.now.strftime('1/%m/%Y')  
+    today = DateTime.now.strftime('%d/%m/%Y')
+    tercerizedValue = false
+    slim :items_ingresados, layout: :layout_backend, locals: {
+      sec_nav: :nav_production,
+      title: "Items ingresados para un usuario dentro de un rango de fechas:",
+      username: State.current_user.username,
+      dateFrom: startOfMonth,
+      dateTo: today,
+      tercerizedValue: tercerizedValue,
+      asignatedItems: 0
+    }
+  end
+
+  post '/production/items_ingresados/refresh' do
+    begin
+      username = params[:username]
+      dateFrom = Date.strptime(params[:dateFrom],"%d/%m/%Y")
+      dateTo = Date.strptime(params[:dateTo],"%d/%m/%Y")
+      tercerizedValue = (params[:tercerized] == "true" ? true:false)
+      asignatedItems = ActionsLog.new.get_new_items(
+        username, dateFrom, dateTo, tercerizedValue)      
+      # puts params.inspect
+      # puts "username -> #{username}"
+      # puts "dateFrom -> #{dateFrom}"
+      # puts "dateTo -> #{dateTo}"
+      # puts "tercerizedValue -> #{tercerizedValue}"
+      # puts "asignatedItems -> #{asignatedItems}"
+      slim :items_ingresados, layout: :layout_backend, locals: {
+        sec_nav: :nav_production,
+        title: "Items ingresados para un usuario dentro de un rango de fechas:",
+        username: username,
+        dateFrom: params[:dateFrom],
+        dateTo: params[:dateTo],
+        tercerizedValue: tercerizedValue,
+        asignatedItems: asignatedItems
+      }
+    rescue => detail
+      redirect to("/production/items_ingresados")
+    end
+  end
 
 
   route :post, ['/production/:order_type/new'] do

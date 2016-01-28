@@ -95,4 +95,14 @@ class ActionsLog < Sequel::Model(:actions_log)
     normal.order(:at).reverse.all
   end
 
+  def get_new_items (username, dateFrom, dateTo, tercerized)
+    username = username.to_s.strip
+    sarasa = DB.fetch("
+      select count(1) as cantidad from actions_log al, products p, users u
+      where u.user_id = al.u_id and p.p_id = al.p_id and
+      al.msg like '%asignada%' and u.username = ? and p.tercerized = ? and 
+      al.at >= ? and al.at <= ? limit 1", username, tercerized ? 1:0,
+      dateFrom, dateTo).first[:cantidad]
+  end
+
 end
