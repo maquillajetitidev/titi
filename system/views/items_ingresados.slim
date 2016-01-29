@@ -1,0 +1,31 @@
+-# coding: UTF-8
+
+form action=url("/production/items_ingresados/refresh") method="post"
+  == Rack::Csrf.tag(env)
+
+  div data-row-span="20"
+    label.aligner for="username" = "Usuario: "
+    input type="text" name="username" size=40 maxlength=40 value="#{username}"
+
+  div data-row-span="20"
+    label.aligner for="dateFrom" = "Desde: "
+    input type="text" name="dateFrom" size=10 maxlength=10 value="#{dateFrom}"
+
+  div data-row-span="20"
+    label.aligner for="dateTo" = "Hasta: "
+    input type="text" name="dateTo" size=10 maxlength=10 value="#{dateTo}"
+
+  div data-row-span="3"
+  	label Tipo:
+  	br
+    input type="radio" name="tercerized" id="is_tercerized" checked=("checked" if tercerizedValue) value="true"
+    label for="is_tercerized" = t.product.fields.is_tercerized
+    br
+    input type="radio" name="tercerized" id="non_tercerized" checked=("checked" if !tercerizedValue) value="false"
+    label for="non_tercerized" = t.product.fields.non_tercerized
+
+  input type="submit" value="Calcular"
+
+  div data-row-span="40"
+    label.aligner for="countResult" = "Items asignados: "
+    input type="text" name="countResult" size=10 maxlength=10 value="#{asignatedItems}"
