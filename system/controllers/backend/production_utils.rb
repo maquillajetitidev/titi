@@ -36,8 +36,9 @@ class Backend < AppController
       username: State.current_user.username,
       dateFrom: startOfMonth,
       dateTo: today,
-      tercerizedValue: tercerizedValue,
-      asignatedItems: 0
+      asignatedItemsTercerized: 0,
+      asignatedItemsNonTercerized: 0,
+      asignatedItemsTotal: 0
     }
   end
 
@@ -46,25 +47,28 @@ class Backend < AppController
       username = params[:username]
       dateFrom = Date.strptime(params[:dateFrom],"%d/%m/%Y")
       dateTo = Date.strptime(params[:dateTo],"%d/%m/%Y")
-      tercerizedValue = (params[:tercerized] == "true" ? true:false)
-      asignatedItems = ActionsLog.new.get_new_items(
-        username, dateFrom, dateTo, tercerizedValue)      
+      asignatedItemsTercerized = ActionsLog.new.get_new_items(
+        username, dateFrom, dateTo, true)
+      asignatedItemsNonTercerized = ActionsLog.new.get_new_items(
+        username, dateFrom, dateTo, false)
       # puts params.inspect
       # puts "username -> #{username}"
       # puts "dateFrom -> #{dateFrom}"
-      # puts "dateTo -> #{dateTo}"
-      # puts "tercerizedValue -> #{tercerizedValue}"
-      # puts "asignatedItems -> #{asignatedItems}"
+      # puts "dateTo -> #{dateTo + 1}"
+      # puts "asignatedItemsTercerized -> #{asignatedItemsTercerized}"
+      # puts "asignatedItemsNonTercerized -> #{asignatedItemsNonTercerized}"
       slim :items_ingresados, layout: :layout_backend, locals: {
         sec_nav: :nav_production,
         title: "Items ingresados para un usuario dentro de un rango de fechas:",
         username: username,
         dateFrom: params[:dateFrom],
         dateTo: params[:dateTo],
-        tercerizedValue: tercerizedValue,
-        asignatedItems: asignatedItems
+        asignatedItemsTercerized: asignatedItemsTercerized,
+        asignatedItemsNonTercerized: asignatedItemsNonTercerized,
+        asignatedItemsTotal: asignatedItemsTercerized + asignatedItemsNonTercerized
       }
     rescue => detail
+      puts detail.inspect
       redirect to("/production/items_ingresados")
     end
   end

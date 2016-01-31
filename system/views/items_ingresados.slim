@@ -15,17 +15,16 @@ form action=url("/production/items_ingresados/refresh") method="post"
     label.aligner for="dateTo" = "Hasta: "
     input type="text" name="dateTo" size=10 maxlength=10 value="#{dateTo}"
 
-  div data-row-span="3"
-  	label Tipo:
-  	br
-    input type="radio" name="tercerized" id="is_tercerized" checked=("checked" if tercerizedValue) value="true"
-    label for="is_tercerized" = t.product.fields.is_tercerized
-    br
-    input type="radio" name="tercerized" id="non_tercerized" checked=("checked" if !tercerizedValue) value="false"
-    label for="non_tercerized" = t.product.fields.non_tercerized
-
   input type="submit" value="Calcular"
 
   div data-row-span="40"
-    label.aligner for="countResult" = "Items asignados: "
-    input type="text" name="countResult" size=10 maxlength=10 value="#{asignatedItems}"
+    label.aligner for="countResultTercerized" = "Comprables: "
+    input type="text" name="countResultTercerized" size=10 maxlength=10 value="#{asignatedItemsTercerized}"
+
+  div data-row-span="40"
+    label.aligner for="countResultNonTercerized" = "Envasables: "
+    input type="text" name="countResultNonTercerized" size=10 maxlength=10 value="#{asignatedItemsNonTercerized}"
+
+  div data-row-span="40"
+    label.aligner for="countResultTotal" = "Total: "
+    input type="text" name="countResultTotal" size=10 maxlength=10 value="#{asignatedItemsTotal}"
