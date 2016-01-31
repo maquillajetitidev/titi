@@ -102,7 +102,7 @@ class ActionsLog < Sequel::Model(:actions_log)
       where u.user_id = al.u_id and p.p_id = al.p_id and
       al.msg like '%asignada%' and u.username = ? and p.tercerized = ? and 
       al.at >= ? and al.at <= ? limit 1", username, tercerized ? 1:0,
-      dateFrom, dateTo).first[:cantidad]
+      dateFrom, dateTo + 1).first[:cantidad]
   end
 
 end
