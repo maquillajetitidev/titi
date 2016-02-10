@@ -20,7 +20,7 @@ class Frontend < AppController
   end
 
   get '/catalog' do
-    send_file 'public/media/catalog.pdf', type: 'application/pdf', disposition: 'attachment'
+    send_file 'public/media/Catalogo Maquillaje TITI.pdf', type: 'application/pdf', disposition: 'attachment'
   end
 
   get '/contacto/' do
