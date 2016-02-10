@@ -12,7 +12,15 @@ class Frontend < AppController
   end
 
   get '/' do
-    slim :home, layout: :layout_frontend
+    send_file 'views/home_new.html'
+  end
+
+  get '/facebook' do
+    redirect to("https://www.facebook.com/maquillajetiti")
+  end
+
+  get '/catalog' do
+    send_file 'public/media/catalog.pdf', type: 'application/pdf', disposition: 'attachment'
   end
 
   get '/contacto/' do
