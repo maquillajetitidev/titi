@@ -10,39 +10,48 @@ img.displayed {
   border-style: none;
 }
 
+@font-face {
+  font-family: InnerversGothic;
+  src: url("fonts/Innervers Gothic 40 Regular.otf") format("opentype");
+}
+
 p.text_subtitle {
   margin-top: 30px;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 12px;
+  margin-bottom: 5px;
   width: 40em;
   color: white;
   text-decoration: underline;
-  font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;
-  font-size: 20px;
+  font-family: InnerversGothic;
+  font-size: 30px;
   text-align: center;
 }
 
 p.blocktext {
-  margin-top: 8px;
+  margin-top: 2px;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 8px;
+  margin-bottom: 2px;
   width: 40em;
   color: white;
-  font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;
+  font-family: InnerversGothic;
   font-size: 20px;
   text-align: center;
 }
 
 p.text_subtitle_nounder {
-  margin-top: 30px;
+  margin-top: 25px;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 12px;
+  margin-bottom: 5px;
   width: 40em;
   color: white;
-  font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;
-  font-size: 20px;
+  font-family: InnerversGothic;
+  font-size: 30px;
   text-align: center;
 }
+
+
+
+
