@@ -358,9 +358,6 @@ class Backend < AppController
     @product.validate
     flash.now[:error] = @product.errors if @product.errors.count > 0
 
-    puts @product.inspect
-
-
     slim :product, layout: :layout_backend
   end
 
