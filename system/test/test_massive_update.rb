@@ -8,7 +8,7 @@ class TestMassiveUpdate < Test::Unit::TestCase
   end
 
   def test_needing_startup_n_teardown
-    CSV.foreach("../data/todo/AccionMasivaIdeales2016.csv") do |row|
+    CSV.foreach("../AccionMasivaIdeales2016.csv") do |row|
       p_id = row[0].to_i
       ideal = row[1]
 
