@@ -10,15 +10,16 @@ class TestMassiveUpdate < Test::Unit::TestCase
   def test_needing_startup_n_teardown
     CSV.foreach("../massive_update_fix.csv") do |row|
       p_id = row[0].to_i
+      comp_env = row[1]
       product = Product[p_id]
 #      puts product.inspect
       if product
-        product.tercerized = true
+        product.tercerized = (comp_env == "Comprable")
 #        puts product.inspect
         if product.errors.count == 0  and product.valid?
           product.update_stocks.save
           if product.errors.count == 0  and product.valid?
-            p "Updated pid #{p_id}"
+            p "Updated pid #{p_id} to tercerized = #{product.tercerized}"
           else
             p "Error updating pid #{p_id}: #{product.errors}"
           end
