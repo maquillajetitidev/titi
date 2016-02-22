@@ -8,24 +8,13 @@ class TestMassiveUpdate < Test::Unit::TestCase
   end
 
   def test_needing_startup_n_teardown
-    CSV.foreach("../AccionMasivaIdeales2016.csv") do |row|
+    CSV.foreach("../massive_update_fix.csv") do |row|
       p_id = row[0].to_i
-      ideal = row[1]
-
-      params = {"direct_ideal_stock" => ideal}
       product = Product[p_id]
-      tercerized = product.tercerized
-
+#      puts product.inspect
       if product
-        product = product.update_from_hash(params)
-        # esta negrada la tengo que hacer porque el update_from_hash 
-        # piso tercerized a false, tiene un alto bug esa mierda
-        # se detecto con este flag pero puede haber otro kilombo mas en ese
-        # update_from_hash, hay que hacerle verdadero testing en el proximo
-        # update masivo de ideales, que esperemos nunca se de ya que
-        # va a estar el nuevo sitio
-        product.tercerized = tercerized
-
+        product.tercerized = true
+#        puts product.inspect
         if product.errors.count == 0  and product.valid?
           product.update_stocks.save
           if product.errors.count == 0  and product.valid?
