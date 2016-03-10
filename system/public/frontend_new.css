@@ -8,6 +8,7 @@ img.displayed {
   margin-left: auto;
   margin-right: auto;
   border-style: none;
+#  width: 100%;
 }
 
 @font-face {
@@ -16,7 +17,7 @@ img.displayed {
 }
 
 p.text_subtitle {
-  margin-top: 30px;
+  margin-top: 10px;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 5px;
@@ -41,7 +42,7 @@ p.blocktext {
 }
 
 p.text_subtitle_nounder {
-  margin-top: 25px;
+  margin-top: 5px;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 5px;
@@ -52,6 +53,14 @@ p.text_subtitle_nounder {
   text-align: center;
 }
 
-
-
-
+p.sitioenconstruccion {
+  margin-top: 2px;
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-bottom: 2px;
+  width: 100%;
+  color: white;
+  font-family: InnerversGothic;
+  font-size: 15px;
+  text-align: right;
+}
