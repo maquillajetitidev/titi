@@ -578,7 +578,7 @@ constant:
   SOLD: Vendido
   RETURNING: En devolución
   SAMPLE: Muestra
-  SAMPLIFICATION: A Muestra
+  SAMPLIFICATIO: A Muestra
 
 location:
   title: Ubicacion
