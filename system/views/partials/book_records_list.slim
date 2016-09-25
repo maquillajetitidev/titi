@@ -19,6 +19,10 @@
           td.number #{record[:r_id]}
           td.number #{record[:o_id]}
           td.date = Utils::local_datetime_format record.created_at
-          td #{record[:type]}
+          td
+            - if record[:type] == "Comisiones"
+              value = "Sueldo Empleado"
+            - else
+              #{record[:type]}
           td #{record[:description]}
           td.number #{Utils::money_format record[:amount], 2}
