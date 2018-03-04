@@ -8,15 +8,15 @@ class TestMassiveUpdate < Test::Unit::TestCase
   end
 
   def test_needing_startup_n_teardown
-    CSV.foreach("../AccionMasivaIdeales2017.csv") do |row|
+    CSV.foreach("../AccionMasivaIdeales2018.csv") do |row|
       p_id = row[0].to_i
       ideal = row[1]
 
       params = {"direct_ideal_stock" => ideal}
       product = Product[p_id]
-      tercerized = product.tercerized
 
       if product
+      	tercerized = product.tercerized
         product = product.update_from_hash(params)
         # esta negrada la tengo que hacer porque el update_from_hash 
         # piso tercerized a false, tiene un alto bug esa mierda
