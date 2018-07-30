@@ -51,3 +51,37 @@ class Ventas < AppController
 
   run! if __FILE__ == $0
 end
+
+class VentasML < AppController
+  set :name, "VentasML"
+  helpers ApplicationHelper
+
+  get '/' do
+    redirect to("https://maquillaje-titi.mercadoshops.com.ar")
+  end
+
+  run! if __FILE__ == $0
+end
+
+class VentasMLContact < AppController
+  set :name, "VentasMLContact"
+  helpers ApplicationHelper
+
+  get '/' do
+    redirect to("https://maquillaje-titi.mercadoshops.com.ar/contact")
+  end
+
+  run! if __FILE__ == $0
+end
+
+class VentasMLAbout < AppController
+  set :name, "VentasML"
+  helpers ApplicationHelper
+
+  get '/' do
+    redirect to("https://maquillaje-titi.mercadoshops.com.ar/about")
+  end
+
+  run! if __FILE__ == $0
+end
+

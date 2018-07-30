@@ -51,5 +51,9 @@ require './sales'
 require './frontend'
 map('/') { run Frontend }
 map('/admin') { run Backend }
-map('/ventas') { run Ventas }
+map('/ventas') { run VentasML }
 map('/sales') { run Sales }
+map('/productos') { run VentasML }
+map('/contacto') { run VentasMLContact }
+map('/fotos') { run VentasMLAbout }
+
